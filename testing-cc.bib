@@ -1,0 +1,2134 @@
+Bibtex supports global string variables.
+# is its string concatenation operator. 
+=================================================
+
+GLOBAL VARIABLES
+
+@string{ACCESSED = {Accessed Sep. 2010}}
+@string{ACM      = {ACM}}
+@string{AW       = {Addison-Wesley}}
+@string{IEEE     = {IEEE}}
+@string{MSR      = {Microsoft Research}}
+@string{PH       = {Prentice Hall}}
+@string{PROC     = {Proc. }}
+@string{Springer = {Springer}}
+
+@string{ASE   = { IEEE/ACM International Conference on Automated Software
+ 		Engineering (ASE)}}
+@string{CACM   = {Communications of the ACM}}
+@string{CAV   = { International Conference on Computer Aided 
+    Verification (CAV)}}
+@string{CC    = { International Conference on Compiler Construction (CC)}} 		
+@string{ECOOP = { European Conference on Object-Oriented 
+    Programming (ECOOP)}}
+@string{FASE  = { International Conference on Fundamental Approaches to 
+    Software Engineering (FASE)}}
+@string{FSE   = { ACM SIGSOFT International Symposium on Foundations of 
+    Software Engineering (FSE)}}
+@string{ICFEM = { International Conference on Formal Engineering 
+    Methods (ICFEM)}}
+@string{ICSE  = { ACM/IEEE International Conference on Software 
+    Engineering (ICSE)}}
+@string{ICSM  = { IEEE International Conference on Software 
+    Maintenance (ICSM)}}
+@string{ISSTA = { ACM SIGSOFT International Symposium on Software Testing 
+    and Analysis (ISSTA)}}
+@string{ISSRE = { IEEE International Symposium on Software Reliability 
+    Engineering (ISSRE)}}    
+@string{OOPSLA= { ACM SIGPLAN Conference on Object-Oriented Programming, 
+    Systems, Languages, and Applications (OOPSLA)}}    
+@string{PASTE = { ACM SIGPLAN-SIGSOFT Workshop on Program Analysis for 
+    Software Tools and Engineering (PASTE)}}
+@string{PLDI  = { ACM SIGPLAN Conference on Programming Language Design 
+    and Implementation (PLDI)}}
+@string{POPL  = { ACM SIGPLAN-SIGACT Symposium on
+    Principles of Programming Languages (POPL)}}
+@string{PPDP  = { ACM SIGPLAN Symposium on Principles and Practice of
+ 		Declarative Programming (PPDP)}}    
+@string{SOFSEM= { International Conference on Current Trends in Theory and 
+    Practice of Computer Science (SOFSEM)}}
+@string{SPE   = { Software---Practice \& Experience}},
+@string{SPIN  = { International SPIN Workshop on Model Checking Software}},
+@string{TACAS = { International Conference on Tools and Algorithms for the 
+    Construction and Analysis of Systems (TACAS)}}
+@string{TOSEM = { ACM Transactions on Software Engineering and Methodology 
+    (TOSEM)}}                                
+@string{TSE   = { IEEE Transactions on Software Engineering (TSE)}}
+@string{VMCAI = { International Conference on Verification, Model Checking,
+    and Abstract Interpretation (VMCAI)}}
+@string{WODA = { International Workshop on Dynamic Analysis (WODA)}}		
+            
+=================================================
+
+
+ENTRIES
+
+@book{ansi83reference,
+  author = {{American National Standards Institute (ANSI)}},
+  title = {Reference Manual for the Ada Programming Language 
+      Ansi/Mil-Std-1815A-1983},
+  year = 1983,
+  month = sep,
+  publisher = Springer,
+}
+
+TODO: M-TOOS does not seem to have a publisher.
+http://research.microsoft.com/conferences/mtoos06/
+
+@inproceedings{artzi06finding,
+   author = {Shay Artzi and Michael D. Ernst and Adam Kie{\.z}un and
+			Carlos Pacheco and Jeff H. Perkins},
+   title = {Finding the needles in the haystack: Generating legal test
+			inputs for object-oriented programs},
+   booktitle = PROC # {1st International Workshop on Model-Based Testing and 
+   			Object-Oriented Systems (M-TOOS)},
+   month = oct,
+   year = 2006,   
+}
+@inproceedings{aydemir05mechanized,
+  author = {Brian E. Aydemir and Aaron Bohannon and Matthew Fairbairn and
+        J. Nathan Foster and Benjamin C. Pierce and Peter Sewell and
+        Dimitrios Vytiniotis and Geoffrey Washburn and Stephanie Weirich and
+        Steve Zdancewic},
+  title = {Mechanized Metatheory for the Masses: The {PoplMark} Challenge},
+  booktitle = PROC # {18th International Conference on Theorem Proving in 
+        Higher Order Logics (TPHOLs)},
+  year = 2005,
+  month = aug,
+  pages = {50--65},
+  publisher = Springer,
+}
+@inproceedings{balakrishnan04analyzing,
+  author = {Gogul Balakrishnan and Thomas Reps},
+  title = {Analyzing memory accesses in x86 executables},
+  year = 2004,
+  month = feb,
+  booktitle = PROC # {13th} # CC,
+  pages = {5--23},
+  publisher = Springer,
+}
+@inproceedings{ball01automatic,
+  author = {Thomas Ball and Rupak Majumdar and Todd Millstein and Sriram K.
+           Rajamani},
+  year = 2001,
+  month = jun,
+  title = {Automatic predicate abstraction of {C} programs},
+  booktitle = PROC # PLDI,
+  pages = {203--213},
+  publisher = ACM,
+}
+@techreport{ball03abstraction,
+  author = {Thomas Ball},
+  year = 2003,
+  month = nov,
+  title = {Abstraction-guided test generation: A case study},
+  number = {MSR-TR-2003-86},
+  institution = MSR
+}
+@inproceedings{ball03from,
+  author = {Thomas Ball and Mayur Naik and Sriram K. Rajamani},
+  year = 2003,
+  month = jan,
+  title = {From symptom to cause: Localizing errors in counterexample traces},
+  booktitle = PROC # {30th} # POPL,
+  pages = {97--105},
+  publisher = ACM,
+  doi = {http://doi.acm.org/10.1145/604131.604140},
+  isbn = {1-58113-628-5}
+}
+@inproceedings{barnett04spec,
+  author = {Mike Barnett and K. Rustan M. Leino and Wolfram Schulte},
+  title = {The {Spec\#} programming system: An overview},
+  booktitle = PROC # {International Workshop on the 
+      Construction and Analysis of Safe, Secure, and Interoperable 
+      Smart Devices (CASSIS)},
+  pages = {49--69},
+  year = 2004,
+  month = mar,
+  publisher = Springer,
+}
+@inproceedings{barnett05boogie,
+  author = {Michael Barnett and Bor-Yuh Evan Chang and Robert DeLine and
+            Bart Jacobs and K. Rustan M. Leino},
+  title = {Boogie: A Modular Reusable Verifier for Object-Oriented Programs},
+  booktitle = PROC # {4th International Symposium on Formal Methods 
+            for Components and Objects (FMCO)},
+  year = 2005,
+  month = nov,
+  pages = {364--387},
+  publisher = Springer
+}
+@inproceedings{barrett05smt-comp,
+  author = {Clark W. Barrett and Leonardo Mendon\c{c}a de Moura and 
+      Aaron Stump},
+  title = {{SMT-COMP}: Satisfiability Modulo Theories Competition},
+  booktitle = PROC # {17th} # CAV,
+  year = 2005,
+  month = jul,
+  pages = {20--23},
+  publisher = Springer,
+}
+@article{barrett05design,
+  author = {Clark W. Barrett and Leonardo Mendon\c{c}a de Moura and
+      Aaron Stump},
+  title = {Design and Results of the First Satisfiability Modulo Theories
+      Competition ({SMT-COMP} 2005)},
+  journal = {Journal of Automated Reasoning},
+  volume = 35,
+  number = 4,
+  year = 2005,
+  month = nov,
+  pages = {373--390},
+}  
+@misc{bcel03,
+  author = {{Apache Software Foundation}},
+  title = {Bytecode engineering library ({BCEL})},
+  howpublished = {http://jakarta.apache.org/bcel/},
+  year = 2003,
+  month = apr,
+  note = ACCESSED
+}
+@article{beck98test,
+  author = {Kent Beck and Erich Gamma},
+  year = 1998,
+  month = jul,
+  title = {Test infected: Programmers love writing tests},
+  journal = {Java Report},
+  volume = 3,
+  number = 7,
+  pages = {37--50},
+  summary = {JUnit kick-off article}
+}
+
+@book{beizer90software,
+ author = {Beizer, Boris},
+ title = {Software testing techniques},
+ year = 1990,
+ edition = {Second},
+ publisher = {Van Nostrand Reinhold},
+}
+
+@book{beizer95black-box,
+  author = {Boris Beizer},
+  title = {Black-Box Testing: 
+    Techniques for Functional Testing of Software and Systems},
+  year = 1995,
+  month = may,
+  publisher = {John Wiley \& Sons},
+}
+@inproceedings{beyer04generating,
+  author = {Dirk Beyer and Adam J. Chlipala and Thomas A. Henzinger and Ranjit
+           Jhala and Rupak Majumdar},
+  year = 2004,
+  month = may,
+  title = {Generating tests from counterexamples},
+  booktitle = PROC # {26th} # ICSE,
+  publisher = IEEE,
+  pages = {326--335},
+}
+@inproceedings{blackburn06dacapo,
+  title={The {DaCapo} Benchmarks: {J}ava Benchmarking Development and Analysis},
+  author = {Stephen M. Blackburn and Robin Garner and Chris Hoffmann and 
+          Asjad M. Khang and Kathryn S. McKinley and Rotem Bentzur and 
+          Amer Diwan and Daniel Feinberg and Daniel Frampton and 
+          Samuel Z. Guyer and Martin Hirzel and Antony Hosking and 
+          Maria Jump and Han Lee and J. Eliot B. Moss and B. Moss and 
+          Aashish Phansalkar and Darko Stefanovi\'{c} and Thomas VanDrunen and 
+          Daniel von Dincklage and Ben Wiedermann},
+  booktitle = PROC # {21st} # OOPSLA,
+  month = oct,
+  year = 2006,
+  pages = {169--190},
+  publisher = ACM
+}
+@inproceedings{bodden07staged,
+	author = {Eric Bodden and Laurie Hendren and Ond\v{r}ej Lhot{\'{a}}k},
+	title = {A staged static program analysis to improve the performance of runtime monitoring},
+	booktitle = PROC # {21st} # ECOOP,
+	year = 2007,
+	Month = jul,
+	Pages = {525--549},
+}
+@inproceedings{bodden10efficient,
+ author = {Bodden, Eric},
+ title = {Efficient hybrid typestate analysis by determining continuation-equivalent states},
+ booktitle = PROC # {32nd} # ICSE,
+ year = 2010,
+ month = may,
+ pages = {5--14},
+ publisher = ACM,
+} 
+@techreport{bodden10taming,
+  title = {{Taming Reflection (Extended version)}},
+  author = {Bodden, Eric and Sewe, Andreas and Sinschek, Jan and Mezini, Mira},
+  number = {TUD-CS-2010-0066},
+  year = 2010,
+  url = {http://www.bodden.de/pubs/tr-tamiflex.pdf},
+	institution = {TU Darmstadt}
+}
+@inproceedings{bodden11taming,
+  title = {Taming Reflection: Aiding Static Analysis in the Presence of Reflection and Custom Class Loaders},
+  author = {Bodden, Eric and Sewe, Andreas and Sinschek, Jan and Mezini, Mira},
+	booktitle = PROC # {33rd} # ICSE,
+  year = 2011,
+	month = may,
+	publisher = ACM,
+	note = {To appear.}
+}
+@inproceedings{bodik00abcd,
+  author = {Rastislav Bodik and Rajiv Gupta and Vivek Sarkar},
+  year = 2000,
+  month = jun,
+  title = {{ABCD}: Eliminating array bounds checks on demand},
+  booktitle = PROC # PLDI,
+  pages = {321--333},
+  publisher = ACM,
+  doi = {http://doi.acm.org/10.1145/349299.349342},
+  isbn = {1-58113-199-2},
+  summary = {Compiler eliminates redundant array bound checks. A check is
+            redundant if its result is implied by previously established
+            program constraints. For example a = new int[10]; if (x>=0 && x<9)
+            print(a[x]);"}
+}
+@inproceedings{boshernitsan06agitar,
+ author = {Marat Boshernitsan and Roongko Doong and Alberto Savoia},
+ title = {From {Daikon} to {Agitator}: Lessons and challenges in building a 
+    commercial tool for developer testing},
+ booktitle = PROC # ISSTA,
+ year = 2006,
+ month = jul,
+ pages = {169--180},
+ publisher = ACM,
+}
+@inproceedings{boyapati02korat,
+  author = {Chandrasekhar Boyapati and Sarfraz Khurshid and Darko Marinov},
+  year = 2002,
+  month = jul,
+  title = {Korat: Automated testing based on {Java} predicates},
+  booktitle = PROC # ISSTA,
+  pages = {123--133},
+  publisher = ACM,
+  doi = {http://doi.acm.org/10.1145/566172.566191},
+  isbn = {1-58113-562-9},
+}
+@article{brat04experimental,
+  author = {Guillaume Brat and Doron Drusinsky and Dimitra Giannakopoulou 
+            and Allen Goldberg and Klaus Havelund and Mike Lowry 
+            and Corina Pasareanu and Arnaud Venet and Willem Visser 
+            and Rich Washington},
+  title = {Experimental Evaluation of Verification and Validation Tools on 
+            {M}artian {R}over Software},
+  journal = {Formal Methods in System Design},
+  volume = 25,
+  number = {2--3},
+  year = 2004,
+  month = sep, 
+  pages = {167--198},
+  publisher = Springer,
+}
+@inproceedings{bruneton02asm,
+  author = {{\'E}ric Bruneton and Romain Lenglet and Thierry Coupaye},
+  title = {{ASM}: a code manipulation tool to implement adaptable
+    systems},
+  booktitle = {Proc. ACM SIGOPS France},
+  year = 2002,
+  month = nov,
+}
+@inproceedings{cadar05execution,
+	author = {Cristian Cadar and Dawson R. Engler},
+	title = {Execution generated test cases: How to make systems code 
+		crash itself},
+	booktitle = PROC # {12th} # SPIN,
+	month = aug,
+	year = 2005,
+	pages = {2--23},
+	publisher = {Springer},
+}
+
+@inproceedings{cadar06exe,
+  author = {Cristian Cadar and Vijay Ganesh and Peter M. Pawlowski and 
+  		David L. Dill and Dawson R. Engler},
+  title = {EXE: Automatically generating inputs of death},
+  booktitle = PROC # {13th ACM Conference on Computer and Communications 
+  		Security (CCS)},
+  year = 2006,
+  month = oct,
+  pages = {322--335},
+  isbn = {1-59593-518-5},
+  doi = {http://doi.acm.org/10.1145/1180405.1180445},
+  publisher = ACM
+}
+
+@inproceedings{cadar08klee,
+  author = {Cristian Cadar and Daniel Dunbar and Dawson R. Engler},
+  title = {KLEE: Unassisted and Automatic Generation of High-Coverage
+               Tests for Complex Systems Programs},
+  booktitle = PROC # {8th USENIX Symposium on Operating Systems Design and
+		Implementation (OSDI)},
+  year = 2008,
+	month = dec,
+  pages = {209--224},
+	publisher = {USENIX},
+}
+
+@misc{carrette90crashme,
+  author = {George J. Carrette},
+  year = 1990,
+  title = {CRASHME: Random input testing},
+  howpublished = {http://people.delphiforums.com/gjc/crashme.html}
+}
+@book{chan98java,
+  author = {Patrick Chan and Rosanna Lee and and Douglas Kramer},
+  title = {The Java Class Libraries},
+  year = 1998,
+  edition = {Second},
+  volume = 1,
+  publisher = AW
+}
+@inproceedings{chandra09snugglebug,
+ author = {Chandra, Satish and Fink, Stephen J. and Sridharan, Manu},
+ title = {Snugglebug: A powerful approach to weakest preconditions},
+ booktitle = PROC # PLDI,
+ year = 2009,
+ month = jun,
+ pages = {363--374},
+ publisher = ACM,
+}
+@inproceedings{chen07mop,
+ author = {Chen, Feng and Ro\c{s}u, Grigore},
+ title = {Mop: An efficient and generic runtime verification framework},
+ booktitle = PROC # {22nd} # OOPSLA,
+ year = 2007,
+ month = oct,
+ pages = {569--588},
+ publisher = ACM,
+} 
+@inproceedings{cheon02simple,
+  author = {Yoonsik Cheon and Gary T. Leavens},
+  title = {A Simple and practical approach to unit testing: The {JML} and
+          {JUnit} way},
+  year = 2002,
+  month = jun,
+  booktitle = PROC # {16th} # ECOOP,
+  pages = {231--255},
+  publisher = Springer,
+}
+@inproceedings{childers03softtest,
+  author = {B. Childers and M. L. Soffa and J. Beaver and L. Ber and K.
+           Cammarata and T. Kane and J. Litman and J. Misurda},
+   month = oct,
+  year = 2003,
+  title = {SoftTest: A framework for software testing of {Java} programs},
+  booktitle = PROC # {{OOPSLA} Workshop on Eclipse Technology eXchange},
+  pages = {79--83},
+  publisher = ACM,
+  summary = {Eclipse plugin: manually enter specification, tool tries path
+            coverage}
+}
+@inproceedings{christodorescu05string,
+  author = {Mihai Christodorescu and Nicholas Kidd and Wen-Han Goh},
+  title = {String analysis for x86 binaries},
+  booktitle = PROC # {6th} # PASTE,
+  year = 2005,
+  month = sep,
+  pages = {88--95},
+  publisher = ACM,
+}
+@inproceedings{chugh09staged,
+ author = {Chugh, Ravi and Meister, Jeffrey A. and Jhala, Ranjit and Lerner, Sorin},
+ title = {Staged information flow for {JavaScript}},
+ booktitle = PROC # PLDI,
+ year = 2009,
+ month = jun,
+ pages = {50--62},
+ publisher = ACM,
+} 
+@inproceedings{claessen00quickcheck,
+  author = {Koen Claessen and John Hughes},
+  year = 2000,
+  month = sep,
+  title = {{QuickCheck}: A lightweight tool for random testing of {Haskell}
+          programs},
+  booktitle = PROC # {5th {ACM} {SIGPLAN} International
+              Conference on Functional Programming (ICFP)},
+  pages = {268--279},
+  publisher = ACM,
+  doi = {http://doi.acm.org/10.1145/351240.351266},
+  isbn = {1-58113-202-6},
+  summary = {Test pure functions in the Haskell programming language using
+            random input. This is easier than testing arbitrary procedures or
+            methods as functions by definition cannot have any side effects.
+            There is no state that can change due to the execution of a
+            function.}
+}
+@article{clarke76system,
+  author = {Lori A. Clarke},
+  title = {A system to generate test data and symbolically execute programs},
+  journal = TSE,
+  year = 1976,
+  volume = 2,
+  number = 3,
+  pages = {215-222},  
+}
+@inproceedings{clarke00finite,
+  author = {Lori A. Clarke},
+   year = 2000,
+  month = aug,
+  title = {Finite state verification: A new approach for validating software
+          systems},
+  booktitle = PROC # ISSTA,
+  pages = {146},
+  publisher = ACM
+}
+@inproceedings{cohen98automatic,
+  author = {Geoff A. Cohen and Jeffrey S. Chase and David L. Kaminsky},
+  title = {Automatic Program Transformation with {Joie}},
+  booktitle = {Proc. USENIX Annual Technical Symposium},
+  year = 1998,
+  month = jun,
+  pages = {167--178},
+  publisher = {USENIX},
+}
+@techreport{cok04escjava2,
+  author = {David R. Cok and Joseph R. Kiniry},
+  year = 2004,
+  month = may,
+  title = {{ESC/Java2}: Uniting {ESC/Java} and {JML}: Progress and issues in
+          building and using {ESC/Java2}},
+  number = {NIII-R0413},
+  institution = {Nijmegen Institute for Computing and Information Science}
+}
+@misc{cok05esc,
+  title = {{ESC/J}ava2 Implementation Notes},
+  howpublished = {http://secure.ucd.ie/products/opensource/ESCJava2/
+  ESCTools/docs/Escjava2-ImplementationNotes.pdf},
+  author  = {David R. Cok},
+  year   = 2005,
+  month = nov,
+  note = ACCESSED
+}
+@article{collberg07empirical,
+ author = {Collberg, Christian and Myles, Ginger and Stepp, Michael},
+ title = {An empirical study of {Java} bytecode programs},
+ journal = SPE,
+ volume = 37,
+ number = 6,
+ year = 2007,
+ month = may,
+ pages = {581--641},
+}
+@inproceedings{cousot79systematic,
+  author = {Patrick Cousot and Radhia Cousot},
+  title = {Systematic design of program analysis frameworks},
+  booktitle = PROC # {6th} # POPL,
+  year = 1979,
+  month = jan,
+  pages = {269--282},
+  publisher = ACM,
+}
+@misc{coverity03prevent,
+  author  = {{Coverity Inc.}},
+  title  = {{Coverity Prevent}},
+  year   = 2003,
+  howpublished    = {http://www.coverity.com/},
+  note = ACCESSED
+}
+
+@inproceedings{csallner03fundexplorer,
+  author = {Christoph Csallner and Marcus Handte and Othmar Lehmann and John Stasko},
+  title = {{FundExplorer}: Supporting the diversification of mutual fund portfolios using {C}ontext {T}reemaps},
+  booktitle = PROC # {9th IEEE Symposium on Information Visualization (InfoVis)},
+  year = 2003,
+  month = oct,
+  pages = {203--208},
+  publisher = IEEE,
+}
+@article{csallner04jcrasher,
+  author = {Christoph Csallner and Yannis Smaragdakis},
+  title = {{JCrasher}: An automatic robustness tester for {Java}},
+  journal = SPE,
+  year = 2004,
+  month = sep,
+  volume = 34,
+  number = 11,
+  pages = {1025--1050}
+}
+@inproceedings{csallner05check,
+  author = {Christoph Csallner and Yannis Smaragdakis},
+  title = {{Check} 'n' {Crash}: Combining static checking and testing},
+  booktitle = PROC # {27th} # ICSE,
+  year = 2005,
+  month = may,
+  pages = {422--431},
+  publisher = ACM
+}
+@inproceedings{csallner06invariants,
+  author = {Christoph Csallner and Yannis Smaragdakis},
+  title = {Dynamically Discovering Likely Interface Invariants},
+  booktitle = PROC # {28th} # ICSE # {, Emerging Results Track},  
+  year = 2006,
+  month = may,
+  pages = {861--864},
+  publisher = ACM
+}
+@inproceedings{csallner06dsd-crasher,
+   author = {Christoph Csallner and Yannis Smaragdakis},
+   title = {{DSD}-{C}rasher: A Hybrid Analysis Tool for Bug Finding},
+   booktitle = PROC # ISSTA,   
+   year = 2006,
+   month = jul,
+   pages = {245--254},
+   publisher = ACM,
+   summary = {ACM SIGSOFT Distinguished Paper Award}
+}
+@article{csallner08dsd-crasher,
+   author = {Christoph Csallner and Yannis Smaragdakis and Tao Xie},
+   title = {{DSD}-{C}rasher: A hybrid analysis tool for bug finding},
+   journal = TOSEM,
+   volume = 17,
+   number = 2,
+   pages = {1--37},
+   month = apr,
+   year = 2008,
+}
+@inproceedings{csallner08dysy,
+   author = {Christoph Csallner and Nikolai Tillmann and Yannis Smaragdakis},
+   booktitle = PROC # {30th} # ICSE,
+   title = {{DySy}: Dynamic symbolic execution for invariant inference},
+   year = 2008,
+   month = may,
+   pages = {281--290},
+   publisher = ACM
+}
+@article{csallner08dsd-crasher,
+  author = {Christoph Csallner and Yannis Smaragdakis and Tao Xie},
+  title = {{DSD}-{C}rasher: A hybrid analysis tool for bug finding},
+  journal = TOSEM,
+  year = 2008,
+  month = apr,
+  pages = {1--37},
+  volume = 17,
+  number = 2,  
+}
+@book{daemen02design,
+  author = {Joan Daemen and Vincent Rijmen},
+  title = {The Design of Rijndael: AES - The Advanced Encryption Standard},
+  edition = {first},
+  year = 2002,
+  month = mar,
+  publisher = Springer,
+}
+@inproceedings{damorim06empirical,
+ author = {Marcelo d'Amorim and Carlos Pacheco and Tao Xie and Darko Marinov
+ 		and Michael D. Ernst},
+ title = {An Empirical Comparison of Automated Generation and Classification
+ 		Techniques for Object-Oriented Unit Testing},
+ booktitle = PROC # {21st} # ASE,
+ year = 2006,
+ month = sep,
+ pages = {59--68},
+ isbn = {0-7695-2579-2},
+ doi = {http://dx.doi.org/10.1109/ASE.2006.13},
+ publisher = IEEE,
+ }
+@inproceedings{deng06bogor,
+  author    = {Xianghua Deng and Jooyong Lee and Robby},
+  title     = {{Bogor/Kiasan}: A k-bounded symbolic execution for checking
+               strong heap properties of open systems},
+  booktitle = PROC # {21st} # ASE,
+  year      = 2006,
+  month     = sep,
+  publisher = IEEE,
+  pages     = {157--166},
+}
+http://ieeexplore.ieee.org/xpl/freeabs_all.jsp?arnumber=4344093
+@inproceedings{deng07kiasan,
+  author    = {Xianghua Deng and Robby and John Hatcliff},
+  title     = {{Kiasan/KUnit}: Automatic test case generation and analysis
+               feedback for open object-oriented systems},
+  booktitle = PROC # {Testing: Academia and Industry Conference - 
+               Practice And Research Techniques (TAIC PART)},
+  year      = 2007,
+  month     = sep,
+  publisher = IEEE,
+  pages     = {3--12},
+}  
+@techreport{detlefs03simplify,
+  author = {David Detlefs and Greg Nelson and James B. Saxe},
+  year = 2003,
+  month = jul,
+  title = {{Simplify}: A theorem prover for program checking},
+  number = {HPL-2003-148},
+  institution = {Hewlett-Packard Systems Research Center}
+}
+@article{dillenberger00building,
+  author = {D. Dillenberger and R. Bordawekar and C. W. Clark and D. Durand
+           and D. Emmes and O. Gohda and S. Howard and M. F. Oliver and F.
+           Samuel and R. W. St. John},
+  year = 2000,
+  month = jan,
+  title = {Building a Java virtual machine for server applications: The JVM on
+          OS/390},
+  journal = {IBM Systems Journal},
+  volume = 39,
+  number = 1,
+  pages = {194--210}
+}
+@inproceedings{do04empirical,
+ author = {Do, Hyunsook and Rothermel, Gregg and Kinneer, Alex},
+ title = {Empirical studies of test case prioritization in a {JUnit} testing environment},
+ booktitle = PROC # {15th} # ISSRE,
+ year = 2004,
+ month = nov,
+ pages = {113--124},
+ publisher = IEEE,
+}
+@article{do05supporting,
+  author = {Hyunsook Do and Sebastian G. Elbaum and Gregg Rothermel},
+  title = {Supporting controlled experimentation with testing techniques:
+        An infrastructure and its potential impact},
+  journal = {Empirical Software Engineering},
+  year = 2005,
+  month = oct,
+  volume = 10,
+  number = 4,
+  pages = {405--435},
+}
+@inproceedings{dwyer07residual,
+ author = {Dwyer, Matthew B. and Purandare, Rahul},
+ title = {Residual dynamic typestate analysis exploiting static analysis: Results to reformulate and reduce the cost of dynamic analysis},
+ booktitle = PROC # {22nd} # ASE,
+ year = 2007,
+ month = nov,
+ pages = {124--133},
+ publisher = ACM,
+} 
+@inproceedings{dwyer08residual,
+ author = {Dwyer, Matthew B. and Purandare, Rahul},
+ title = {Residual checking of safety properties},
+ booktitle = PROC # {15th} # SPIN,
+ year = 2008,
+ month = aug,
+ pages = {1--2},
+ publisher = Springer,
+} 
+@manual{ecma01c-sharp,
+  author = {{Ecma International}},
+  title = {Standard {ECMA-334}: C\# Language Specification},
+  edition = {First},
+  year = 2001,
+  month = dec
+}
+@manual{ecma01cli,
+  author = {{Ecma International}},
+  title = {Standard {ECMA-335}: Common Language Infrastructure ({CLI})},
+  edition = {First},
+  year = 2001,
+  month = dec
+}
+@manual{ecma06c-sharp,
+  author = {{Ecma International}},
+  title = {Standard {ECMA-334}: C\# Language Specification},
+  edition = {Fourth},
+  year = 2006,
+  month = jun,
+}  
+@manual{ecma06cli,
+  author = {{Ecma International}},
+  title = {Standard {ECMA-335}: Common Language Infrastructure ({CLI})},
+  edition = {Fourth},
+  year = 2006,
+  month = jun,
+}
+@article{edwards01framework,
+  author = {Stephen H. Edwards},
+  year = 2001,
+  month = jun,
+  title = {A framework for practical, automated black-box testing of
+          component-based software},
+  journal = {Software Testing, Verification \& Reliability},
+  volume = 11,
+  number = 2,
+  pages = {97--111}
+}
+@inproceedings{eisenbarth01aiding,
+  author = {Thomas Eisenbarth and Rainer Koschke and Daniel Simon},
+  title = {Aiding Program Comprehension by Static and Dynamic Feature Analysis},
+  booktitle = PROC # ICSM,
+  year = 2001,
+  month = nov,
+  pages = {602--611},
+  publisher = IEEE,
+}
+@inproceedings{elkarablieh09precise,
+  author = {Bassem Elkarablieh and Patrice Godefroid and Michael Y. Levin},
+  title = {Precise pointer reasoning for dynamic test generation},
+  booktitle = PROC # {18th} # ISSTA,
+  year = 2009,
+	month = jul,
+  pages = {129--140},
+	publisher = ACM,
+}
+@inproceedings{engler04static,
+  author = {Dawson Engler and Madanlal Musuvathi},
+   year = 2004,
+  month = jan,
+  title = {Static analysis versus software model checking for bug finding},
+  booktitle = PROC # {5th} # VMCAI,
+  pages = {191--210},
+  publisher = Springer,
+  summary = {extended version of musuvathi03lessons}
+}
+@inproceedings{ernst99dynamically,
+  author = {Michael D. Ernst and Jake Cockrell and William G. Griswold and
+           David Notkin},
+  year = 1999,
+  month = may,
+  title = {Dynamically discovering likely program invariants to support
+          program evolution},
+  booktitle = PROC # {21st} # ICSE,
+  pages = {213--224},
+  publisher = ACM,
+}
+@article{ernst01dynamically,
+  author = {Michael D. Ernst and Jake Cockrell and William G. Griswold and
+           David Notkin},
+  year = 2001,
+  month = feb,
+  title = {Dynamically discovering likely program invariants to support
+          program evolution},
+  journal = TSE,
+  volume = 27,
+  number = 2,
+  pages = {99--123}
+}
+@inproceedings{ernst03static,
+   author = {Michael D. Ernst},
+     title = {Static and dynamic analysis: Synergy and duality},
+   booktitle = PROC # {1st} # WODA},
+   pages = {24--27},
+   month = may,
+   year = 2003
+}
+@article{fecko02lessons,
+  author = {Mariusz A. Fecko and Christopher M. Lott},
+  year = 2002,
+  month = dec,
+  title = {Lessons learned from automating tests for an operations support
+          system},
+  journal = {Software---Practice \& Experience},
+  volume = 32,
+  number = 15,
+  pages = {1485--1506},
+  summary = {Tested GUI at Telecordia. Extended commercial tool SilkTest from
+            Segue Software}
+}
+@inproceedings{flanagan01houdini,
+  author = {Cormac Flanagan and K. Rustan M. Leino},
+   year = 2001,
+  month = mar,
+  title = {Houdini, an annotation assistant for {ESC/Java}},
+  booktitle = PROC # {International Symposium of Formal Methods Europe ({FME})},
+  pages = {500--517},
+  publisher = Springer
+}
+@inproceedings{flanagan02extended,
+  author = {Cormac Flanagan and K. Rustan M. Leino and Mark Lillibridge and
+           Greg Nelson and James B. Saxe and Raymie Stata},
+  year = 2002,
+  month = jun,
+  title = {Extended static checking for {Java}},
+  booktitle = PROC # PLDI,
+  pages = {234--245},
+  publisher = ACM
+}
+@inproceedings{forrester00empirical,
+  author  = {Justin E. Forrester and Barton P. Miller},
+  title  = {An empirical study of the
+ robustness of {Windows NT} applications using random testing},
+  year   = 2000,
+  month    = aug,
+  booktitle = PROC # {4th USENIX Windows Systems Symposium},
+  pages    = {59--68},
+}
+
+@inproceedings{ganesh07procedure,
+  author  = {Vijay Ganesh and David L. Dill},
+  title  = {A decision procedure for bit-vectors and arrays},
+  year   = 2007,
+  month    = jul,
+  booktitle = PROC # {19th} # CAV,
+  pages    = {524--536},
+	publisher = Springer
+}
+
+@inproceedings{godefroid05dart,
+  author = {Patrice Godefroid and Nils Klarlund and Koushik Sen},
+  title = {DART: Directed automated random testing},
+  booktitle = PROC # PLDI,
+  year = 2005,
+  month = jun,
+  pages = {213--223},
+  isbn = {1-59593-056-6},
+  doi = {http://doi.acm.org/10.1145/1065010.1065036},
+  publisher = ACM
+}
+@inproceedings{godefroid07compositional,
+  author = {Patrice Godefroid},
+  title = {Compositional dynamic test generation},
+  pages = {47--54},
+  booktitle = PROC # {34th} # POPL,
+  year = 2007,
+  month = jan,
+  publisher = ACM,
+}
+@article{goldreich86how,
+  author = {Oded Goldreich and Shafi Goldwasser and Silvio Micali},
+  title = {How to construct random functions},
+  journal = {Journal of the ACM},
+  volume = 33,
+  number = 4,
+  year = 1986,
+  month = oct,
+  pages = {792--807},
+  publisher = ACM,
+}
+@book{gosling96java,
+  author = {James Gosling and Bill Joy and Guy L. Steele},
+  title = {The Java Language Specification},
+  edition = {First},
+  year = 1996,
+  month = sep,
+  publisher = AW
+} 
+@book{gosling05java,
+  author = {James Gosling and Bill Joy and Guy L. Steele and Gilad Bracha},
+  title = {The Java Language Specification},
+  edition = {Third},
+  year = 2005,
+  month = jun,
+  publisher = PH
+} 
+@phdthesis{gulwani05thesis,
+  author = {Sumit Gulwani},
+  title =	 {Program Analysis Using Random Interpretation},
+  school = {UC-Berkeley},
+  year =	 2005,
+}
+@inproceedings{gulwani07program,
+  author =	 {Sumit Gulwani and Nebojsa Jojic},
+  title =	 {Program Verification as Probabilistic Inference},
+  pages = {277--289},  
+  booktitle = PROC # {34th} # POPL,
+  year = 2007,
+  month = jan,
+  publisher = ACM,  
+}
+@article{gutjahr99partition,
+  author = {Walter J. Gutjahr},
+  year = 1999,
+  month = sep,
+  title = {Partition testing versus random testing: The influence of
+          uncertainty},
+  journal = TSE,
+  volume = 25,
+  number = 5,
+  pages = {661--674},
+  summary = {Partition testing is better than random testing.}
+}
+@inproceedings{hallem02system,
+  author = {Seth Hallem and Benjamin Chelf and Yichen Xie and Dawson Engler},
+  year = 2002,
+  month = jun,
+  title = {A system and language for building system-specific, static analyses},
+  booktitle = PROC # PLDI,
+  pages = {69--82},
+  publisher = ACM
+}
+@inproceedings{hangal02tracking,
+  author = {Sudheendra Hangal and Monica S. Lam},
+  month = may,
+  year = 2002,
+  title = {Tracking Down Software Bugs Using Automatic Anomaly Detection},
+  booktitle = PROC # {24th} # ICSE,
+  pages = {291--301},
+  publisher = ACM
+}
+@MANUAL{hapner02java,
+  author = {Mark Hapner and Rich Burridge and Rahul Sharma and Joseph Fialli},
+  year = 2002,
+  month = apr,
+  title = {Java Message Service: Version 1.1},
+  organization = {Sun Microsystems},
+  abstract = {The JMS API is an API for accessing enterprise messaging systems
+             from Java programs.}
+}
+@techreport{hartman02model,
+  author = {Alan Hartman},
+  title = {Model-based test generation tools},
+  year = 2002,
+  month = nov,
+  summary = {Defines model based testing, lists commercial and research tools.},
+  institution = {Agedis Consortium},
+  howpublished = {http://www.agedis.de/downloads.shtml} 
+}
+@book{hatcher02java,
+  author = {Erik Hatcher and Steve Loughran},
+  year = 2002,
+  month = aug,
+  title = {Java development with {Ant}},
+  publisher = {Manning Publications}
+}
+@article{havelund00model,
+  author = {Klaus Havelund and Thomas Pressburger},
+  title = {Model Checking {Java} Programs using {Java} {PathFinder}},
+  journal = {International Journal on Software Tools for Technology Transfer},
+  year = 2000,
+  month = mar,
+  volume = 2,
+  number = 4,
+  pages = {366--381},
+}
+@inproceedings{heckman07adaptive,
+  author = {Sarah Smith Heckman},
+  title = {Adaptive Probabilistic Model for Ranking Code-Based Static 
+          Analysis Alerts},
+  booktitle = {Companion to the } # PROC # {29th} # ICSE,
+  year = 2007,
+  month = may,
+  pages = {89--90},
+  publisher = IEEE,
+}
+@book{hejlsberg03csharp,
+  author = {Anders Hejlsberg and Scott Wiltamuth and Peter Golde},
+  title = {The C\# Programming Language},
+  edition = {First},
+  year = 2003,
+  month = oct,
+  publisher = AW
+}
+@book{hejlsberg06csharp,
+  author = {Anders Hejlsberg and Scott Wiltamuth and Peter Golde},
+  title = {The C\# Programming Language},
+  edition = {Second},
+  year = 2006,
+  month = jun,
+  publisher = AW
+}
+@article{henkel07discovering,
+  author = {Johannes Henkel and Christoph Reichenbach and Amer Diwan},
+  year = 2007,
+  month = aug,
+  title = {Discovering documentation for {Java} container classes},
+  journal = TSE,
+  volume = 33,
+  number = 8,
+  pages = {526--543}
+}
+@inproceedings{henzinger03software,
+  author = {Thomas A. Henzinger and Ranjit Jhala and Rupak Majumdar and 
+          Gr{\'e}goire Sutre},
+  title = {Software verification with {BLAST}},
+  booktitle = PROC # {10th} # SPIN,
+  pages = {235--239},
+  year = 2003,
+  month = may,
+  publisher = Springer
+}
+@inproceedings{hind01pointer,
+ author = {Hind, Michael},
+ title = {Pointer analysis: Haven't we solved this problem yet?},
+ booktitle = PROC # PASTE,
+ year = 2001,
+ month = jun,
+ pages = {54--61},
+ publisher = ACM,
+}
+@inproceedings{hovemeyer04finding,
+  author = {David Hovemeyer and William Pugh},
+  year = 2004,
+  month = oct,
+  title = {Finding bugs is easy},
+  booktitle = {Companion to the 19th} # OOPSLA,
+  publisher = ACM,
+  pages = {132--136},
+  doi = {http://doi.acm.org/10.1145/1028664.1028717},
+  isbn = {1-58113-833-4},
+  summary = {Formalize some context-sensitive prose specifications, e.g. do
+            not read a field before initializing, as bug-pattern detectors,
+            which use control flow analysis.}  
+}
+@article{hovemeyer04finding-notices,
+  author = {David Hovemeyer and William Pugh},
+	title = {Finding bugs is easy},
+	journal = {SIGPLAN Notices},
+  year = 2004,
+  month = dec,
+	volume = 39,
+	number = 12,	
+  pages = {92--106},
+	publisher = ACM,
+	summary = {extends OOPSLA companion paper}
+}
+@inproceedings{hovemeyer07finding,
+ author = {Hovemeyer, David and Pugh, William},
+ title = {Finding more null pointer bugs, but not too many},
+ booktitle = PROC # {7th} # PASTE,
+ year = 2007,
+ month = jun,
+ pages = {9--14},
+ publisher = ACM,
+} 
+
+@article{howe97test,
+  author = {Adele E. Howe and Anneliese von Mayrhauser and Richard T. Mraz},
+  year = 1997,
+  month = jan,
+  title = {Test case generation as an {AI} planning problem},
+  journal = {Automated Software Engineering},
+  volume = 4,
+  number = 1,
+  pages = {77--106},
+  publisher = {Kluwer Academic Publishers},
+  summary = {Build a semantic model of your application: specify your
+            operators through pre- and postconditions. Then use an AI planner
+            to derive a path = test-case from an intial to a final state.}
+}
+
+Rationale of the Green language, which was picked as Ada.
+Intended as a companion to the dense ANSI standard reference manual.
+
+Revised version appeared in book form and online
+http://archive.adaic.com/standards/83rat/html/ratl-TOC.html
+
+@article{ichbiah79rationale,
+  author = {Jean D. Ichbiah and Bernd Krieg-Br\"{u}ckner and Brian A. Wichmann 
+      and John G. P. Barnes and Olivier Roubine and Jean-Claude Heliard},
+  title = {Rationale for the design of the {Ada} programming language},
+  journal = {SIGPLAN Notices},
+  volume = 14,
+  number = {6b},
+  year = 1979,
+  month = jun,
+  pages = {1--261},
+  publisher = ACM,
+}
+@inproceedings{islam10dsc+mock,
+   author = {Mainul Islam and Christoph Csallner},
+   title = {Dsc+{Mock}: A test case + mock class generator in support of
+			coding against interfaces},
+   booktitle = PROC # {8th} # WODA,
+   month = jul,
+	 pages = {26--31},
+   year = 2010,
+	 publisher = ACM,
+}
+@article{Islam14Generating,
+   author = {Mainul Islam and Christoph Csallner},
+   title = {Generating test cases for programs that are coded against 
+		interfaces and annotations},
+   journal = TOSEM,
+	 volume = 23,
+	 issue = 3,
+   month = may,
+	 pages = {21:1--21:38},
+   year = 2014,
+	 publisher = ACM,
+}
+@inproceedings{jackson00finding,
+  author = {Daniel Jackson and Mandana Vaziri},
+   year = 2000,
+  month = aug,
+  title = {Finding bugs with a constraint solver},
+  booktitle = PROC # ISSTA,
+  pages = {14--25},
+  publisher = ACM
+}
+@inproceedings{jackson00software,
+  author = {Daniel Jackson and Martin Rinard},
+  title = {Software analysis: A roadmap},
+  booktitle = PROC # {Conference on The Future of Software Engineering},
+  year = 2000,
+  month = jun,
+  pages = {133--145},
+  publisher = ACM,
+}
+
+1970 ETH tech rep = first Pascal publication
+1971 acta inf     = first formal Pascal publication, already dropped "class" 
+1974 1st edition  = book form
+1991 4th edition  = ISO standard, formalization of existing Pascal 
+
+@book{jensen74pascal,
+  author = {Kathleen Jensen and Niklaus Wirth},
+  title = {Pascal: User Manual and Report},
+  edition = {First},
+  year = 1974,
+  month = oct,
+  publisher = Springer,
+}
+@book{jensen91pascal,
+  author = {Kathleen Jensen and Niklaus Wirth},
+  title = {Pascal: User Manual and Report},
+  edition = {Fourth},
+  year = 1991,
+  month = sep,
+  publisher = Springer,
+}
+
+@misc{junit02,
+  key = {JUnit},
+  title = {{JU}nit},
+  howpublished = {http://www.junit.org},
+  keywords = {testing},
+  year = 2002,
+  month = aug,
+  note = ACCESSED
+}
+
+1st edition = original K&R C
+2nd edition = ANSI C = C89 = C90
+n/a edition = C99
+
+@book{kernighan78c,
+  author = {Brian W. Kernighan and Dennis M. Ritchie},
+  title = {The C Programming Language},
+  edition = {First},
+  year = 1978,
+  month = feb,
+  publisher = PH,
+}
+@book{kernighan88c,
+  author = {Brian W. Kernighan and Dennis M. Ritchie},
+  title = {The C Programming Language},
+  edition = {Second},
+  year = 1988,
+  month = apr,
+  publisher = PH,
+}
+
+@article{king76symbolic,
+  author = {James C. King},
+  title = {Symbolic execution and program testing},
+  journal = CACM,
+  year = 1976,
+  volume = 19,
+  number = 7,
+  pages = {385--394},
+}
+@inproceedings{kiniry06soundness,
+ author = {Joseph R. Kiniry and Alan E. Morkan and Barry Denby},
+ title = {Soundness and completeness warnings in {ESC/Java2}},
+ booktitle = PROC # {5th International Workshop on Specification and Verification of 
+		Component-Based Systems (SAVCBS)},
+ year = 2006,
+ month = nov,
+ pages = {19--24},
+ isbn = {1-59593-586-X},
+ doi = {http://doi.acm.org/10.1145/1181195.1181200},
+ publisher = ACM,
+} 
+@inproceedings{kozen02eager,
+  author = {Dexter Kozen and Matthew Stillerman},
+   title = {Eager class initialization for {Java}},
+  booktitle = PROC # {7th International Symposium on Formal Techniques in
+  		Real-Time and Fault-Tolerant Systems ({FTRTFT})},
+  year = 2002,
+  month = sep,
+  pages = {71--80},
+  publisher = Springer,
+  isbn = {3-540-44165-4}
+}
+@inproceedings{khurshid03generalized,
+  author = {Sarfraz Khurshid and Corina S. Pasareanu and Willem Visser},
+  title = {Generalized symbolic execution for model checking and testing},
+  booktitle = PROC # {9th} # TACAS,
+  year = 2003,
+  month = apr,
+  pages = {553--568},
+  publisher = Springer,
+}
+@inproceedings{kremenek03using,
+  author = {Ted Kremenek and Dawson Engler},
+  year = 2003,
+  month = jun,
+  title = {Z-Ranking: Using statistical analysis to counter the impact of
+          static analysis approximations},
+  booktitle = PROC # {10th International Static Analysis Symposium (SAS)},
+  pages = {295--315},
+  publisher = Springer
+}
+@inproceedings{kremenek06from,
+  author = {Ted Kremenek and Paul Twohey and Godmar Back and Andrew Ng 
+  		and Dawson Engler},
+  title = {From Uncertainty to Belief: Inferring the Specification Within},
+  booktitle = PROC # {7th USENIX Symposium on Operating Systems Design and
+  		Implemetation (OSDI)},
+  year = 2006,
+  month = nov,
+  pages = {161–-176},
+  publisher = {USENIX}
+}
+
+@inproceedings{krieg80anna,
+  author = {Bernd Krieg-Br\"{u}ckner and David C. Luckham},
+  title = {ANNA: Towards a language for annotating Ada programs},
+  booktitle = PROC # {ACM-SIGPLAN Symposium on the Ada Programming Language},
+  year = 1980,
+  month = dec,
+  pages = {128--138},
+  publisher = ACM
+}
+
+@inproceedings{kroening04counterexample,
+  author = {Daniel Kroening and Alex Groce and Edmund M. Clarke},
+   year = 2004,
+  month = nov,
+  title = {Counterexample guided abstraction refinement via program execution},
+  booktitle = PROC # {6th} # ICFEM,
+  pages = {224--238},
+  publisher = Springer
+}
+@inproceedings{kropp98automated,
+  author = {Nathan P. Kropp and Philip J. Koopman and Daniel P. Siewiorek},
+  year = 1998,
+  month = jun,
+  title = {Automated robustness testing of off-the-shelf software components},
+  booktitle = PROC # {28th International Symposium on Fault-Tolerant Computing
+  		({FTCS})},
+  pages = {230--239},
+  publisher = IEEE,
+  summary = {Ballista project at Carnegie Mellon University. Automatic
+            reliability testing by dynamically providing parameters for POSIX
+            operating system functions. Note that the problems faced at that
+            level are entirely different from those of JCrasher. For instance,
+            the set of supported parameter types is fixed and known in
+            advance. Therefore no discovery or planning is needed. Also,
+            crashing is always an error at the operating system level.}
+}
+@unpublished{lasater01jaunt,
+  author = {Miles Lasater},
+  title = {Jaunt: A productive detour of automated testing},
+  year = 2001,
+  summary   = {Senior project. Test case
+ generation guided by Java type system similar to JCrasher. Also same idea
+ that there are two classes of exceptions: expected ones and bugs.
+ Call random method sequences on parametes to modify their state.
+ http://zoo.cs.yale.edu/classes/cs490/00-01b/lasater.miles.mhl22/},
+  note    = {http://zoo.cs.yale.edu/classes/cs490/00-01b/lasater.miles.mhl22/},
+}
+@techreport{leavens98preliminary,
+  author = {Gary T. Leavens and Albert L. Baker and Clyde Ruby},
+  year = 1998,
+  month = jun,
+  title = {Preliminary design of {JML}: A behavioral interface specification
+          language for {Java}},
+  number = {TR98-06y},
+  institution = {Department of Computer Science, Iowa State University},
+  summary = {revised frequently, last time in June 2004.}
+}
+@techreport{leino00escjava,
+  author = {K. Rustan M. Leino and Greg Nelson and James B. Saxe},
+  year = 2000,
+  month = oct,
+  title = {{ESC/Java} user's manual},
+  number = {2000-002},
+  institution = {Compaq Computer Corporation Systems Research Center}
+}
+@techreport{leino04efficient,
+  author = {K. Rustan M. Leino},
+  year = 2004,
+  month = apr,
+  title = {Efficient weakest preconditions},
+  number = {MSR-TR-2004-34},
+  institution = MSR
+}
+@inproceedings{lindahl06success,
+ author = {Tobias Lindahl and Konstantinos Sagonas},
+ title = {Practical type inference based on success typings},
+ booktitle = PROC # {8th} # PPDP,
+ year = 2006,
+ pages = {167--178},
+ publisher = ACM,
+}
+@book{lindholm96java,
+  author = {Tim Lindholm and Frank Yellin},
+  title = {The Java Virtual Machine Specification},
+  year = 1996,
+  month = sep,
+  edition = {First},
+  publisher = AW,  
+}
+@book{lindholm99java,
+  author = {Tim Lindholm and Frank Yellin},
+  title = {The Java Virtual Machine Specification},
+  year = 1999,
+  month = apr,
+  edition = {Second},
+  publisher = AW,  
+}
+@book{luckham87anna,
+  author = {David C. Luckham and Friedrich W. von Henke and 
+      Bernd Krieg-Brueckner and Olaf Owe},
+  title = {ANNA: A Language for Annotating Ada Programs: Reference Manual},
+  edition = {First},
+  year = 1987,
+  month = aug,
+  publisher = Springer
+}
+@inproceedings{martin07automated,
+  author = {Evan Martin and Suranjana Basu and Tao Xie},
+  title = {Automated Testing and Response Analysis of Web Services},
+  booktitle = PROC # { IEEE International Conference on Web Services (ICWS),
+        Application Services and Industry Track},
+  year = 2007,
+  month = jul,
+  pages = {647--654},
+  publisher = IEEE
+}
+@book{mcconnell04code,
+  author = {Steve McConnell},
+  title = {Code Complete},
+  edition = {Second},
+  year = 2004,
+  month = jul,
+  publisher = {Microsoft Press},
+}
+@article{memon01hierarchical,
+  author = {Atif M. Memon and Martha E. Pollack and Mary L. Soffa},
+  year = 2001,
+  month = feb,
+  title = {Hierarchical {GUI} test case generation using automated planning},
+  journal = TSE,
+  volume = 27,
+  number = 2,
+  pages = {144--155},
+  summary = {Build a model (semantics) of your GUI: model each operator by its
+            pre- and postcondition. Then given an intital and final state an
+            AI planner can find a way = test case from inital to final state.}
+}
+@book{meyer97Object,
+  author = {Bertrand Meyer},
+  title = {Object-Oriented Software Construction},
+  edition = {Second},
+  year = 1997,
+  month = apr,
+  publisher = PH,
+}
+
+FIXME: "Lisa (Ling) Liu" is correct, but shows up as L.L. Liu.
+@inproceedings{meyer07automatic,
+  author = {Bertrand Meyer and Ilinca Ciupa and Andreas Leitner and 
+  		Lisa Liu},
+   title = {Automatic testing of object-oriented software},
+  booktitle = PROC # {33rd} # SOFSEM,
+  year = 2007,
+  month = jan,
+  pages = {114--129},
+  publisher = Springer,
+  summary = {AutoTest overview = JCrasher + Eiffel invariants + selection heuristics}
+}
+@book{miller03common,
+  author = {James S. Miller and Susann Ragsdale},
+  title = {The Common Language Infrastructure Annotated Standard},
+  edition = {First},
+  year = 2003,
+  month = nov,
+  publisher = AW
+}
+@article{mockus02two,
+ author = {Mockus, Audris and Fielding, Roy T. and Herbsleb, James D.},
+ title = {Two case studies of open source software development: {Apache} and {Mozilla}},
+ journal = TOSEM,
+ volume = 11,
+ number = 3,
+ year = 2002,
+ pages = {309--346},
+ doi = {http://doi.acm.org/10.1145/567793.567795},
+ publisher = ACM,
+}
+@inproceedings{moura08Z3,
+ author = {Moura, Leonardo de and Bj{\o}rner, Nikolaj},
+ title = {Z3: An Efficient {SMT} Solver},
+ booktitle = PROC # {14th} # TACAS,
+ year = 2008,
+ month = apr,
+ pages = {337--340},
+ doi = {http://www.springerlink.com/content/60hx121083823548},
+ publisher = Springer,
+}
+@inproceedings{musuvathi03lessons,
+  author = {Madanlal Musuvathi and Dawson Engler},
+   title = {Some lessons from using static analysis and software model checking
+          for Bug Finding},
+  booktitle = PROC # {Workshop on Software Model Checking (SoftMC)},
+  year = 2003,
+  month = jul,
+  publisher = {Elsevier},
+  summary = {superceded by engler04model}
+}
+@article{nechvatal01report,
+  author = {James Nechvatal and Elaine Barker and Lawrence Bassham and
+        William Burr and Morris Dworkin and James Foti and Edward Roback},
+  title = {Report on the Development of the Advanced Encryption Standard
+        ({AES})},
+  journal = {Journal of Research of the National Institute of Standards 
+        and Technology},
+  year = 2001,
+  month = may,
+  volume = 106,
+  number = 3,
+  pages = {511--577},
+}
+@book{nelson91systems,
+  author = {Greg Nelson},
+  title = {Systems Programming with Modula-3},
+  year = 1991,
+  month = jul,
+  publisher = PH, 
+}
+@book{nielson99principles,
+  author = {Flemming Nielson and Hanne R. Nielson and Chris Hankin},
+  title = {Principles of Program Analysis},
+  edition = {First},
+  year = 1999,
+  month = nov,
+  publisher = Springer,
+}
+@inproceedings{nimmer02automatic,
+  author = {Jeremy W. Nimmer and Michael D. Ernst},
+  title = {Automatic Generation of Program Specifications},
+  booktitle = PROC # ISSTA,
+  year = 2002,
+  month = jul,              
+  pages = {229--239},
+  publisher = ACM
+}
+@inproceedings{nimmer02invariant,
+  author = {Jeremy W. Nimmer and Michael D. Ernst},
+  year = 2002,
+  month = nov,
+  title = {Invariant inference for static checking: An empirical evaluation},
+  booktitle = PROC # {10th} # FSE,
+  pages = {11--20},
+  publisher = ACM,
+  summary = {Compare two systems that help users deal with ESC/Java: Houdini
+            and Daikon.}
+}
+@inbook{nyman98defense,
+  author  = {Noel Nyman},
+  editor    = {Thomas R. Arnold},
+  title  = {{Visual Test 6} bible},
+  year   = 1998,
+  month = oct,
+  note    = {http://www.softtest.org/sigs/material/nnyman2.htm},
+  chapter    = 14,
+ publisher = {Hungry Minds, Inc.},
+  summary   = {Nyman is a Test Lead in Applications Compatibility at Microsoft.
+  He concentrates on
+ testing GUI applications by generating user input sequences. A test
+ monkey autonomously generates sequences of simple actions a user
+ would not have thought of. He has started to use test monkeys when
+ testing Windows NT 4.0. He is an exper user of Rational Visual Test 6.}
+}
+@inproceedings{pacheco05eclat,
+   author = {Carlos Pacheco and Michael D. Ernst},
+     title = {Eclat: Automatic generation and classification of test inputs},
+   booktitle = PROC # {19th} # ECOOP,
+   year = 2005,
+   month = jul,
+   pages = {504--527},
+   publisher = Springer
+}
+@inproceedings{pacheco07feedback,
+  author = {Carlos Pacheco and Shuvendu K. Lahiri and Michael D. Ernst and
+            Thomas Ball},
+  title = {Feedback-Directed Random Test Generation},
+  booktitle = PROC # {29th} # ICSE,
+  year = 2007,
+  month = may,
+  pages = {75--84},
+  publisher = IEEE,
+}
+@inproceedings{pan01robustness,
+  author = {Jiantao Pan and Philip Koopman and Daniel Siewiorek and Yennun
+           Huang and Robert Gruber and Mimi Ling Jiang},
+  title = {Robustness testing and hardening of {CORBA} {ORB} implementations},
+  booktitle = PROC # {International Conference on Dependable Systems 
+        and Networks (DSN)},
+  year = 2001,
+  month = jul,
+  pages = {141--150},
+  publisher = IEEE
+}
+@inproceedings{pasareanu10symbolic,
+  author = {P\u{a}s\u{a}reanu, Corina S. and Rungta, Neha},
+  title = {Symbolic {PathFinder}: Symbolic execution of {Java} bytecode},
+  booktitle = PROC # {25th} # ASE,
+  year = 2010,
+	month = sep,
+  pages = {179--180},
+  publisher = ACM,
+}
+@misc{parasoft02jtest,
+  author = {{Parasoft Inc.}},
+  title = {Jtest},
+  year = 2002,
+  month = oct,
+  howpublished = {http://www.parasoft.com/},
+  note = ACCESSED
+}
+@article{parnas72criteria,
+ author = {Parnas, David Lorge},
+ title = {On the criteria to be used in decomposing systems into modules},
+ journal = CACM,
+ volume = 15,
+ number = 12,
+ year = 1972,
+ month = dec,
+ pages = {1053--1058},
+ doi = {http://doi.acm.org/10.1145/361598.361623},
+ publisher = ACM,
+}
+@inproceedings{perkins04efficient,
+ author = {Jeff H. Perkins and Michael D. Ernst},
+ title = {Efficient incremental algorithms for dynamic detection of likely 
+    invariants},
+ booktitle = PROC # {12th} # FSE,
+ year = 2004,
+ month = oct,
+ pages = {23--32},
+ publisher = ACM,
+}
+@inproceedings{person08differential,
+  author = {Person, Suzette and Dwyer, Matthew B. and Elbaum, Sebastian and P\v{a}s\v{a}reanu, Corina S.},
+  title = {Differential symbolic execution},
+  booktitle = PROC # {16th} # FSE,
+  year = 2008,
+	month = nov,
+  pages = {226--237},
+  publisher = ACM,
+}
+@inproceedings{robby04checking,
+  author = {Robby and Edwin Rodr\'{i}guez and Matthew B. Dwyer and 
+  		John Hatcliff},
+  title =  {Checking Strong Specifications Using An Extensible Software
+  		Model Checking Framework},
+  pages = {404--420},
+  year = 2004,
+  month = mar,
+  booktitle = PROC # {10th} # TACAS,
+  publisher = Springer
+}
+
+@inproceedings{rutar04comparison,
+  author = {Nick Rutar and Christian B. Almazan and Jeffrey S. Foster},
+  year = 2004,
+  month = nov,
+  title = {A comparison of bug finding tools for {Java}},
+  booktitle = PROC # {15th} # ISSRE,
+  pages = {245--256},
+  publisher = IEEE,
+}
+@article{sagiv96precise,
+  author = {Mooly Sagiv and Thomas Reps and Susan Horwitz},
+  title = {Precise interprocedural dataflow analysis with applications 
+        to constant propagation},
+  year   = 1996,
+  month = oct,
+  journal = {Theoretical Computer Science},
+  volume = 167,
+  pages = {131--170},
+  number = {1--2},
+}
+@inproceedings{sankar94adl,
+  author = {Sriram Sankar and Roger Hayes},
+   year = 1994,
+  month = aug,
+  title = {{ADL}---An interface definition language for specifying and testing
+          software},
+  booktitle = PROC # {Workshop on Interface Definition Languages},
+  pages = {13--21},
+  publisher = ACM,
+}
+@inproceedings{sen05cute,
+  author    = {Koushik Sen and Darko Marinov and Gul Agha},
+  title     = {CUTE: A concolic unit testing engine for {C}},
+  booktitle = PROC # {13th} # FSE,
+  year      = 2005,
+  month     = sep,
+  pages     = {263--272},
+  publisher = ACM,
+}
+
+@inproceedings{sen06cute,
+  author = {Koushik Sen and Gul Agha},
+  title = {Cute and {jCute}: Concolic Unit Testing and Explicit Path
+		Model-Checking Tools},
+  booktitle = PROC # {International Conference on Computer Aided 
+		Verification (CAV)},
+  year = 2006,
+	month = aug,
+  pages = {419--423},
+	publisher = Springer,
+}
+
+@inproceedings{schlenker02pooc,
+  author = {Hans Schlenker and Georg Ringwelski},
+   year = 2002,
+  month = jun,
+  title = {{POOC}: A platform for object-oriented constraint programming},
+  booktitle = PROC # {Joint {ERCIM/CologNet}
+              International Workshop on Constraint Solving and Constraint
+              Logic Programming},
+  pages = {159--170},
+  publisher = Springer
+}
+@misc{silvermark02,
+  author = {{SilverMark Inc.}},
+  title = {Enhanced {JUnit} version 3.7 user reference},
+  year = 2002,
+  month = jun,
+  howpublished = {http://www.silvermark.com/Product/java/enhancedjunit/documentation/ enhancedjunitmanual.pdf},
+}
+@misc{sintes01jtest,
+  author = {Tony Sintes},
+  year = 2001,
+  month = mar,
+  title = {Does {Jtest} make the grade?},
+  journal = {JavaWorld},
+  summary = {Jtest lets you specify rules about your source code. It checks
+            these rules with static analysis.}
+}
+@inproceedings{smaragdakis07combining,
+   author = {Yannis Smaragdakis and Christoph Csallner},
+   title = {Combining static and dynamic reasoning for bug detection},
+   booktitle = PROC # {1st International Conference on Tests And Proofs (TAP)},
+   year = 2007,
+   month = feb,
+   pages = {1--16},
+   publisher = Springer,
+}
+@inproceedings{smaragdakis07scalable,
+  author = {Yannis Smaragdakis and Christoph Csallner and Ranjith Subramanian},
+  title = {Scalable automatic test data generation from modeling diagrams},
+  booktitle = PROC # {22nd} # ASE,
+  year = 2007,
+  month = nov,
+  pages = {4--13},
+  publisher = ACM,
+}
+@inproceedings{steensgaard96points-to,
+  author = {Bjarne Steensgaard},
+  year = 1996,
+  month = jan,
+  title = {Points-to analysis in almost linear time},
+  booktitle = PROC # {23rd} # POPL,
+  pages = {32--41},
+  publisher = ACM
+}
+@inproceedings{stotts02informal,
+  author = {David Stotts and Mark Lindsey and Angus Antley},
+  year = 2002,
+  month = aug,
+  title = {An informal formal method for systematic {JUnit} test case
+          generation},
+  booktitle = PROC # {2nd {XP} Universe and 1st Agile Universe Conference
+  			(XP/Agile Universe)},
+  pages = {131--143},
+  publisher = Springer
+}
+
+1st edition = pre-standardization
+2nd edition = multiple inheritance, exceptions, templates
+3rd edition = ISO C++ standard
+3rd special = ISO C++ standard plus some corrections
+n/a edition = C++0x
+
+@book{stroustrup86c++,
+  author = {Bjarne Stroustrup},
+  title = {The C++ Programming Language},
+  edition = {First},
+  year = 1986,
+  month = jan,
+  publisher = AW
+}
+@book{stroustrup00c++,
+  author = {Bjarne Stroustrup},
+  title = {The C++ Programming Language},
+  edition = {Special third},
+  year = 2000,
+  month = feb,
+  publisher = AW
+}
+
+@inproceedings{taghdiri06lightweight,
+  author    = {Mana Taghdiri and Robert Seater and Daniel Jackson},
+  title     = {Lightweight extraction of syntactic specifications},
+  booktitle = PROC # {14th} # FSE,
+  year      = 2006,
+  month     = nov,
+  pages     = {276--286},
+  publisher = ACM,
+}
+@inproceedings{tempero08how,
+  author = {Ewan D. Tempero and James Noble and Hayden Melton},
+  title = {How Do Java Programs Use Inheritance? An Empirical Study
+               of Inheritance in Java Software},
+  booktitle = PROC # {22nd} # ECOOP,
+  year = 2008,
+	month = jul,
+  pages = {667--691},
+	publisher = Springer,
+}
+@article{tillmann06unit,
+  author = {Nikolai Tillmann and Wolfram Schulte},
+  title = {Unit Tests Reloaded: Parameterized Unit Testing with Symbolic Execution},
+  journal = {IEEE Software},
+  volume = 23,
+  number = 4,
+  year = 2006,
+  pages = {38--47}
+}
+@inproceedings{tillmann08pex,
+   author = {Nikolai Tillmann and Jonathan de Halleux},
+   booktitle = PROC # {2nd International Conference on Tests And Proofs (TAP)},
+   title = {Pex - White Box Test Generation for {.Net}},
+   year = 2008,
+   month = apr,
+   pages = {134--153},
+   publisher = Springer,
+}
+@manual{tillmann10pexandmoles,
+   title = {Unit Testing with Microsoft Moles},
+   year = 2010,
+   month = mar,
+   organization = "Microsoft Corporation",
+   note = {http://research.microsoft.com/en-us/projects/pex/molestutorial.pdf},
+}
+@inproceedings{tomb07variably,
+  author    = {Aaron Tomb and Guillaume P. Brat and Willem Visser},
+  title     = {Variably interprocedural program analysis for runtime error
+               detection},
+  booktitle = PROC # ISSTA,
+  year      = 2007,
+  month     = jul,
+  pages     = {97--107},
+  publisher = ACM,
+}
+@inproceedings{untch93mutation,
+  author = {Roland Untch and Mary Jean Harrold and Jeff Offutt},
+  year = 1993,
+  month = jun,
+  title = {Mutation analysis using program schemata},
+  booktitle = PROC # ISSTA,
+  pages = {139--148},
+  publisher = ACM,
+  summary = {Mutation Testing = (change subject a little, run test)+}
+}
+@inproceedings{vaziri03checking,
+  author = {Mandana Vaziri and Daniel Jackson},
+   year = 2003,
+  month = apr,
+  title = {Checking properties of heap-manipulating procedures with a
+          constraint solver},
+  booktitle = PROC # {9th} # TACAS,
+  pages = {505--520},
+  publisher = Springer
+}
+@techreport{venolia05software,
+  author = {Gina D. Venolia and Robert DeLine and Thomas LaToza},
+  year = 2005,
+  month = oct,
+  title = {Software development at {Microsoft} observed},
+  number = {MSR-TR-2005-140},
+  institution = MSR
+}
+@article{visser03model,
+  author = {Willem Visser and Klaus Havelund and Guillaume P. Brat and
+            Seungjoon Park and Flavio Lerda},
+  title = {Model Checking Programs},
+  journal = {Automated Software Engineering},
+  volume = 10,
+  number = 2,
+  year = 2003,
+  month = apr,
+  pages = {203--232},
+}
+@inproceedings{visser04test,
+  author = {Willem Visser and Corina S. P\u{a}s\u{a}reanu and Sarfraz Khurshid},
+   year = 2004,
+  month = jul,
+  title = {Test input generation with {Java} {PathFinder}},
+  booktitle = PROC # ISSTA,
+  pages = {97--107},
+  publisher = ACM
+}
+@inproceedings{wagner05comparing,
+  author = {Stefan Wagner and Jan J{\"u}rjens and Claudia Koller and
+            Peter Trischberger},
+  title = {Comparing Bug Finding Tools with Reviews and Tests},
+  booktitle = PROC # {17th IFIP TC6/WG 6.1 International Conference
+            on Testing of Communicating Systems (TestCom)},
+  year = 2005,
+  month = may,
+  pages = {40--55},
+  publisher = Springer
+}
+@book{weiss98data,
+  author = {Mark Allen Weiss},
+  title = {Data Structures and Algorithm Analysis in Java},
+  edition = {First},
+  year = 1998,
+  month = oct,
+  publisher = AW
+}
+@inproceedings{whaley02automatic,
+  author = {John Whaley and Michael C. Martin and Monica S. Lam},
+  title = {Automatic extraction of object-oriented component interfaces},
+  booktitle = PROC # ISSTA,
+  year = 2002,
+  month = jul,
+  pages = {218--228},
+  publisher = ACM,
+}
+@phdthesis{willink01thesis,
+  author = {Edward D. Willink},
+  year = 2001,
+  month = jun,
+  title = {Meta-Compilation for C++},
+  school = {University of Surrey},  
+}
+@article{wirth71programming,
+  author = {Niklaus Wirth},
+  title = {The Programming Language {Pascal}},
+  year = 1971,
+  month = may,
+  journal = {Acta Informatica},
+  volume = 1,
+  number = 1,
+  pages = {35--63},
+}
+http://www.springerlink.com/content/h525494126697301/?p=ee329f8bc1d8410a9f5cf649ce766e64&pi=3
+
+@book{wirth83programming,
+  author = {Niklaus Wirth},
+  title = {Programming in Modula-2},
+  edition = {First},
+  year = 1983,
+  month = may,
+  publisher = Springer,
+}
+@book{wirth89programming,
+  author = {Niklaus Wirth},
+  title = {Programming in Modula-2},
+  edition = {Fourth},
+  year = 1989,
+  month = jan,
+  publisher = Springer,
+}
+@inproceedings{wirth07modula-2,
+  author = {Niklaus Wirth},
+  title = {Modula-2 and Oberon},
+  booktitle = PROC # {3rd ACM SIGPLAN History of Programming Languages 
+      Conference (HOPL-III)},
+  year = 2007,
+  month = jun,
+  pages = {1--10},
+  publisher = ACM,
+ }
+@inproceedings{xie02using,
+  author = {Yichen Xie and Dawson Engler},
+  year = 2002,
+  month = nov,
+  title = {Using redundancies to find errors},
+  booktitle = PROC # {10th} # FSE,
+  pages = {51--60},
+  publisher = ACM,
+  summary = {superceded by xie03using}
+}
+@inproceedings{xie03tool,
+  author = {Tao Xie and David Notkin},
+  year = 2003,
+  month = oct,
+  title = {Tool-assisted unit test selection based on operational violations},
+  booktitle = PROC # {18th} # ASE,
+  pages = {40--48},
+  publisher = IEEE,
+  summary = {Use Daikon and Jtest. Start with test-cases, let Michael Ernst's
+            Daikon record test-case execution as subject invariants, pre- and
+            postconditions. Then derive additional test-cases that satisfy
+            these preconditions. Run those test-cases. If Daikon extends its
+            model (invariants etc ) of the subject then the inital test-cases
+            did not cover all of subject functionality.}
+}
+@article{xie03using,
+  author = {Yichen Xie and Dawson Engler},
+  year = 2003,
+  month = oct,
+  title = {Using redundancies to find errors},
+  journal = TSE,
+  volume = 29,
+  number = 10,
+  pages = {915--928},
+  summary = {journal version of xie02using}
+}
+@inproceedings{xie04rostra,
+  author = {Tao Xie and Darko Marinov and David Notkin},
+  title = {Rostra: A Framework for Detecting Redundant Object-Oriented 
+          Unit Tests},
+  booktitle = PROC # {19th} # ASE,
+  year = 2004,
+  month = sep,
+  pages = {196--205},
+  publisher = IEEE
+}
+@inproceedings{xie04automatic,
+  author = {Tao Xie and David Notkin},
+  title = {Automatic Extraction of Object-Oriented Observer Abstractions from
+        Unit-Test Executions},
+  booktitle = PROC # {6th} # ICFEM,
+  year = 2004,
+  month = nov,
+  pages = {290--305},
+  publisher = Springer,
+}
+@inproceedings{kim2007which,
+   author = {Sunghun Kim and Michael D. Ernst},
+   title = {Which warnings should {I} fix first?},
+   booktitle = {Proc. 11th European Software
+	Engineering Conference and the 15th {ACM} {SIGSOFT} Symposium on
+	the Foundations of Software Engineering (ESEC/FSE)},
+   pages = {45--54},
+   month = sep,
+   year = {2007},
+   publisher = {ACM},
+}
+@inproceedings{kremenek2004correlation,
+ author = {Kremenek, Ted and Ashcraft, Ken and Yang, Junfeng and Engler, Dawson},
+ title = {Correlation exploitation in error ranking},
+ booktitle = {Proc. 12th International symposium on Foundations of software engineering (FSE)},
+ year = {2004},
+ month = oct,
+ pages = {83--93},
+ publisher = {ACM},
+} 
+@inproceedings{xie05automatically,
+  author = {Tao Xie and David Notkin},
+  title = {Automatically Identifying Special and Common Unit Tests for 
+        Object-Oriented Programs},
+  booktitle = PROC # {16th} # ISSRE,
+  year = 2005,
+  month = nov,
+  pages = {277--287},
+  publisher = IEEE,
+}
+@inproceedings{xie06augmenting,
+  author = {Tao Xie},
+  title = {Augmenting Automatically Generated Unit-Test Suites with 
+          Regression Oracle Checking},
+  booktitle = PROC # {20th} # ECOOP,
+  year = 2006,
+  month = jul,
+  pages = {380--403},
+  publisher = Springer
+}
+@inproceedings{yoshikawa03random,
+  author = {Takahide Yoshikawa and Kouya Shimura and Toshihiro Ozawa},
+  title = {Random Program Generator for {Java} {JIT} Compiler Test System},
+  booktitle = PROC # {3rd  International Conference on Quality Software (QSIC)},
+  year = 2003,
+  month = nov,
+  pages = {20--24},
+  publisher = IEEE,
+}
+@inproceedings{young03symbiosis,
+  author = {Michal Young},
+  title = {Symbiosis of static analysis and program testing},
+  booktitle = PROC # {6th} # FASE,
+  year = 2003,
+  month = apr,
+  pages = {1--5},
+  publisher = Springer
+}
+@inproceedings{zitser04testing,
+  author = {Misha Zitser and Richard Lippmann and Tim Leek},
+  title = {Testing static analysis tools using exploitable buffer 
+          overflows from open source code},
+  booktitle = PROC # {12th} # FSE,
+  year = 2004,
+  month = oct,
+  pages = {97--106},
+  publisher = ACM,
+  isbn = {1-58113-855-5},
+  doi = {http://doi.acm.org/10.1145/1029894.1029911}
+}
+@article{zweben92systematic ,
+  author = {Stuart H. Zweben and Wayne D. Heym and Jon Kimmich},
+  title = {Systematic testing of data abstractions based on 
+          software specifications},
+  year = 1992,
+  month = jan,
+  journal = {Software Testing, Verification \& Reliability},
+  volume = 1,
+  number = 4,
+  pages = {39--55}
+}
+@misc{jaxlib,
+  author = {},
+  title = {},
+  howpublished = {http://sourceforge.net/projects/jaxlib/},
+  note = ACCESSED
+}
+@misc{activemq,
+  author = {},
+  title = {},
+  howpublished = {http://activemq.apache.org/},
+  note = ACCESSED
+}
+@misc{AMQmessagegroup,
+  author = {},
+  title = {},
+  howpublished = {http://activemq.apache.org/message-groups.html},
+  note = ACCESSED
+}
+@misc{AMQvirtualdestination,
+  author = {},
+  title = {},
+  howpublished = {http://activemq.apache.org/virtual-destinations.html},
+  note = ACCESSED
+}
+@misc{AMQwildcards,
+  author = {},
+  title = {},
+  howpublished = {http://activemq.apache.org/wildcards.html},
+  note = ACCESSED
+}
+@misc{AMQcompositedestination,
+  author = {},
+  title = {},
+  howpublished = {http://activemq.apache.org/composite-destinations.html},
+  note = ACCESSED,
+}
+@misc{package_java_io,
+  author = {},
+  title = {},
+  howpublished = {http://download-llnw.oracle.com/javase/1.4.2/docs/api/
+		java/io/package-summary.html},
+  note = ACCESSED
+}
+@misc{ReadableByteChannel,
+  author = {{Sun Microsystems}},
+  title = {Readable byte channel, {Java} {Nio}},
+  howpublished = {http://download.oracle.com/javase/6/docs/api/java/nio/
+	channels/ReadableByteChannel.html},
+  note = ACCESSED
+}
+
+
+
+CROSS-REF is not so great, because it will create entries that refer
+to other entires like "Csallner in ICSE [1]"
+http://newton.ex.ac.uk/tex/pack/bibtex/btxdoc/node3.html
+
+We strip any trademarks like (TM) or \texttrademark from Java etc.
