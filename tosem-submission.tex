@@ -41,14 +41,7 @@ stringstyle=\color{orange}}
 % flushend balances the two columns on the last page
 \usepackage{flushend}
 
-\setlength{\pdfpagewidth}{8.5truein}
-\setlength{\pdfpageheight}{11.0truein}
-
 \begin{document}
-
-\clubpenalty = 10000
-\widowpenalty = 10000
-\displaywidowpenalty = 10000
 
 %\conferenceinfo{ISSTA'12,} {July 15--20, 2012, Minneapolis, MN, USA} 
 %\CopyrightYear{2012}
@@ -172,66 +165,24 @@ stringstyle=\color{orange}}
 \copyrightpage     %% not required for an M.S. thesis
 \signaturepage
 
-
-%% \author{Michael~Shell,~\IEEEmembership{Member,~IEEE,}
-%%         John~Doe,~\IEEEmembership{Fellow,~OSA,}
-%%         and~Jane~Doe,~\IEEEmembership{Life~Fellow,~IEEE}% <-this % stops a space
-% NOTE! Affiliations placed here should be for the institution where the
-%       BULK of the research was done. If the author has gone to a new
-%       institution, before publication, the (above) affiliation should NOT be changed.
-%       The authors 'current' address may be given in the "Author's addresses:" block (below).
-%       So for example, Mr. Abdelzaher, the bulk of the research was done at UIUC, and he is
-%       currently affiliated with NASA.
-% CR: According to this I should list myself as unaffiliated, but that
-% seems silly.  I could change it to UMass, though.
-
-\begin{abstract}
-We introduce the concept of ``residual investigation'' for program
-analysis. A residual investigation is a dynamic check installed as a
-result of running a static analysis that reports a possible program
-error.  The purpose is to observe conditions that indicate whether the
-statically predicted program fault is likely to be realizable and
-relevant. The key feature of a residual investigation is that it has
-to be much more precise (i.e., with fewer false warnings) than the
-static analysis alone, yet significantly more general (i.e., reporting
-more errors) than the dynamic tests in the program's test suite that
-are pertinent to the statically reported error. That is, good residual
-investigations encode dynamic conditions that, when considered in
-conjunction with the static error report, increase confidence in the
-existence or severity of an error without needing to
-directly observe a fault resulting from the error.
-
-We enhance the static analyzer FindBugs with several residual
-investigations, appropriately tuned to the static error patterns in
-FindBugs, and apply it to 9 large open-source systems and their native
-test suites. The result is an analysis with a low occurrence of false
-warnings (``false positives'') while reporting several actual errors
-that would not have been detected by mere execution of a program's
-test suite. 
-\end{abstract}
-
-% At a minimum you need to supply the author names, year and a title.
-% IMPORTANT:
-% Full first names whenever they are known, surname last, followed by a period.
-% In the case of two authors, 'and' is placed between them.
-% In the case of three or more authors, the serial comma is used, that is, all author names
-% except the last one but including the penultimate author's name are followed by a comma,
-% and then 'and' is placed before the final author's name.
-% If only first and middle initials are known, then each initial
-% is followed by a period and they are separated by a space.
-% The remaining information (journal title, volume, article number, date, etc.) is 'auto-generated'.
+\mainmatter   %% <-- This line is mandatory
 
 \chapter{Introduction}
-Software practitioners have traditionally faced many problems with testing, documenting and maintaining software modules and/or systems.  These problems are often the result of poor understanding of program properties, over-reliance on specific bug detecting tools, and so on. Various static and dynamic program analysis techniques can be used to remedy these problems. These two kinds of analyses have their own advantages. Dynamic analysis techniques excel in control-flow accuracy, while static analysis techniques are good at data-flow richness/generality\cite{smaragdakis07combining}. One cannot make a statement that static analysis is always better than dynamic analysis or vice versa. This has led researchers to devise combinations of static and dynamic analyses (e.g., \cite{csallner05check,csallner06dsd-crasher,godefroid05dart,cadar05execution,tomb07variably,tillmann08pex,Islam14Generating}) in order to achieve the best of both worlds.  
+\label{chp:introduction}
+
+Software practitioners have traditionally faced many problems with testing, documenting and maintaining software modules and/or systems.  These problems are often the result of poor understanding of program properties, over-reliance on specific bug detecting tools, and so on. Various static and dynamic program analysis techniques can be used to remedy these problems. Each flavor of analysis has its own advantage. Dynamic analysis excels in control-flow accuracy, while static analysis is good at data-flow richness/generality\cite{smaragdakis07combining}. One cannot make a statement that static analysis is always better than dynamic analysis or vice versa. This has led researchers to devise combinations of static and dynamic analyses (e.g., \cite{csallner05check,csallner06dsd-crasher,godefroid05dart,cadar05execution,tomb07variably,tillmann08pex,Islam14Generating}) in order to achieve the best of both worlds.  
 
 Dynanmic symbolic execution\cite{Schwartz:2010:YEW:1849417.1849981} is such an example. Symbolic execution is a static analysis technique.  For a vector of input values, a method performs an execution following a particular path, then returns output results.  Instead of using concrete values, symbolic execution represents input and output values of a method by symbolic names. In an object-oriented programming language, symbolic execution can create symbolic representations of class variables. Symbolic execution can compute the path condition of each path in an analyzed program.  A path condition is a conjunct of branch conditions along the path.  A branch condition is a symbolic expression over input symbols. Symbolic execution cannot reason about native method calls because the source code of native method calls are not available.  Dynamic symbolic execution resolves this by symbolically executing a program in parallel with the actual program execution.  Calls to native methods are replaced with concrete values of the method call from the execution.  
 
+I propose new combinations of static and dynamnic analysis for bug detection and program understanding.  The remainder of this proposal is organized as follows.  Chapter~\ref{chp:worksofar} summarizes work done so far.  Work I propose to do is presented in Chapter~\ref{chp:proposed}.  Related work is discussed in Chapter~\ref{chp:related}.  Chapter~\ref{chp:timeline} concludes with a schedule for compelting the work proposed.   
+
 
 \chapter{Work done so far}
+\label{chp:worksofar}
 
 \section{Residual Investigation: Predictive and Precise Bug Detection}
 
-We identify and present a new kind of combination of static and dynamic analyses, which we term residual investigation. A residual investigation is a dynamic analysis whose purpose is to be the run-time agent of a static analysis and to identify with higher certainty whether the error identified by the static analysis is likely true.  In other words, one can see the dynamic analysis as the “residual” of the static analysis at a subsequent stage: that of program execution. The distinguishing feature of a residual investigation, compared to past static-dynamic combinations, is that the residual investigation does not intend to report the error only if it actually occurs, but to identify general conditions that confirm the statically detected error. That is, a residual investigation is a predictive dynamic analysis, predicting errors in executions not actually observed.
+My work\cite{rfbi-issta12} with Christoph Reichenbach, Christoph Csallner, and Yannis Smaragdakis identified and presented a new kind of combination of static and dynamic analyses, which we term residual investigation. A residual investigation is a dynamic analysis whose purpose is to be the run-time agent of a static analysis and to identify with higher certainty whether the error identified by the static analysis is likely true.  In other words, one can see the dynamic analysis as the “residual” of the static analysis at a subsequent stage: that of program execution. The distinguishing feature of a residual investigation, compared to past static-dynamic combinations, is that the residual investigation does not intend to report the error only if it actually occurs, but to identify general conditions that confirm the statically detected error. That is, a residual investigation is a predictive dynamic analysis, predicting errors in executions not actually observed.
 
 Consider as an example the ``equal objects must have equal hashcodes''
 analysis (codenamed HE) in the FindBugs static error detector for Java
@@ -270,7 +221,7 @@ We implemented residual investigations for several of the most common analyses i
 \section{Enhanced Dynamic Invariant Inference Using Second-Order Constraints}
 Dynamic invariant inference is fundamentally a search in the space of propositions over program variables for the tiny subset of propositions that are both true (on all executions) and relevant (to the programmer, or to some client analysis such as a theorem prover or test data generator). Any such search requires a way of generating candidate propositions and a way of evaluating them. Even limiting consideration to propositions of limited length, over a particular vocabulary of operations and relations among variables, the space is enormous, and for a long time it seemed folly to even attempt such a search based on dynamic program execution.  Daikon\cite{ernst99dynamically}  was the first demonstration that a generate-and-test tactic could be feasible, generating a moderately large set of candidate propositions from syntactic templates and quickly pruning the vast majority as they were refuted by program execution.  The success of Daikon generated a great deal of excitement and a flurry of research activity.  Attempts to improve candidate generation include using program text (especially predicates governing control flow) to choose candidate propositions that are more likely to be related to program logic and, in DySy\cite{csallner08dysy}, generating propositions from symbolic execution along actual program execution paths.   Attempts to more effectively prune false propositions have so far been limited to generating more thorough test suites\cite{godefroid05dart,1081750}.
 
-To enhance the dynamic invariant detection approach we identified and described the idea of second-order constraints that can help improve the consistency and relevance of dynamically inferred invariants.  We called these constraints “second-order” because they are constraints over constraints: they relate classes of invariants (first-order constraints). Such second-order constraints can be known even though the invariants are unknown.  We defined a vocabulary of common and useful second-order constraints and provided an implementation of the constraints in our vocabulary in the context of the Daikon system.  Experimental results demonstrate that a minimal effort on specifying second-order constraints is sufficient to produce several valid and helpful invariants even in systems of significant size, such as the Apache Commons Collections.
+To enhance the dynamic invariant detection approach my work\cite{Li:2013:SCD:2491411.2491457} with Christoph Reichenbach, Yannis Smaragdakis, and Michal Young identified and described the idea of second-order constraints that can help improve the consistency and relevance of dynamically inferred invariants.  We called these constraints “second-order” because they are constraints over constraints: they relate classes of invariants (first-order constraints). Such second-order constraints can be known even though the invariants are unknown.  We defined a vocabulary of common and useful second-order constraints and provided an implementation of the constraints in our vocabulary in the context of the Daikon system.  Experimental results demonstrate that a minimal effort on specifying second-order constraints is sufficient to produce several valid and helpful invariants even in systems of significant size, such as the Apache Commons Collections.
 
 \section{Dynamic Example Data Generation for Dataflow Programs}
 
@@ -301,22 +252,22 @@ operations, and user-defined functions, the generated data are
 incomplete due to shortcomings in constraint searching and solving
 strategies.
 
-We address the problem of efficient example data
+My work \cite{6693083} with Christoph Reichenbach, Yannis Smaragdakis, Yanlei Diao, and Christoph Csallner addressed the problem of efficient example data
 generation for complex dataflow programs by bringing {\em
   symbolic reasoning} to bear on the process of sample data
-generation.  We present the first technique and system for
+generation.  We presented the first technique and system for
 systematically generating representative example data using dynamic
 symbolic execution (DSE)~\cite{godefroid05dart,cadar05execution,tillmann:08} of dataflow programs.  Our
 concrete setting is the popular Pig Latin
-language~\cite{Olston:2008:PLN:1376616.1376726}.  We adapt the technique of dynamic-symbolic execution to the domain of dataflow languages. By doing so, we exploit the unique
-  features of this domain, thus enabling high coverage. Specifically,
-  we exploit the absence of side-effects in order to perform a
+language~\cite{Olston:2008:PLN:1376616.1376726}.  We adapted the technique of dynamic-symbolic execution to the domain of dataflow languages. By doing so, we exploited the unique features of this domain, thus enabling high coverage. Specifically,
+  we exploited the absence of side-effects in order to perform a
   multiple-path analysis: observations on the values of a user-defined
   function on different execution paths can help solve constraints
   involving the user-defined function.
 
   
 \chapter{Proposed Work}
+\label{chp:proposed}
 
 In our evaluation of residual investigation, we can only confirm or down-play 43 bugs out of 436 FindBugs reports. This is largely because a lot of program paths have not been exercised by the native test suite. We propose to improve the recall of residual investigation by making existing test suites better. To achieve this, we generate tests automatically using dynamic symbolic execution.  In particular, we focus on generating system tests. Generated unit tests might not be realistic, while generated system tests attract less debate about the realism of the test cases, because users can see how the tests are used on the client side.  The challenge of using dynamic symbolic execution to generate system tests is that not all system tests can be generated, because existing dynamic symbolic execution engines are not powerful enough to deal with complicated real-world code (e.g., existing tools cannot generate sequences of method calls to construct desired object states)\cite{Xiao:2011:PIP:1985793.1985876}.  To address this challenge, we propose to tap into existing system tests to approximate new system tests. The approximate new system tests consist of  states (i.e. assignments to variables) induced by existing system tests and assignments to some variables that are key to triggering a dynamic condition of residual investigation.  The approximate new system tests are not system tests.  They are unit tests with some system state attached.  They are justified by existing system tests so that the unit tests can connect with some execution path tracing back all the way up to program entry (i.e., the main function).  We cannot guarantee the correctness of such an approximation. It is likely that the argument assignments in the unit tests contradict with the states with which we pair the unit tests.  
 
@@ -381,11 +332,18 @@ PERM definitions for other bug patterns not mentioned in the above text:
 \end{itemize}
 
 \chapter{Related Work}
+\label{chp:related}
+
 Similar to us, hybrid concolic testing\cite{Majumdar:2007:HCT:1248820.1248874} interleaves random testing and concolic testing to increase coverage.  The switch from random testing to concolic testing happens when random testing does not find new coverage points after a predetermined steps; the switch from concolic testing to random testing happens when concolic testing finds an input to an uncovered branch goal (though concolic testing may need to explore several feasible execution paths to generate the new input).  But hybrid concolic testing is not designed to trigger one specific bug condition.  We are targeting at generating tests to trigger one specific bug condition, using call graph search and dynamic symbolic execution. 
 
 \cite{Elbaum:2006:CDU:1181775.1181806} saves system test states and restores those states as regression tests.  We also save system test states.  But our purpose is helping setting up environment (i.e. assignments to heap variables) for starting dynamic symbolic execution of the “switching” method.
 
 The closest work to us is \cite{Pasareanu:2008:CUS:1390630.1390635}, which uses system tests to set up the environment.  Different from\cite{Pasareanu:2008:CUS:1390630.1390635} that uses symbolic execution to generate unit tests, we use dynamic symbolic execution to generate unit tests.  This enables us to handle native method calls and some complicated constraints by replacing them with concrete values. 
+
+\chapter{Management and Timeline}
+\label{chp:timeline}
+
+My overall goal is to defend the dissertation by September 2015.  I plan to submit a paper on the proposed work to ICSE 2016; the deadline for this conference is September 4, 2015.  Right now the underlying dynamic symbolic execution engine Dsc\cite{islam10dsc+mock} is very similar to jCute\cite{sen06cute} released by University of Illinois at Urbana-Champaign. I plan to improve Dsc to make it become cutting-edge and open-sourced by the end of next March.  I plan to work out the requried static analysis (e.g. call graph analysis) by May 2015.  I plan to finish the implementation of the proposed work by July 2015.  I will be writing the dissertations, performing rounds of implementations, and plan to complete the dissertation by September 2015. 
 
 \bibliographystyle{umthesis}
 \bibliography{testing,testing-cc,refactoring,sigproc}

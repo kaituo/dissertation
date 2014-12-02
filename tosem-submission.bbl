@@ -1,0 +1,183 @@
+\begin{thebibliography}{10}
+
+\bibitem{Ayewah:2010:GFF:1831708.1831738}
+Ayewah, Nathaniel, and Pugh, William.
+\newblock The {Google} {FindBugs} fixit.
+\newblock In {\em Proc. 19th International Symposium on Software Testing and
+  Analysis (ISSTA)\/} (2010), ACM, pp.~241--252.
+
+\bibitem{cadar05execution}
+Cadar, Cristian, and Engler, Dawson~R.
+\newblock Execution generated test cases: How to make systems code crash
+  itself.
+\newblock In {\em Proc. 12th International SPIN Workshop on Model Checking
+  Software\/} (Aug. 2005), Springer, pp.~2--23.
+
+\bibitem{csallner05check}
+Csallner, Christoph, and Smaragdakis, Yannis.
+\newblock {Check} 'n' {Crash}: Combining static checking and testing.
+\newblock In {\em Proc. 27th International Conference on Software Engineering
+  (ICSE)\/} (May 2005), ACM, pp.~422--431.
+
+\bibitem{csallner06dsd-crasher}
+Csallner, Christoph, and Smaragdakis, Yannis.
+\newblock {DSD}-{C}rasher: A hybrid analysis tool for bug finding.
+\newblock In {\em Proc. {ACM} {SIGSOFT} International Symposium on Software
+  Testing and Analysis ({ISSTA})\/} (July 2006), ACM, pp.~245--254.
+
+\bibitem{csallner08dysy}
+Csallner, Christoph, Tillmann, Nikolai, and Smaragdakis, Yannis.
+\newblock {DySy}: Dynamic symbolic execution for invariant inference.
+\newblock In {\em Proc. 30th ACM/IEEE International Conference on Software
+  Engineering (ICSE)\/} (May 2008), ACM, pp.~281--290.
+
+\bibitem{Elbaum:2006:CDU:1181775.1181806}
+Elbaum, Sebastian, Chin, Hui~Nee, Dwyer, Matthew~B., and Dokulil, Jonathan.
+\newblock Carving differential unit test cases from system test cases.
+\newblock In {\em Proceedings of the 14th ACM SIGSOFT International Symposium
+  on Foundations of Software Engineering\/} (New York, NY, USA, 2006), SIGSOFT
+  '06/FSE-14, ACM, pp.~253--264.
+
+\bibitem{ernst99dynamically}
+Ernst, Michael~D., Cockrell, Jake, Griswold, William~G., and Notkin, David.
+\newblock Dynamically discovering likely program invariants to support program
+  evolution.
+\newblock In {\em Proc. 21st International Conference on Software Engineering
+  (ICSE)\/} (May 1999), IEEE, pp.~213--224.
+
+\bibitem{godefroid05dart}
+Godefroid, Patrice, Klarlund, Nils, and Sen, Koushik.
+\newblock {DART}: Directed automated random testing.
+\newblock In {\em Proc. ACM SIGPLAN Conference on Programming Language Design
+  and Implementation (PLDI)\/} (June 2005), ACM, pp.~213--223.
+
+\bibitem{hovemeyer04finding}
+Hovemeyer, David, and Pugh, William.
+\newblock Finding bugs is easy.
+\newblock In {\em Companion to the 19th ACM SIGPLAN Conference on
+  Object-Oriented Programming Systems, Languages, and Applications (OOPSLA)\/}
+  (Oct. 2004), ACM, pp.~132--136.
+
+\bibitem{hovemeyer07finding}
+Hovemeyer, David, and Pugh, William.
+\newblock Finding more null pointer bugs, but not too many.
+\newblock In {\em Proc. 7th ACM SIGPLAN-SIGSOFT Workshop on Program Analysis
+  for Software Tools and Engineering (PASTE)\/} (June 2007), ACM, pp.~9--14.
+
+\bibitem{islam10dsc+mock}
+Islam, Mainul, and Csallner, Christoph.
+\newblock Dsc+{Mock}: A test case + mock class generator in support of coding
+  against interfaces.
+\newblock In {\em Proc. 8th International Workshop on Dynamic Analysis
+  (WODA)\/} (July 2010), ACM, pp.~26--31.
+
+\bibitem{Islam14Generating}
+Islam, Mainul, and Csallner, Christoph.
+\newblock Generating test cases for programs that are coded against interfaces
+  and annotations.
+\newblock {\em ACM Transactions on Software Engineering and Methodology (TOSEM)
+  23\/} (May 2014), 21:1--21:38.
+
+\bibitem{6693083}
+Li, Kaituo, Reichenbach, C., Smaragdakis, Y., Diao, Y., and Csallner, C.
+\newblock Sedge: Symbolic example data generation for dataflow programs.
+\newblock In {\em Automated Software Engineering (ASE), 2013 IEEE/ACM 28th
+  International Conference on\/} (Nov 2013), pp.~235--245.
+
+\bibitem{rfbi-issta12}
+Li, Kaituo, Reichenbach, Christoph, Csallner, Christoph, and Smaragdakis,
+  Yannis.
+\newblock Residual investigation: Predictive and precise bug detection.
+\newblock In {\em Proc. International Symposium on Software Testing and
+  Analysis ({ISSTA})\/} (July 2012), pp.~298--308.
+
+\bibitem{Li:2013:SCD:2491411.2491457}
+Li, Kaituo, Reichenbach, Christoph, Smaragdakis, Yannis, and Young, Michal.
+\newblock Second-order constraints in dynamic invariant inference.
+\newblock In {\em Proceedings of the 2013 9th Joint Meeting on Foundations of
+  Software Engineering\/} (New York, NY, USA, 2013), ESEC/FSE 2013, ACM,
+  pp.~103--113.
+
+\bibitem{Majumdar:2007:HCT:1248820.1248874}
+Majumdar, Rupak, and Sen, Koushik.
+\newblock Hybrid concolic testing.
+\newblock In {\em Proceedings of the 29th International Conference on Software
+  Engineering\/} (Washington, DC, USA, 2007), ICSE '07, IEEE Computer Society,
+  pp.~416--426.
+
+\bibitem{Olston:2009:GED:1559845.1559873}
+Olston, Christopher, Chopra, Shubham, and Srivastava, Utkarsh.
+\newblock Generating example data for dataflow programs.
+\newblock In {\em Proc. 2009 ACM SIGMOD International Conference on Management
+  of Data (SIGMOD)\/} (2009), ACM, pp.~245--256.
+
+\bibitem{Olston:2008:PLN:1376616.1376726}
+Olston, Christopher, Reed, Benjamin, Srivastava, Utkarsh, Kumar, Ravi, and
+  Tomkins, Andrew.
+\newblock Pig latin: A not-so-foreign language for data processing.
+\newblock In {\em Proc. ACM SIGMOD International Conference on Management of
+  Data (SIGMOD)\/} (2008), ACM, pp.~1099--1110.
+
+\bibitem{Pasareanu:2008:CUS:1390630.1390635}
+P\v{a}s\v{a}reanu, Corina~S., Mehlitz, Peter~C., Bushnell, David~H.,
+  Gundy-Burlet, Karen, Lowry, Michael, Person, Suzette, and Pape, Mark.
+\newblock Combining unit-level symbolic execution and system-level concrete
+  execution for testing nasa software.
+\newblock In {\em Proceedings of the 2008 International Symposium on Software
+  Testing and Analysis\/} (New York, NY, USA, 2008), ISSTA '08, ACM,
+  pp.~15--26.
+
+\bibitem{Schwartz:2010:YEW:1849417.1849981}
+Schwartz, Edward~J., Avgerinos, Thanassis, and Brumley, David.
+\newblock All you ever wanted to know about dynamic taint analysis and forward
+  symbolic execution (but might have been afraid to ask).
+\newblock In {\em Proceedings of the 2010 IEEE Symposium on Security and
+  Privacy\/} (Washington, DC, USA, 2010), SP '10, IEEE Computer Society,
+  pp.~317--331.
+
+\bibitem{sen06cute}
+Sen, Koushik, and Agha, Gul.
+\newblock Cute and {jCute}: Concolic unit testing and explicit path
+  model-checking tools.
+\newblock In {\em Proc. International Conference on Computer Aided Verification
+  (CAV)\/} (Aug. 2006), Springer, pp.~419--423.
+
+\bibitem{1081750}
+Sen, Koushik, Marinov, Darko, and Agha, Gul.
+\newblock {CUTE}: a concolic unit testing engine for {C}.
+\newblock In {\em Proc. 13th International Symposium on Foundations of Software
+  Engineering (FSE)\/} (Sept. 2005), ACM, pp.~263--272.
+
+\bibitem{smaragdakis07combining}
+Smaragdakis, Yannis, and Csallner, Christoph.
+\newblock Combining static and dynamic reasoning for bug detection.
+\newblock In {\em Proc. International Conference on Tests And Proofs (TAP)\/}
+  (Feb. 2007), Springer, pp.~1--16.
+
+\bibitem{tillmann:08}
+Tillmann, Nikolai, and de~Halleux, Jonathan.
+\newblock Pex -- white box test generation for {.NET}.
+\newblock In {\em Proc. Second International Conference on Tests and Proofs
+  (TAP)\/} (Apr. 2008), Springer.
+\newblock To appear.
+
+\bibitem{tillmann08pex}
+Tillmann, Nikolai, and de~Halleux, Jonathan.
+\newblock Pex - white box test generation for {.Net}.
+\newblock In {\em Proc. 2nd International Conference on Tests And Proofs
+  (TAP)\/} (Apr. 2008), Springer, pp.~134--153.
+
+\bibitem{tomb07variably}
+Tomb, Aaron, Brat, Guillaume~P., and Visser, Willem.
+\newblock Variably interprocedural program analysis for runtime error
+  detection.
+\newblock In {\em Proc. ACM SIGSOFT International Symposium on Software Testing
+  and Analysis (ISSTA)\/} (July 2007), ACM, pp.~97--107.
+
+\bibitem{Xiao:2011:PIP:1985793.1985876}
+Xiao, Xusheng, Xie, Tao, Tillmann, Nikolai, and de~Halleux, Jonathan.
+\newblock Precise identification of problems for structural test generation.
+\newblock In {\em Proceedings of the 33rd International Conference on Software
+  Engineering\/} (New York, NY, USA, 2011), ICSE '11, ACM, pp.~611--620.
+
+\end{thebibliography}
