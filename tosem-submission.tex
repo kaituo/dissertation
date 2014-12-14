@@ -166,16 +166,23 @@ stringstyle=\color{orange}}
 \signaturepage
 
 \begin{abstract}
-I propose new combinations of static and dynamic analysis for bug detection and program understanding.  More specifically, my co-authors and I have devised the following combinations.
-
-We improve the consistency of dynamically discovered invariants by taking into account second-order constraints, which encode knowledge about invariants, even when the invariants themselves are unknown. The (second-order) constraints are either supplied by the programmer or vetted by the programmer (among candidate constraints suggested automatically). Both first-order invariants and second-order constraints can serve as a documentation of program behavior.  Our experiments show that dynamic inference of second-order constraints together with minimal human effort can significantly influence the produced (first-order) invariants even in systems of substantial size.
-
-Our tool SEDGE address the automatic testing of dataflow (esp. map-reduce) programs.  SEDGE relies on the constraints using a symbolic reasoning engine (a powerful SMT solver), while using input data as concrete aids in the solution process.  The approach resembles dynamic-symbolic (a.k.a. "concolic") execution in a conventional programming language, adapted to the unique features of the dataflow domain.  In third-party benchmarks, SEDGE achieves higher coverage than current state-of-the-art. 
-
-We identify and present residual investigation, the dynamic analysis that serves the runtime agent of a static analysis and to identify with higher certainty whether the error identified by the static analysis is likely true.  The distinguishing feature of a residual investigation, compared with past static-dynamic combinations, is that the residual investigation does not intend to report the error only if it actually occurs, but to identify general conditions that confirm the statically detected error.  We implement residual investigation for several of the most common analyses in the static analyzer FindBugs. The result is an analysis with a low occurrence of false warnings ("false positives") while reporting several actual errors that would not have been detected by mere execution of a program's test suite.
-
-Residual investigation depends on a reasonable test suite. Without it, residual investigation is not likely to bear much fruit.  In this work I propose to develop algorithms for residual investigation in the case of sparse test suite. I intend to study how to augment existing system-level tests using automatic test generation via dynamic symbolic execution. One challenge of using dynamic symbolic execution is that it is not powerful enough to deal with complicated real-world code (e.g., existing tools cannot generate sequences of method calls to construct desired object states). I will investigate what heuristics allow dynamic symbolic execution to  generate error-revealing system tests for complicated real-world code.
-
+This work proposes new combinations of static and dynamic analysis for bug
+detection and program understanding. There are 3 independent directions.
+a) In the area of dynamic invariant inference, I improve the consistency of
+dynamically discovered invariants by taking into account second-order
+constraints that encode knowledge about invariants; the second-order
+constraints are either supplied by the programmer or vetted by the
+programmer (among candidate constraints suggested automatically).
+b) In the area of testing dataflow (esp. map-reduce) programs, my
+tool, SEDGE, achieves higher testing coverage by leveraging existing
+input data and generalizing them using a symbolic reasoning engine (a
+powerful SMT solver).
+c) In the area of bug detection, I identify and present the concept of
+residual investigation: a dynamic analysis that serves the runtime agent of a
+static analysis. Residual investigation identifies with higher certainty
+whether an error reported by the static analysis is likely true. In
+future work, I propose to improve the recall of residual investigation
+by augmenting existing system-level tests via dynamic symbolic execution.
 \end{abstract}
 
 \mainmatter   %% <-- This line is mandatory
