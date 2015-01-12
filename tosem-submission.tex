@@ -106,7 +106,7 @@ stringstyle=\color{orange}}
 
 \title{Combining Static and Dynamic Analysis for Bug Detection and Program Understanding}
 \author{Kaituo Li}
-\date{Januray 30 2014} % The date you'll actually graduate -- must be
+\date{January 30 2014} % The date you'll actually graduate -- must be
                      % February, May, or September
 \copyrightyear{2014}
 \bachelors{B.Sc.}{Jilin University}
@@ -202,7 +202,7 @@ I propose new combinations of static and dynamic analysis for bug detection and 
 
 \section{Residual Investigation: Predictive and Precise Bug Detection}
 
-My work\cite{rfbi-issta12} with Christoph Reichenbach, Christoph Csallner, and Yannis Smaragdakis identified and presented a new kind of combination of static and dynamic analyses, which I term residual investigation. A residual investigation is a dynamic analysis whose purpose is to be the run-time agent of a static analysis and to identify with higher certainty whether the error identified by the static analysis is likely true.  In other words, one can see the dynamic analysis as the “residual” of the static analysis at a subsequent stage: that of program execution. The distinguishing feature of a residual investigation, compared with past static-dynamic combinations, is that the residual investigation does not intend to report the error only if it actually occurs, but to identify general conditions that confirm the statically detected error. That is, a residual investigation is a predictive dynamic analysis, predicting errors in executions not actually observed.
+My work\cite{rfbi-issta12} with Christoph Reichenbach, Christoph Csallner, and Yannis Smaragdakis identified and presented a new kind of combination of static and dynamic analyses, which I term residual investigation. A residual investigation is a dynamic analysis whose purpose is to be the run-time agent of a static analysis and to identify with higher certainty whether the error identified by the static analysis is likely true.  In other words, one can see the dynamic analysis as the "residual" of the static analysis at a subsequent stage: that of program execution. The distinguishing feature of a residual investigation, compared with past static-dynamic combinations, is that the residual investigation does not intend to report the error only if it actually occurs, but to identify general conditions that confirm the statically detected error. That is, a residual investigation is a predictive dynamic analysis, predicting errors in executions not actually observed.
 
 Consider an example the ``equal objects must have equal hashcodes''
 analysis (codenamed HE) in the FindBugs static error detector for Java
