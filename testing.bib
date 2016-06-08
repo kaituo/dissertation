@@ -1,4 +1,64 @@
+Bibtex supports global string variables.
+# is its string concatenation operator. 
+=================================================
 
+GLOBAL VARIABLES
+
+@string{ACCESSED = {Accessed Sep. 2010}}
+@string{ACM      = {ACM}}
+@string{AW       = {Addison-Wesley}}
+@string{IEEE     = {IEEE}}
+@string{MSR      = {Microsoft Research}}
+@string{PH       = {Prentice Hall}}
+@string{PROC     = {Proc. }}
+@string{Springer = {Springer}}
+
+@string{ASE   = { IEEE/ACM International Conference on Automated Software
+ 		Engineering (ASE)}}
+@string{CACM   = {Communications of the ACM}}
+@string{CAV   = { International Conference on Computer Aided 
+    Verification (CAV)}}
+@string{CC    = { International Conference on Compiler Construction (CC)}} 		
+@string{ECOOP = { European Conference on Object-Oriented 
+    Programming (ECOOP)}}
+@string{FASE  = { International Conference on Fundamental Approaches to 
+    Software Engineering (FASE)}}
+@string{FSE   = { ACM SIGSOFT International Symposium on Foundations of 
+    Software Engineering (FSE)}}
+@string{ICFEM = { International Conference on Formal Engineering 
+    Methods (ICFEM)}}
+@string{ICSE  = { ACM/IEEE International Conference on Software 
+    Engineering (ICSE)}}
+@string{ICSM  = { IEEE International Conference on Software 
+    Maintenance (ICSM)}}
+@string{ISSTA = { ACM SIGSOFT International Symposium on Software Testing 
+    and Analysis (ISSTA)}}
+@string{ISSRE = { IEEE International Symposium on Software Reliability 
+    Engineering (ISSRE)}}    
+@string{OOPSLA= { ACM SIGPLAN Conference on Object-Oriented Programming, 
+    Systems, Languages, and Applications (OOPSLA)}}    
+@string{PASTE = { ACM SIGPLAN-SIGSOFT Workshop on Program Analysis for 
+    Software Tools and Engineering (PASTE)}}
+@string{PLDI  = { ACM SIGPLAN Conference on Programming Language Design 
+    and Implementation (PLDI)}}
+@string{POPL  = { ACM SIGPLAN-SIGACT Symposium on
+    Principles of Programming Languages (POPL)}}
+@string{PPDP  = { ACM SIGPLAN Symposium on Principles and Practice of
+ 		Declarative Programming (PPDP)}}    
+@string{SOFSEM= { International Conference on Current Trends in Theory and 
+    Practice of Computer Science (SOFSEM)}}
+@string{SPE   = { Software---Practice \& Experience}},
+@string{SPIN  = { International SPIN Workshop on Model Checking Software}},
+@string{TACAS = { International Conference on Tools and Algorithms for the 
+    Construction and Analysis of Systems (TACAS)}}
+@string{TOSEM = { ACM Transactions on Software Engineering and Methodology 
+    (TOSEM)}}                                
+@string{TSE   = { IEEE Transactions on Software Engineering (TSE)}}
+@string{VMCAI = { International Conference on Verification, Model Checking,
+    and Abstract Interpretation (VMCAI)}}
+@string{WODA = { International Workshop on Dynamic Analysis (WODA)}}		
+            
+            
 @inproceedings{artzi06finding,
    author = {Shay Artzi and Michael D. Ernst and Adam Kie{\.z}un and
 			Carlos Pacheco and Jeff H. Perkins},
@@ -169,26 +229,7 @@ TODO: M-TOOS does not seem to have proceedings or publisher.
             There is no state that can change due to the execution of a
             function.}
 }
-@inproceedings{clarke00finite,
-  author = {Lori A. Clarke},
-   year = 2000,
-  month = aug,
-  title = {Finite state verification: A new approach for validating software
-          systems},
-  booktitle = {Proc. {ACM} {SIGSOFT} International Symposium
-              on Software Testing and Analysis (ISSTA)},
-  pages = {146},
-  publisher = {ACM}
-}
-@techreport{cok04escjava2,
-  author = {David R. Cok and Joseph R. Kiniry},
-  year = 2004,
-  month = may,
-  title = {{ESC/Java2}: Uniting {ESC/Java} and {JML}: Progress and issues in
-          building and using {ESC/Java2}},
-  number = {NIII-R0413},
-  institution = {Nijmegen Institute for Computing and Information Science}
-}
+
 @misc{cok05esc,
   title = {{ESC/J}ava2 Implementation Notes},
   howpublished = {http://secure.ucd.ie/products/opensource/ESCJava2/
@@ -215,36 +256,7 @@ TODO: M-TOOS does not seem to have proceedings or publisher.
   number = 11,
   pages = {1025--1050}
 }
-@inproceedings{csallner05check,
-  author = {Christoph Csallner and Yannis Smaragdakis},
-   year = 2005,
-  month = may,
-  title = {{Check} 'n' {Crash}: Combining static checking and testing},
-  booktitle = {Proc. 27th International Conference on Software Engineering (ICSE)},
-  pages = {422--431},
-  publisher = {ACM}
-}
-@inproceedings{csallner06invariants,
-  author = {Christoph Csallner and Yannis Smaragdakis},
-   year = 2006,
-  month = may,
-  title = {Dynamically Discovering Likely Interface Invariants},
-  booktitle = {Proc. 28th International Conference on Software Engineering (ICSE),
-               Emerging Results Track},
-  pages = {861--864},
-  publisher = {ACM}
-}
-@inproceedings{csallner06dsd-crasher,
-   author = {Christoph Csallner and Yannis Smaragdakis},
-     year = 2006,
-   month = jul,
-   title = {{DSD}-{C}rasher: A Hybrid Analysis Tool for Bug Finding},
-   booktitle = {Proc. {ACM} {SIGSOFT} International Symposium on Software
-   		Testing and Analysis ({ISSTA})},
-   pages = {245--254},
-   publisher = {ACM},
-   summary = {ACM SIGSOFT Distinguished Paper Award}
-}
+
 @inproceedings{damorim06empirical,
  author = {Marcelo d'Amorim and Carlos Pacheco and Tao Xie and Darko Marinov
  		and Michael D. Ernst},
@@ -316,18 +328,7 @@ TODO: M-TOOS does not seem to have proceedings or publisher.
   isbn = {1-58113-074-0},
   url = {citeseer.ist.psu.edu/ernst00dynamically.html}
 }
-@article{ernst01dynamically,
-  author = {Michael D. Ernst and Jake Cockrell and William G. Griswold and
-           David Notkin},
-  year = 2001,
-  month = feb,
-  title = {Dynamically discovering likely program invariants to support
-          program evolution},
-  journal = {IEEE Transactions on Software Engineering},
-  volume = 27,
-  number = 2,
-  pages = {99--123}
-}
+
 @inproceedings{ernst03static,
    author = {Michael D. Ernst},
      title = {Static and dynamic analysis: Synergy and duality},
@@ -349,26 +350,7 @@ TODO: M-TOOS does not seem to have proceedings or publisher.
   summary = {Tested GUI at Telecordia. Extended commercial tool SilkTest from
             Segue Software}
 }
-@inproceedings{flanagan01houdini,
-  author = {Cormac Flanagan and K. Rustan M. Leino},
-   year = 2001,
-  month = mar,
-  title = {Houdini, an annotation assistant for {ESC/Java}},
-  booktitle = {Proc. International Symposium of Formal Methods Europe ({FME})},
-  pages = {500--517},
-  publisher = {Springer}
-}
-@inproceedings{flanagan02extended,
-  author = {Cormac Flanagan and K. Rustan M. Leino and Mark Lillibridge and
-           Greg Nelson and James B. Saxe and Raymie Stata},
-  year = 2002,
-  month = jun,
-  title = {Extended static checking for {Java}},
-  booktitle = {Proc. {ACM} {SIGPLAN} Conference on
-		Programming Language Design and Implementation (PLDI)},
-  pages = {234--245},
-  publisher = {ACM}
-}
+
 @inproceedings{forrester00empirical,
   author  = {Justin E. Forrester and Barton P. Miller},
   title  = {An empirical study of the
@@ -378,17 +360,7 @@ TODO: M-TOOS does not seem to have proceedings or publisher.
   booktitle = {4th USENIX Windows Systems Symposium},
   pages    = {59--68},
 }
-@inproceedings{godefroid05dart,
-  author = {Patrice Godefroid and Nils Klarlund and Koushik Sen},
-  title = {{DART}: Directed automated random testing},
-  booktitle = {Proc. ACM SIGPLAN Conference on Programming Language Design
-  		and Implementation (PLDI)},
-  year = 2005,
-  month = jun,
-  pages = {213--223},
-  _doi = {http://doi.acm.org/10.1145/1065010.1065036},
-  publisher = {ACM}
- }
+
 @inproceedings{godefroid07compositional,
   author = {Patrice Godefroid},
   title = {Compositional dynamic test generation},
@@ -421,16 +393,7 @@ TODO: M-TOOS does not seem to have proceedings or publisher.
   pages = {69--82},
   publisher = {ACM}
 }
-@inproceedings{hangal02tracking,
-  author = {Sudheendra Hangal and Monica S. Lam},
-  month = may,
-  year = 2002,
-  title = {Tracking Down Software Bugs Using Automatic Anomaly Detection},
-  booktitle = {Proc. 24th International Conference on Software
-              Engineering (ICSE)},
-  pages = {291--301},
-  publisher = {ACM}
-}
+
 @MANUAL{hapner02java,
   author = {Mark Hapner and Rich Burridge and Rahul Sharma and Joseph Fialli},
   year = 2002,
@@ -463,22 +426,7 @@ TODO: M-TOOS does not seem to have proceedings or publisher.
   month = may,
   publisher = {Springer}
 }
-@inproceedings{hovemeyer04finding,
-  author = {David Hovemeyer and William Pugh},
-   year = 2004,
-  month = oct,
-  title = {Finding bugs is easy},
-  booktitle = {Companion to the 19th ACM SIGPLAN Conference on
-              Object-Oriented Programming Systems, Languages, and Applications
-              (OOPSLA)},
-  publisher = {ACM},
-  pages = {132--136},
-  _doi = {http://doi.acm.org/10.1145/1028664.1028717},
-  isbn = {1-58113-833-4},
-  summary = {Formalize some context-sensitive prose specifications, e.g. do
-            not read a field before initializing, as bug-pattern detectors,
-            which use control flow analysis.}  
-}
+
 @article{howe97test,
   author = {Adele E. Howe and Anneliese von Mayrhauser and Richard T. Mraz},
   year = 1997,
@@ -604,16 +552,7 @@ TODO: M-TOOS does not seem to have proceedings or publisher.
  http://zoo.cs.yale.edu/classes/cs490/00-01b/lasater.miles.mhl22/},
   note    = {http://zoo.cs.yale.edu/classes/cs490/00-01b/lasater.miles.mhl22/},
 }
-@techreport{leavens98preliminary,
-  author = {Gary T. Leavens and Albert L. Baker and Clyde Ruby},
-  year = 1998,
-  month = jun,
-  title = {Preliminary design of {JML}: A behavioral interface specification
-          language for {Java}},
-  number = {TR98-06y},
-  institution = {Department of Computer Science, Iowa State University},
-  summary = {revised frequently, last time in June 2004.}
-}
+
 @techreport{leino00escjava,
   author = {K. Rustan M. Leino and Greg Nelson and James B. Saxe},
   year = 2000,
@@ -662,13 +601,7 @@ TODO: M-TOOS does not seem to have proceedings or publisher.
             pre- and postcondition. Then given an intital and final state an
             AI planner can find a way = test case from inital to final state.}
 }
-@book{meyer97Object,
-  author  = {Bertrand Meyer},
-  title  = {Object-Oriented Software Construction},
-  year   = 1997,
-  publisher = {Prentice Hall PTR},
-  edition    = {2nd},
-}
+
 @inproceedings{meyer07automatic,
   author = {Bertrand Meyer and Ilinca Ciupa and Andreas Leitner and 
   		Lisa Liu},
@@ -683,16 +616,7 @@ TODO: M-TOOS does not seem to have proceedings or publisher.
 }
 FIXME: "Lisa (Ling) Liu" is correct, but shows up as L.L. Liu.
 
-@inproceedings{musuvathi03lessons,
-  author = {Madanlal Musuvathi and Dawson Engler},
-   title = {Some lessons from using static analysis and software model checking
-          for Bug Finding},
-  booktitle = {Proc. Workshop on Software Model Checking (SoftMC)},
-  year = 2003,
-  month = jul,
-  publisher = {Elsevier},
-  summary = {superceded by engler04model}
-}
+
 @inproceedings{nimmer02automatic,
   author = {Jeremy W. Nimmer and Michael D. Ernst},
   title = {Automatic Generation of Program Specifications},
@@ -773,17 +697,7 @@ FIXME: "Lisa (Ling) Liu" is correct, but shows up as L.L. Liu.
   publisher = {Springer}
 }
 
-@inproceedings{rutar04comparison,
-  author = {Nick Rutar and Christian B. Almazan and Jeffrey S. Foster},
-  year = 2004,
-  month = nov,
-  title = {A comparison of bug finding tools for {Java}},
-  booktitle = {Proc. 15th International Symposium on Software
-              Reliability Engineering (ISSRE)},
-  pages = {245--256},
-  publisher = {IEEE},
-  _doi = {http://dx.doi.org/10.1109/ISSRE.2004.1}
-}
+
 @article{sagiv96precise,
   author  = {Mooly Sagiv and Thomas Reps and Susan Horwitz},
   title  = {Precise interprocedural
@@ -832,15 +746,7 @@ FIXME: "Lisa (Ling) Liu" is correct, but shows up as L.L. Liu.
   summary = {Jtest lets you specify rules about your source code. It checks
             these rules with static analysis.}
 }
-@inproceedings{smaragdakis07combining,
-   author = {Yannis Smaragdakis and Christoph Csallner},
-   year = 2007,
-   month = feb,
-   title = {Combining Static and Dynamic Reasoning for Bug Detection},
-   booktitle = {Proc. International Conference on Tests And Proofs (TAP)},
-	 pages = {1--16},
-   publisher = {Springer}
-}
+
 @inproceedings{steensgaard96points-to,
   author = {Bjarne Steensgaard},
   year = 1996,
@@ -894,17 +800,7 @@ FIXME: "Lisa (Ling) Liu" is correct, but shows up as L.L. Liu.
   pages = {97--107},
   publisher = {ACM}
 }
-@inproceedings{wagner05comparing,
-  author    = {Stefan Wagner and Jan J{\"u}rjens and Claudia Koller and
-               Peter Trischberger},
-  title     = {Comparing Bug Finding Tools with Reviews and Tests},
-  booktitle = {Proc. 17th IFIP TC6/WG 6.1 International Conference
-  			on Testing of Communicating Systems (TestCom)},
-  year      = 2005,
-  month     = may,
-  pages     = {40-55},
-  publisher = {Springer}
-}
+
 @book{weiss99data,
   author = {Mark Allen Weiss},
   year = 1999,
@@ -969,17 +865,7 @@ FIXME: "Lisa (Ling) Liu" is correct, but shows up as L.L. Liu.
   pages = {1-5},
   publisher = {Springer}
 }
-@inproceedings{zitser04testing,
-  author = {Misha Zitser and Richard Lippmann and Tim Leek},
-  title = {Testing static analysis tools using exploitable buffer overflows from open source code},
-  booktitle = {Proc. 12th ACM SIGSOFT International Symposium on
-		Foundations of Software Engineering (FSE)},
-  year = 2004,
-  month = oct,
-  pages = {97--106},
-  publisher = {ACM},
-  _doi = {http://doi.acm.org/10.1145/1029894.1029911}
-}
+
 @article{zweben92systematic ,
   author  = {Stuart H. Zweben and Wayne D. Heym and Jon Kimmich},
   title  = {Systematic testing of data abstractions based on software specifications},
@@ -1035,16 +921,18 @@ year={2006}
    year = 2007,
    month = dec,
 }
-@inproceedings{perkins04efficient,
-   author = {Jeff H. Perkins and Michael D. Ernst},
-   title = {Efficient incremental algorithms for dynamic detection of
-    likely invariants},
-   booktitle = {Proc. 12th International Symposium on
-    Foundations of Software Engineering (FSE)},
-   pages = {23--32},
-   month = nov,
-   year = 2004
+
+@inproceedings{cadar05execution,
+	author = {Cristian Cadar and Dawson R. Engler},
+	title = {Execution generated test cases: How to make systems code 
+		crash itself},
+	booktitle = PROC # {12th} # SPIN,
+	month = aug,
+	year = 2005,
+	pages = {2--23},
+	publisher = {Springer},
 }
+
 @article{360252,
  author = {James C. King},
  title = {Symbolic execution and program testing},
@@ -1371,8 +1259,8 @@ opportunities},
    booktitle = "Proc. International Symposium on Software Testing and Analysis ({ISSTA})",
 	 pages = {298--308},
    year = 2012,
-   month = jul
-	 publisher = {ACM},
+   month = jul,
+   publisher = {ACM},
 }
 
 @INPROCEEDINGS{Lahiri09staticand,
@@ -1392,7 +1280,7 @@ opportunities},
   year =      1993,
 	month = jan,
   booktitle = "USENIX Winter Technical Conference",
-  pages =     "97--106"
+  pages =     "97--106",
 	publisher = {Usenix},
 }
 
@@ -1804,3 +1692,128 @@ month={Nov},
 pages={235-245},
 keywords={data flow analysis;program testing;programming languages;reasoning about programs;specification languages;Hadoop map-reduce programs;SDSS benchmarks;SEDGE system;SMT solver;automatic testing;complex programs;concolic execution;conventional programming language;dataflow domain;dataflow operator;dataflow programs;high-level dataflow language;map-reduce code;mapreduce programs;operator use;pig platform;state-of-the-art dynamic-symbolic execution;symbolic constraints;symbolic example data generation;symbolic reasoning engine;test cases;Benchmark testing;Cognition;Concrete;Data processing;Educational institutions;Extraterrestrial measurements;Programming},
 doi={10.1109/ASE.2013.6693083},}
+
+@inproceedings{ guyer99annotation,
+    author = "Samuel Z. Guyer and Calvin Lin",
+    title = "An annotation language for optimizing software libraries",
+    booktitle = "Second Conference on {D}omain-{S}pecific {L}anguages ({DSL})",
+    pages = "39-52",
+    year = "1999",
+    url = "citeseer.ist.psu.edu/guyer99annotation.html" }
+    
+
+@inproceedings{dysy-icse08,
+	Author = {Christoph Csallner and Nikolai Tillmann and Yannis Smaragdakis},
+	Booktitle = {International Conference on Software Engineering ({ICSE})},
+	Month = may,
+	Title = {{DySy}: Dynamic Symbolic Execution for Invariant Inference},
+	Year = 2008}
+	
+@inproceedings{kannan08krystal,
+ author = {Yamini Kannan and Koushik Sen},
+ title = {Universal symbolic execution and its application to likely data structure invariant generation},
+ booktitle = {ISSTA '08: Proceedings of the 2008 Int. Symposium on Software Testing and Analysis},
+ year = {2008},
+ isbn = {978-1-60558-050-0},
+ pages = {283--294},
+ location = {Seattle, WA, USA},
+ doi = {http://doi.acm.org/10.1145/1390630.1390665},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ abstract = {
+Local data structure invariants are asserted over a bounded fragment
+                  of a data structure around a distinguished node M of
+                  the data structure. An example of such an invariant
+                  for a sorted doubly linked list is "for all nodes M
+                  of the list, if M $\neq$ null and M.next $\neq$ null, then
+                  M.next.prev = M and M.value $\leq$ M.next.value." It has
+                  been shown that such local invariants are both
+                  natural and sufficient for describing a large class
+                  of data structures. This paper explores a novel
+                  technique, called Krystal, to infer likely local
+                  data structure invariants using a variant of
+                  symbolic execution, called universal symbolic
+                  execution. Universal symbolic execution is like
+                  traditional symbolic execution except the fact that
+                  we create a fresh symbolic variable for every read
+                  of a lvalue that has no mapping in the symbolic
+                  state rather than creating a symbolic variable only
+                  for inputs. This helps universal symbolic execution
+                  to symbolically track data flow for all memory
+                  locations along an execution even if input values do
+                  not flow directly into those memory locations. We
+                  have implemented our algorithm and applied it to
+                  several data structure implementations in Java. Our
+                  experimental results show that we can infer many
+                  interesting local invariants for these data
+                  structures. 
+}                  
+ }
+ 
+@inproceedings{dyncomp,
+	Acmid = {1146268},
+	Address = {New York, NY, USA},
+	Author = {Guo, Philip J. and Perkins, Jeff H. and McCamant, Stephen and Ernst, Michael D.},
+	Booktitle = {Proceedings of the 2006 international symposium on Software testing and analysis},
+	Date-Added = {2013-03-01 13:07:40 -0800},
+	Date-Modified = {2013-03-01 13:08:15 -0800},
+	Doi = {10.1145/1146238.1146268},
+	Isbn = {1-59593-263-1},
+	Keywords = {C, C++, Java, abstract types, dynamic analysis, interaction, mixed-level analysis, type inference, units, values and variables},
+	Location = {Portland, Maine, USA},
+	Numpages = {11},
+	Pages = {255--265},
+	Publisher = {ACM},
+	Series = {ISSTA '06},
+	Title = {Dynamic inference of abstract types},
+	Url = {http://doi.acm.org/10.1145/1146238.1146268},
+	Year = {2006},
+	Bdsk-Url-1 = {http://doi.acm.org/10.1145/1146238.1146268},
+	Bdsk-Url-2 = {http://dx.doi.org/10.1145/1146238.1146268}}
+
+
+@misc{MeghaniE2003,
+   author = {Samir V. Meghani and Michael D. Ernst},
+   title = {Determining legal method call sequences in object interfaces},
+   month = may,
+   year = {2003}
+}
+
+@inproceedings{Gabel:2010:OIE:1806799.1806806,
+ author = {Gabel, Mark and Su, Zhendong},
+ title = {Online inference and enforcement of temporal properties},
+ booktitle = {Proceedings of the 32nd ACM/IEEE International Conference on Software Engineering - Volume 1},
+ series = {ICSE '10},
+ year = {2010},
+ isbn = {978-1-60558-719-6},
+ location = {Cape Town, South Africa},
+ pages = {15--24},
+ numpages = {10},
+ url = {http://doi.acm.org/10.1145/1806799.1806806},
+ doi = {10.1145/1806799.1806806},
+ acmid = {1806806},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {dynamic analysis, online algorithm, temporal properties},
+} 
+
+@inproceedings{Beschastnikh:2011:LEI:2025113.2025151,
+ author = {Beschastnikh, Ivan and Brun, Yuriy and Schneider, Sigurd and Sloan, Michael and Ernst, Michael D.},
+ title = {Leveraging existing instrumentation to automatically infer invariant-constrained models},
+ booktitle = {Proceedings of the 19th ACM SIGSOFT symposium and the 13th European conference on Foundations of software engineering},
+ series = {ESEC/FSE '11},
+ year = {2011},
+ isbn = {978-1-4503-0443-6},
+ location = {Szeged, Hungary},
+ pages = {267--277},
+ numpages = {11},
+ url = {http://doi.acm.org/10.1145/2025113.2025151},
+ doi = {10.1145/2025113.2025151},
+ acmid = {2025151},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {log analysis, model inference, synoptic, temporal invariant mining},
+} 
+
+
+
