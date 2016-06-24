@@ -528,9 +528,9 @@ stringstyle=\color{orange}}
 
 \title{Combining Static and Dynamic Analysis for Bug Detection and Program Understanding}
 \author{Kaituo Li}
-\date{January 30 2014} % The date you'll actually graduate -- must be
+\date{August 31 2016} % The date you'll actually graduate -- must be
                      % February, May, or September
-\copyrightyear{2014}
+\copyrightyear{2016}
 \bachelors{B.Sc.}{Jilin University}
 \masters{M.Sc.}{Zhejiang University}
 % \secondmasters{M.Ed.}{Antioch College}
@@ -543,7 +543,7 @@ stringstyle=\color{orange}}
 % \fourthreader{Mary Lamb}   % Optional
 %\fifthreader{}            % Optional
 %\sixthreader{}            % Optional
-\departmentchair{Lori Clarke} % Uses "Department Chair" as the title. To
+\departmentchair{James Allan} % Uses "Department Chair" as the title. To
 % use an alternate title, such as "Chair", use \departmentchair[Chair]{Pete Shearer}
 \departmentname{School of Computer Science}
 
@@ -612,190 +612,198 @@ by augmenting existing system-level tests via dynamic symbolic execution.
 \chapter{Introduction}
 \label{chp:introduction}
 
+\section{My thesis}
+
+We can improve the precision and availability of existing program understanding and bug detection techniques by combining static and dynamic analysis.
+
+\section{Static and dynamic analysis}
+
 Software practitioners have traditionally faced many problems with testing, documenting and maintaining software modules systems.  These problems are often the result of poor understanding of program properties, over-reliance on specific bug detecting tools, and so on. Various static and dynamic program analysis techniques can be used to remedy these problems. Each flavor of analysis has its own advantage. Dynamic analysis excels in control-flow accuracy; static analysis is good at data-flow richness/generality\cite{smaragdakis07combining}. One cannot make a statement that static analysis is always better than dynamic analysis or vice versa. This has led researchers to devise combinations of static and dynamic analyses (e.g., \cite{csallner05check,csallner06dsd-crasher,godefroid05dart,cadar05execution,tomb07variably,tillmann08pex,Islam14Generating}) to achieve the best of both worlds.  
 
 Dynamic symbolic execution\cite{Schwartz:2010:YEW:1849417.1849981} is such an example. Symbolic execution is a static analysis technique.  For a vector of input values, a method performs an execution following a particular path, then returns output results.  Instead of using concrete values, symbolic execution represents input and output values of a method by symbolic names. In an object-oriented programming language, symbolic execution can create symbolic representations of class variables. Symbolic execution can compute the path condition of each path in an analyzed program.  A path condition is a conjunct of branch conditions along the path.  A branch condition is a symbolic expression over input symbols. Symbolic execution cannot reason about native method calls because the source code of native method calls are not available.  Dynamic symbolic execution resolves this by symbolically executing a program in parallel with the actual program execution.  Calls to native methods are replaced with concrete values of the method call from the execution.  
 
-I propose new combinations of static and dynamic analysis for bug detection and program understanding.  The remainder of this proposal is organized as follows.  Chapter~\ref{chp:worksofar} summarizes work done so far.  Work I propose to do is presented in Chapter~\ref{chp:proposed}.  Related work is discussed in Chapter~\ref{chp:related}.  Chapter~\ref{chp:timeline} concludes with a schedule for completing the work proposed.   
+\section{Overview and contribution}
+
+I propose new combinations of static and dynamic analysis for bug detection and program understanding.  More specifically, I make the following contributions:
+\begin{enumerate}
+\item I present a technique to enhance the dynamic invariant detection approach. My work identifies and describes the idea of second-order constraints that can help improve the consistency and relevance of dynamically inferred invariants.  I call these constraints “second-order” because they are constraints over constraints: they relate classes of invariants (first-order constraints). For instance, even though the invariants describing the behavior of two functions f1 and f2 may be unknown, I may know that any valid input for f1 is also valid for f2, i.e., the precondition of f1 implies that of f2.
+\item My SEDGE system addresses the dataflow program test case generation completeness problem: for every dataflow operator, I produce data aiming to cover all cases that arise in the dataflow program (e.g., both passing and failing a filter). SEDGE relies on transforming the program into symbolic constraints, and solving the constraints using a symbolic reasoning engine (a powerful SMT solver), while using input data as concrete aids in the solution process. The approach resembles dynamic-symbolic (a.k.a. “concolic”) execution in a conventional programming language, adapted to the unique features of the dataflow domain. SEDGE is the \textit{\textbf{first} dynamic symbolic execution engine for dataflow programs}.
+\item To reduce false or low-value warnings for static tools, I introduce the concept of “residual investigation” for program analysis. Residual investigation provides a \textbf{general recipe} for \textbf{designing predictive and precise dynamic analysis for the first time}. A residual investigation is a dynamic check installed as a result of running a static analysis that reports a possible program error. The purpose is to observe conditions that indicate whether the statically predicted program fault is likely to be realizable and relevant. The key feature of a residual investigation is that it has to be much more precise (i.e., with fewer false warnings) than the static analysis alone, yet significantly more general (i.e., reporting more errors) than the dynamic tests in the program’s test suite pertinent to the statically reported error. 
+\end{enumerate}
+
+%The remainder of this proposal is organized as follows.  Chapter~\ref{chp:worksofar} summarizes work done so far.  Work I propose to do is presented in Chapter~\ref{chp:proposed}.  Related work is discussed in Chapter~\ref{chp:related}.  Chapter~\ref{chp:timeline} concludes with a schedule for completing the work proposed.   
 
 
-\chapter{Work done so far}
-\label{chp:worksofar}
+%\chapter{Work done so far}
+%\label{chp:worksofar}
+%
+%In the past few years, I have introduced three program analysis tools combining static and dynamic analysis. Residual investigation \cite{rfbi-issta12} uses predictive dynamic analysis as a post processing step to static analysis.  Residual investigation produces fewer warnings than pure static analysis.  Second-order constraint \cite{Li:2013:SCD:2491411.2491457} combines formal reasoning and dynamic invariant inference. As a result, second-order constraint can significantly influence the produced (first-order) invariants even in systems of substantial size.  SEDGE \cite{6693083} is a dynamic symbolic execution engine for dataflow programs.  SEDGE addresses the problem of automatic test case generation for dataflow programs.
+%
+%
+%\section{Residual Investigation: Predictive and Precise Bug Detection}
+%
+%My work \cite{rfbi-issta12} with Christoph Reichenbach, Christoph Csallner, and Yannis Smaragdakis identified and presented a new kind of combination of static and dynamic analyses, which I term residual investigation. A residual investigation is a dynamic analysis whose purpose is to be the run-time agent of a static analysis and to identify with higher certainty whether the error identified by the static analysis is likely true.  In other words, one can see the dynamic analysis as the "residual" of the static analysis at a subsequent stage: that of program execution. The distinguishing feature of a residual investigation, compared with past static-dynamic combinations, is that the residual investigation does not intend to report the error only if it actually occurs, but to identify general conditions that confirm the statically detected error. That is, a residual investigation is a predictive dynamic analysis, predicting errors in executions not actually observed.
+%
+%Consider an example the ``equal objects must have equal hashcodes''
+%analysis (codenamed HE) in the FindBugs static error detector for Java
+%\cite{hovemeyer04finding,hovemeyer07finding,Ayewah:2010:GFF:1831708.1831738}. The HE
+%analysis emits a warning whenever a class overrides the method
+%\sv{equals(Object)} (originally defined in the \sv{Object} class, the
+%ancestor of all Java classes) without overriding the \sv{hashCode()}
+%method (or vice versa). The idea of the analysis is that the hash code
+%value of an object should serve as an equality signature, so a class
+%should not give a new meaning to equality without updating the meaning
+%of \sv{hashCode()}. An actual fault may occur if, e.g., two objects
+%with distinct hash code values are equal as far as the \sv{equals}
+%method is concerned, and are used in the same hash table. 
+%%This error
+%%will be hard to trace, as it can lead to a violation of fundamental
+%%program invariants. 
+%However, the programmer may validly object to the error
+%warning: objects of this particular class may never be used
+%in hash tables in the current program.  Our residual investigation
+%consists of determining whether (during the execution of the usual
+%test suite of the program) objects of the suspect class are ever
+%used inside a hash table data structure, or otherwise have their
+%\sv{hashCode} method ever invoked. (The former is a strong indication
+%of an error, the latter a slightly weaker one.)  Note that this will
+%likely not cause a failure of the current test execution: all objects
+%inserted in the hash table may have distinct hash code values, or
+%object identity in the hash table may not matter for the end-to-end
+%program correctness. Yet, the fact that objects of a suspect type
+%are used in a suspicious way is a strong indication that the
+%program will likely exhibit a fault for different inputs. In this way
+%the residual investigation is a predictive dynamic analysis: it is
+%both more general than mere testing and more precise than static analysis.
+%
+%I implemented residual investigations for several of the most common analyses in the FindBugs system, such as “cloneable not implemented correctly”, “dropped exception”, “read return should be checked”, and several more. This yields a concrete result of our work, in the form of the Residual FindBugs Investigator (RFBI) tool.  The real experimental validation of our work consists of the ability to invent residual investigations easily. However, I also validated our expectation that the resulting analyses are useful by applying them to 9 open-source applications (including large systems, such as JBoss, Tomcat, NetBeans, and more) using their native test suites. 
+%%I find that residual investigation produces numerous (31) warnings that do not correspond to test suite failures and are overwhelmingly bugs.
+%I find my approach to be highly effective at eliminating
+%false positives and highlighting actual bugs among static bug reports without needing to
+%observe real faults. For example, FindBugs with residual investigation lowers the false
+%positive rate from $\geq 90\%$ to $\leq 23\%$ in several large Open Source systems. I observe similarly dramatic improvements with race detection.
+%
+%\section{Enhanced Dynamic Invariant Inference Using Second-Order Constraints}
+%Dynamic invariant inference is fundamentally a search in the space of propositions over program variables for the tiny subset of propositions that are both true (on all executions) and relevant (to the programmer, or to some client analysis such as a theorem prover or test data generator). To enhance the dynamic invariant detection approach my work\cite{Li:2013:SCD:2491411.2491457} identifies and describes the idea of second-order constraints that can help improve the consistency and relevance of dynamically inferred invariants.  I call these constraints “second-order” because they are constraints over constraints: they relate classes of invariants (first-order constraints). For instance, even though the invariants describing the behavior of two functions f1 and f2 may be unknown, I may know that any valid input for f1 is also valid for f2, i.e., the precondition of f1 implies that of f2.  Such second-order constraints can be known even though the invariants are unknown.  I define a vocabulary of common and useful second-order constraints and provided an implementation of the constraints in our vocabulary in the context of the Daikon system.  I further introduce techniques for dynamically discovering potential second-order constraints that the programmer can subsequently approve or reject.
+%
+%Our implementation builds on the Daikon tool, with a vocabulary of constraints that the programmer can use to enhance and constrain Daikon’s inference. We show that dynamic inference of second-order constraints together with minimal human effort can significantly influence the produced (first-order) invariants even in systems of substantial size, such as the Apache Commons Collections and the AspectJ compiler. We also find that 99\% of the dynamically inferred second-order constraints we sampled are true.
+%
+%\section{Dynamic Example Data Generation for Dataflow Programs}
+%
+%\emph{Dataflow programming} has emerged as an important data
+%processing paradigm in the area of big data analytics. Dataflow
+%programming consists of specifying a data processing program as a
+%directed acyclic graph. 
+%When a user writes a dataflow program, he/she will typically employ
+%example data or test cases to validate it. Validating with large real
+%data is impractical, both for reasons of efficiency (running on large
+%data sets takes a long time) and for reasons of ease-of-validation (it
+%is hard to tell whether the result is what was expected). One
+%alternative is to sample the real data available. The sample data need
+%to thoroughly exercise the program, covering all key behavior of each
+%dataflow operator. This is very hard to achieve via random sampling,
+%however. For instance, equi-joining two sample data tables of small
+%size is likely to produce an empty result, if the values being joined
+%are distributed arbitrarily.
+%Another alternative is to synthesize representative data.  Such data
+%synthesis is complicated by the complexity of dataflow language
+%operators as well as by the presence of user-defined functions.
+%Current state-of-the-art in example data generation for dataflow
+%programs~\cite{Olston:2009:GED:1559845.1559873} is of limited
+%help. Such techniques can generate high-coverage data for dataflow
+%programs with simple constraints. However, for dataflow programs with
+%complex constraints, e.g., with numerous filters, arithmetic
+%operations, and user-defined functions, the generated data are
+%incomplete due to shortcomings in constraint searching and solving
+%strategies.
+%
+%My work \cite{6693083} with Christoph Reichenbach, Yannis Smaragdakis, Yanlei Diao, and Christoph Csallner addresses the problem of efficient example data
+%generation for complex dataflow programs by bringing {\em
+%  symbolic reasoning} to bear on the process of sample data
+%generation.  We present the first technique and system for
+%systematically generating representative example data using dynamic
+%symbolic execution (DSE)~\cite{godefroid05dart,cadar05execution,tillmann:08} of dataflow programs.  Our
+%concrete setting is the popular Pig Latin
+%language~\cite{Olston:2008:PLN:1376616.1376726}.  We adapt the technique of dynamic-symbolic execution to the domain of dataflow languages. By doing so, we exploit the unique features of this domain, thus enabling high coverage. Specifically,
+%  we exploit the absence of side-effects to do a
+%  multiple-path analysis: observations on the values of a user-defined
+%  function on different execution paths can help solve constraints
+%  involving the user-defined function.
+%
+%  
+%\chapter{Proposed Work}
+%\label{chp:proposed}
+%
+%In our evaluation of residual investigation, we can only confirm or down-play 43 bugs out of 436 FindBugs reports. This is largely because many program paths have not been exercised by the native test suite. We propose to improve the recall of residual investigation by making existing test suites better. To achieve this, we generate tests automatically using dynamic symbolic execution.  In particular, we focus on generating system tests. Generated unit tests may not be realistic; generated system tests attract less debate about the realism of the test cases, because users can see how the tests are used on the client side.  The challenge of using dynamic symbolic execution to generate system tests is that not all system tests can be generated, because existing dynamic symbolic execution engines are not powerful enough to deal with complicated real-world code (e.g., existing tools cannot generate sequences of method calls to construct desired object states)\cite{Xiao:2011:PIP:1985793.1985876}.  To address this challenge, I propose to tap into existing system tests to approximate new system tests. The approximate new system tests consist of  states (i.e. assignments to variables) induced by existing system tests and assignments to some variables that are key to triggering a dynamic condition of residual investigation.  The approximate new system tests are not system tests.  They are unit tests with some system state attached.  They are justified by existing system tests so that the unit tests can connect with some execution path tracing back all the way up to program entry (i.e., the main function).  I cannot guarantee the correctness of such an approximation. It is likely that the argument assignments in the unit tests contradict with the states with which I pair the unit tests.  
+%
+%Let us walk through the concepts involved with an example. Consider the following code
+%\begin{small}
+%\begin{verbatim}
+%main() {
+%   v = …
+%   foo(v);
+%}
+%
+%foo(v) {
+%  bar(v2);
+%  baz(v3);
+%}
+%
+%bar (x) {
+%  foobar(x2);
+%  foobaz(x3);
+%}
+%
+%baz(y) {
+%  foobaz(..);
+%}
+%
+%foobar(x) {
+%  …
+%}
+%
+%foobaz(...) {
+%  …
+%}
+%\end{verbatim}
+%\end{small}
+%
+%The corresponding static call graph (approximated) is
+%\begin{figure}[h]
+%\centering
+%\includegraphics[width=3.5in, trim=0.8in 0in 0in 1.0in, clip]{callgraph.png}
+%\caption{The call graph of the example program}
+%\end{figure}
+%
+%I define a potential error revealing method (PERM) as the method that might trigger the dynamic condition of residual investigation for a FindBugs bug pattern.  For example, FindBugs reports an error when a class overrides the equals(Object) method but not the hashCode() method.  Residual investigation installs dynamic checks for the condition that Object.hashCode() is called on an object of a class that redefines equals(Object) and inherits the implementation of hashCode(). The method that contains a call to hashCode() on the suspect class (i.e. the class that redefines equals and inherits hashCode) or its subclass is the PERM for this bug pattern.  Another example is that FindBugs statically detects dropped exceptions and reports them.  Residual investigation examines which methods end up being dynamically invoked in the suspect code block and watches whether the same methods ever throw the dropped exception when called from anywhere in the program. The methods that contain calls to a method that can be invoked in the suspect code block and can throw exceptions are the PERMs for this bug pattern. I analyze the PERMs using text search such as grep and static analysis such as call graph analysis and Java reflection API.  For example, for the dropped exception pattern, I analyze the types of the exceptions declared to be thrown by the methods in the suspect code block (suspect methods) using Java reflection and then search for methods whose names are the same as that of any suspect method and throw the same exceptions using grep.  Suppose the method foobar in the above code example is our PERM.  
+%
+%Once finding a PERM, I interpose k levels back in the call graph from a PERM and call this a “switching” method.  Suppose k=1. In our example, the method bar is a switching method.  At the beginning I run existing system tests.  When I hit a switching method, I start exploring (i.e. switching to dynamic symbolic execution mode, instead of just dynamic execution).  To allow exploration, I relax (i.e., forget) some concrete values.  The first cut is to forget the arguments of switching methods.  In short, the invocation of a switching method turns on dynamic symbolic execution mode during the execution of an existing system test.  I declare victory when I find an approximate system test that calls the PERM method: the unit test case for bar that invokes foobar during its execution given the relaxed state.  In our example, this corresponds to a path like 
+%
+%\begin{figure}[h]
+%\centering
+%\includegraphics[width=3.5in, trim=0in 0in 0in 2.0in, clip]{path.png}
+%\caption{The path that calls the PERM method in the example program}
+%\end{figure}
+%
+%The dotted line arrow marks the path before I start dynamic symbolic exploration (i.e. the path exercised by the existing system test), while the solid line arrow marks the path that the generated unit test case for bar establishes. 
+%
+%PERM definitions for other bug patterns not mentioned in the above text:
+%\begin{itemize}
+%\item Bad Covariant Definition of Equals: FindBugs detects that programmers write equals method that accept a parameter of type other than Object.  Residual investigation checks whether the ancestral equals method, Object.equals(Object), is called on an instance of a class that has a covariant definition of equals.  The PERM for this bug pattern is the method that contains a call to equals() on the suspect class (i.e. the class redefines equals and inherits hashCode) or its subclass.
+%\item Cloneable Not Implemented Correctly: This bug pattern does not require native test suite.  Thus, I do not need to improve existing test suite.
+%\item Equals Method Overrides Equals in Super-class and May not Be Symmetric: FindBugs detects whether both the overriding equals method in the subclass and the overridden equals method in the superclass use instanceof in the determination of whether two objects are equal.  Residual investigation dynamically calls both equals method whenever it observes a comparison involving a contentious object and test if the results match.  The PERM for this bug pattern is the method that contains a call to equals() on the suspect superclass or subclass.
+%\item Non-Short-Circuit Boolean Operator: FindBugs issues warnings for use of \sv{\&} and \sv{|} inside the condition of an if statement.  Residual investigation checks for actual side-effects on the right-hand side of a non-short-circuiting boolean operator.  The PERM for this bug pattern is the method that contains a \sv{\&} or \sv{|} in an if statement.
+%\item Read Return Should be Checked: FindBugs checks if the return value from read in java.io.InputStream is ignored.  Residual investigation waits until it sees a read method on an object of any subclass of InputStream returns fewer bytes than requested (even for a call that does check the return value).  The PERM for this bug pattern is the method that contains a call to read on the suspect class.
+%\end{itemize}
 
-In the past few years, I have introduced three program analysis tools combining static and dynamic analysis. Residual investigation \cite{rfbi-issta12} uses predictive dynamic analysis as a post processing step to static analysis.  Residual investigation produces fewer warnings than pure static analysis.  Second-order constraint \cite{Li:2013:SCD:2491411.2491457} combines formal reasoning and dynamic invariant inference. As a result, second-order constraint can significantly influence the produced (first-order) invariants even in systems of substantial size.  SEDGE \cite{6693083} is a dynamic symbolic execution engine for dataflow programs.  SEDGE addresses the problem of automatic test case generation for dataflow programs.
 
 
-\section{Residual Investigation: Predictive and Precise Bug Detection}
+%\chapter{Management and Timeline}
+%\label{chp:timeline}
+%
+%My overall goal is to defend the dissertation by September 2015.  I plan to submit a paper on the proposed work to ICSE 2016; the deadline for this conference is September 4, 2015.  Right now the underlying dynamic symbolic execution engine Dsc\cite{islam10dsc+mock} is similar to jCute\cite{sen06cute} released by University of Illinois at Urbana-Champaign. I plan to improve Dsc to make it become cutting-edge and open-sourced by the end of next March.  I plan to work out the required static analysis (e.g. call graph analysis) by May 2015.  I plan to finish the implementation of the proposed work by July 2015.  I will be writing the dissertation, performing implementations and evaluations, and plan to complete the dissertation by September 2015. 
 
-My work \cite{rfbi-issta12} with Christoph Reichenbach, Christoph Csallner, and Yannis Smaragdakis identified and presented a new kind of combination of static and dynamic analyses, which I term residual investigation. A residual investigation is a dynamic analysis whose purpose is to be the run-time agent of a static analysis and to identify with higher certainty whether the error identified by the static analysis is likely true.  In other words, one can see the dynamic analysis as the "residual" of the static analysis at a subsequent stage: that of program execution. The distinguishing feature of a residual investigation, compared with past static-dynamic combinations, is that the residual investigation does not intend to report the error only if it actually occurs, but to identify general conditions that confirm the statically detected error. That is, a residual investigation is a predictive dynamic analysis, predicting errors in executions not actually observed.
-
-Consider an example the ``equal objects must have equal hashcodes''
-analysis (codenamed HE) in the FindBugs static error detector for Java
-\cite{hovemeyer04finding,hovemeyer07finding,Ayewah:2010:GFF:1831708.1831738}. The HE
-analysis emits a warning whenever a class overrides the method
-\sv{equals(Object)} (originally defined in the \sv{Object} class, the
-ancestor of all Java classes) without overriding the \sv{hashCode()}
-method (or vice versa). The idea of the analysis is that the hash code
-value of an object should serve as an equality signature, so a class
-should not give a new meaning to equality without updating the meaning
-of \sv{hashCode()}. An actual fault may occur if, e.g., two objects
-with distinct hash code values are equal as far as the \sv{equals}
-method is concerned, and are used in the same hash table. 
-%This error
-%will be hard to trace, as it can lead to a violation of fundamental
-%program invariants. 
-However, the programmer may validly object to the error
-warning: objects of this particular class may never be used
-in hash tables in the current program.  Our residual investigation
-consists of determining whether (during the execution of the usual
-test suite of the program) objects of the suspect class are ever
-used inside a hash table data structure, or otherwise have their
-\sv{hashCode} method ever invoked. (The former is a strong indication
-of an error, the latter a slightly weaker one.)  Note that this will
-likely not cause a failure of the current test execution: all objects
-inserted in the hash table may have distinct hash code values, or
-object identity in the hash table may not matter for the end-to-end
-program correctness. Yet, the fact that objects of a suspect type
-are used in a suspicious way is a strong indication that the
-program will likely exhibit a fault for different inputs. In this way
-the residual investigation is a predictive dynamic analysis: it is
-both more general than mere testing and more precise than static analysis.
-
-I implemented residual investigations for several of the most common analyses in the FindBugs system, such as “cloneable not implemented correctly”, “dropped exception”, “read return should be checked”, and several more. This yields a concrete result of our work, in the form of the Residual FindBugs Investigator (RFBI) tool.  The real experimental validation of our work consists of the ability to invent residual investigations easily. However, I also validated our expectation that the resulting analyses are useful by applying them to 9 open-source applications (including large systems, such as JBoss, Tomcat, NetBeans, and more) using their native test suites. 
-%I find that residual investigation produces numerous (31) warnings that do not correspond to test suite failures and are overwhelmingly bugs.
-I find my approach to be highly effective at eliminating
-false positives and highlighting actual bugs among static bug reports without needing to
-observe real faults. For example, FindBugs with residual investigation lowers the false
-positive rate from $\geq 90\%$ to $\leq 23\%$ in several large Open Source systems. I observe similarly dramatic improvements with race detection.
-
-\section{Enhanced Dynamic Invariant Inference Using Second-Order Constraints}
-Dynamic invariant inference is fundamentally a search in the space of propositions over program variables for the tiny subset of propositions that are both true (on all executions) and relevant (to the programmer, or to some client analysis such as a theorem prover or test data generator). To enhance the dynamic invariant detection approach my work\cite{Li:2013:SCD:2491411.2491457} identifies and describes the idea of second-order constraints that can help improve the consistency and relevance of dynamically inferred invariants.  I call these constraints “second-order” because they are constraints over constraints: they relate classes of invariants (first-order constraints). For instance, even though the invariants describing the behavior of two functions f1 and f2 may be unknown, I may know that any valid input for f1 is also valid for f2, i.e., the precondition of f1 implies that of f2.  Such second-order constraints can be known even though the invariants are unknown.  I define a vocabulary of common and useful second-order constraints and provided an implementation of the constraints in our vocabulary in the context of the Daikon system.  I further introduce techniques for dynamically discovering potential second-order constraints that the programmer can subsequently approve or reject.
-
-Our implementation builds on the Daikon tool, with a vocabulary of constraints that the programmer can use to enhance and constrain Daikon’s inference. We show that dynamic inference of second-order constraints together with minimal human effort can significantly influence the produced (first-order) invariants even in systems of substantial size, such as the Apache Commons Collections and the AspectJ compiler. We also find that 99\% of the dynamically inferred second-order constraints we sampled are true.
-
-\section{Dynamic Example Data Generation for Dataflow Programs}
-
-\emph{Dataflow programming} has emerged as an important data
-processing paradigm in the area of big data analytics. Dataflow
-programming consists of specifying a data processing program as a
-directed acyclic graph. 
-When a user writes a dataflow program, he/she will typically employ
-example data or test cases to validate it. Validating with large real
-data is impractical, both for reasons of efficiency (running on large
-data sets takes a long time) and for reasons of ease-of-validation (it
-is hard to tell whether the result is what was expected). One
-alternative is to sample the real data available. The sample data need
-to thoroughly exercise the program, covering all key behavior of each
-dataflow operator. This is very hard to achieve via random sampling,
-however. For instance, equi-joining two sample data tables of small
-size is likely to produce an empty result, if the values being joined
-are distributed arbitrarily.
-Another alternative is to synthesize representative data.  Such data
-synthesis is complicated by the complexity of dataflow language
-operators as well as by the presence of user-defined functions.
-Current state-of-the-art in example data generation for dataflow
-programs~\cite{Olston:2009:GED:1559845.1559873} is of limited
-help. Such techniques can generate high-coverage data for dataflow
-programs with simple constraints. However, for dataflow programs with
-complex constraints, e.g., with numerous filters, arithmetic
-operations, and user-defined functions, the generated data are
-incomplete due to shortcomings in constraint searching and solving
-strategies.
-
-My work \cite{6693083} with Christoph Reichenbach, Yannis Smaragdakis, Yanlei Diao, and Christoph Csallner addresses the problem of efficient example data
-generation for complex dataflow programs by bringing {\em
-  symbolic reasoning} to bear on the process of sample data
-generation.  We present the first technique and system for
-systematically generating representative example data using dynamic
-symbolic execution (DSE)~\cite{godefroid05dart,cadar05execution,tillmann:08} of dataflow programs.  Our
-concrete setting is the popular Pig Latin
-language~\cite{Olston:2008:PLN:1376616.1376726}.  We adapt the technique of dynamic-symbolic execution to the domain of dataflow languages. By doing so, we exploit the unique features of this domain, thus enabling high coverage. Specifically,
-  we exploit the absence of side-effects to do a
-  multiple-path analysis: observations on the values of a user-defined
-  function on different execution paths can help solve constraints
-  involving the user-defined function.
-
-  
-\chapter{Proposed Work}
-\label{chp:proposed}
-
-In our evaluation of residual investigation, we can only confirm or down-play 43 bugs out of 436 FindBugs reports. This is largely because many program paths have not been exercised by the native test suite. We propose to improve the recall of residual investigation by making existing test suites better. To achieve this, we generate tests automatically using dynamic symbolic execution.  In particular, we focus on generating system tests. Generated unit tests may not be realistic; generated system tests attract less debate about the realism of the test cases, because users can see how the tests are used on the client side.  The challenge of using dynamic symbolic execution to generate system tests is that not all system tests can be generated, because existing dynamic symbolic execution engines are not powerful enough to deal with complicated real-world code (e.g., existing tools cannot generate sequences of method calls to construct desired object states)\cite{Xiao:2011:PIP:1985793.1985876}.  To address this challenge, I propose to tap into existing system tests to approximate new system tests. The approximate new system tests consist of  states (i.e. assignments to variables) induced by existing system tests and assignments to some variables that are key to triggering a dynamic condition of residual investigation.  The approximate new system tests are not system tests.  They are unit tests with some system state attached.  They are justified by existing system tests so that the unit tests can connect with some execution path tracing back all the way up to program entry (i.e., the main function).  I cannot guarantee the correctness of such an approximation. It is likely that the argument assignments in the unit tests contradict with the states with which I pair the unit tests.  
-
-Let us walk through the concepts involved with an example. Consider the following code
-\begin{small}
-\begin{verbatim}
-main() {
-   v = …
-   foo(v);
-}
-
-foo(v) {
-  bar(v2);
-  baz(v3);
-}
-
-bar (x) {
-  foobar(x2);
-  foobaz(x3);
-}
-
-baz(y) {
-  foobaz(..);
-}
-
-foobar(x) {
-  …
-}
-
-foobaz(...) {
-  …
-}
-\end{verbatim}
-\end{small}
-
-The corresponding static call graph (approximated) is
-\begin{figure}[h]
-\centering
-\includegraphics[width=3.5in, trim=0.8in 0in 0in 1.0in, clip]{callgraph.png}
-\caption{The call graph of the example program}
-\end{figure}
-
-I define a potential error revealing method (PERM) as the method that might trigger the dynamic condition of residual investigation for a FindBugs bug pattern.  For example, FindBugs reports an error when a class overrides the equals(Object) method but not the hashCode() method.  Residual investigation installs dynamic checks for the condition that Object.hashCode() is called on an object of a class that redefines equals(Object) and inherits the implementation of hashCode(). The method that contains a call to hashCode() on the suspect class (i.e. the class that redefines equals and inherits hashCode) or its subclass is the PERM for this bug pattern.  Another example is that FindBugs statically detects dropped exceptions and reports them.  Residual investigation examines which methods end up being dynamically invoked in the suspect code block and watches whether the same methods ever throw the dropped exception when called from anywhere in the program. The methods that contain calls to a method that can be invoked in the suspect code block and can throw exceptions are the PERMs for this bug pattern. I analyze the PERMs using text search such as grep and static analysis such as call graph analysis and Java reflection API.  For example, for the dropped exception pattern, I analyze the types of the exceptions declared to be thrown by the methods in the suspect code block (suspect methods) using Java reflection and then search for methods whose names are the same as that of any suspect method and throw the same exceptions using grep.  Suppose the method foobar in the above code example is our PERM.  
-
-Once finding a PERM, I interpose k levels back in the call graph from a PERM and call this a “switching” method.  Suppose k=1. In our example, the method bar is a switching method.  At the beginning I run existing system tests.  When I hit a switching method, I start exploring (i.e. switching to dynamic symbolic execution mode, instead of just dynamic execution).  To allow exploration, I relax (i.e., forget) some concrete values.  The first cut is to forget the arguments of switching methods.  In short, the invocation of a switching method turns on dynamic symbolic execution mode during the execution of an existing system test.  I declare victory when I find an approximate system test that calls the PERM method: the unit test case for bar that invokes foobar during its execution given the relaxed state.  In our example, this corresponds to a path like 
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=3.5in, trim=0in 0in 0in 2.0in, clip]{path.png}
-\caption{The path that calls the PERM method in the example program}
-\end{figure}
-
-The dotted line arrow marks the path before I start dynamic symbolic exploration (i.e. the path exercised by the existing system test), while the solid line arrow marks the path that the generated unit test case for bar establishes. 
-
-PERM definitions for other bug patterns not mentioned in the above text:
-\begin{itemize}
-\item Bad Covariant Definition of Equals: FindBugs detects that programmers write equals method that accept a parameter of type other than Object.  Residual investigation checks whether the ancestral equals method, Object.equals(Object), is called on an instance of a class that has a covariant definition of equals.  The PERM for this bug pattern is the method that contains a call to equals() on the suspect class (i.e. the class redefines equals and inherits hashCode) or its subclass.
-\item Cloneable Not Implemented Correctly: This bug pattern does not require native test suite.  Thus, I do not need to improve existing test suite.
-\item Equals Method Overrides Equals in Super-class and May not Be Symmetric: FindBugs detects whether both the overriding equals method in the subclass and the overridden equals method in the superclass use instanceof in the determination of whether two objects are equal.  Residual investigation dynamically calls both equals method whenever it observes a comparison involving a contentious object and test if the results match.  The PERM for this bug pattern is the method that contains a call to equals() on the suspect superclass or subclass.
-\item Non-Short-Circuit Boolean Operator: FindBugs issues warnings for use of \sv{\&} and \sv{|} inside the condition of an if statement.  Residual investigation checks for actual side-effects on the right-hand side of a non-short-circuiting boolean operator.  The PERM for this bug pattern is the method that contains a \sv{\&} or \sv{|} in an if statement.
-\item Read Return Should be Checked: FindBugs checks if the return value from read in java.io.InputStream is ignored.  Residual investigation waits until it sees a read method on an object of any subclass of InputStream returns fewer bytes than requested (even for a call that does check the return value).  The PERM for this bug pattern is the method that contains a call to read on the suspect class.
-\end{itemize}
-
-\chapter{Related Work}
-\label{chp:related}
-
-Similar to us, hybrid concolic testing\cite{Majumdar:2007:HCT:1248820.1248874} interleaves random testing and concolic testing to increase coverage.  The switch from random testing to concolic testing happens when random testing does not find new coverage points after a predetermined steps; the switch from concolic testing to random testing happens when concolic testing finds an input to an uncovered branch goal (though concolic testing may need to explore several feasible execution paths to generate the new input).  But hybrid concolic testing is not designed to trigger one specific bug condition.  I are targeting at generating tests to trigger one specific bug condition, using call graph search and dynamic symbolic execution. 
-
-\cite{Elbaum:2006:CDU:1181775.1181806} saves system test states and restores those states as regression tests.  I also save system test states.  But our purpose is helping setting up environment (i.e. assignments to heap variables) for starting dynamic symbolic execution of the “switching” method.
-
-The closest work to us is \cite{Pasareanu:2008:CUS:1390630.1390635}, which uses system tests to set up the environment.  Different from\cite{Pasareanu:2008:CUS:1390630.1390635} that uses symbolic execution to generate unit tests, I use dynamic symbolic execution to generate unit tests.  This enables us to handle native method calls and some complicated constraints by replacing them with concrete values. 
-
-\chapter{Management and Timeline}
-\label{chp:timeline}
-
-My overall goal is to defend the dissertation by September 2015.  I plan to submit a paper on the proposed work to ICSE 2016; the deadline for this conference is September 4, 2015.  Right now the underlying dynamic symbolic execution engine Dsc\cite{islam10dsc+mock} is similar to jCute\cite{sen06cute} released by University of Illinois at Urbana-Champaign. I plan to improve Dsc to make it become cutting-edge and open-sourced by the end of next March.  I plan to work out the required static analysis (e.g. call graph analysis) by May 2015.  I plan to finish the implementation of the proposed work by July 2015.  I will be writing the dissertation, performing implementations and evaluations, and plan to complete the dissertation by September 2015. 
-
-\chapter{Meta-invariant}
+\chapter{Second-Order Constraints in Dynamic Invariant Inference}
 \label{chp:metainvariantpaper}
 
 
@@ -3575,130 +3583,45 @@ complement for manual derivation of second-order constraints.
 
 
 
-\section{Related Work}
-\label{related}
 
-There is a wealth of other work on invariant inference. We next
-selectively focus on some recent approaches that were not covered in
-the body of the paper (typically because they focus on static
-invariant inference techniques).
+%\section{Conclusions}
+%\label{conclusions}
+%
+%
+%Second-order constraints can steer dynamic invariant inference to
+%avoid erroneous invariants and to derive more relevant invariants
+%while reducing noise.  We have defined a vocabulary of second-order
+%constraints and described how each of them encodes information that is
+%typically known by programmers and useful to a dynamic invariant
+%detector.  
+%%The simplest approach to applying second-order constraints
+%%is static in the sense that it combines invariants after dynamic
+%%detection is complete, but static combination tends to produce
+%%uselessly over-general invariants.  
+%We have taken an approach in which the second-order constraints control
+%the propagation of the observations on which invariant detection is
+%based. We have also extended the Daikon system so as to infer second-order
+%constraints.
+%
+%%We have implemented dynamic invariant detection with second-order
+%%constraints as an extension of Daikon, allowing a user to provide a
+%%separate configuration file containing second-order constraints. We
+%%report three case studies, one of a small example application with a
+%%relatively thorough test suite, and two of large, unfamiliar
+%%applications, with real-world test suites.  The programmer effort
+%%required to specify implicit relationships among methods as
+%%second-order constraints in all cases was modest, and resulted in
+%%elimination of many spurious invariants and addition of others, many
+%%of which were insightful.
+%
+%Overall, we consider second-order constraints to be a particularly
+%promising idea not just as a meaningful documentation concept but also
+%for improving the consistency and quality of dynamically inferred
+%invariants---a major challenge in this area. 
+%% We believe this work to
+%%be an important first step in this direction.
 
-For reverse engineering, Gannod and Cheng \cite{gannod95strongest}
-proposed to infer detailed specifications statically by computing the
-strongest postconditions. Nevertheless, pre/postconditions obtained
-from analyzing the implementation are usually too detailed to
-understand and too specific to support program evolution. Gannod and
-Cheng \cite{gannod99specification} addressed this deficiency by
-generalizing the inferred specification, for instance by deleting
-conjuncts, or adding disjuncts or implications. Their approach
-requires loop bounds and invariants, both of which must be added
-manually.
-
-There has been some recent progress in inferring invariants using
-abstract interpretation. Logozzo \cite{logozzo04automatic,logozzo-phd}
-infers loop invariants while inferring class invariants.  The
-limitation of his approach are the available abstract domains;
-numerical domains are best studied. Resulting specifications are
-expressed in terms of fields of classes. 
-
-Flanagan and Leino \cite{flanagan01houdini} propose a lightweight
-verification-based tool, named Houdini, to statically infer ESC/Java
-\cite{flanagan02extended} annotations from unannotated Java
-programs. Based on pre-set property patterns, Houdini conjectures a
-large number of possible annotations and then uses ESC/Java to verify
-or refute each of them. The ability of this approach is limited by the
-patterns used. In fact, only simple patterns are feasible, otherwise
-too many candidate annotations will be generated, and, consequently,
-it will take a long time for ESC/Java to verify complicated
-properties.
-
-Taghdiri \cite{10.1109/ASE.2004.10075} uses a counterexample-guided
-refinement process to infer over-approximate specifications for
-procedures called in the function being verified. In contrast to our
-approach, Taghdiri aims to approximate the behaviors for the
-procedures within the caller's context instead of inferring
-specifications of the procedure.
-
-Henkel and Diwan \cite{henkel07discovering} have built a tool to
-dynamically discover algebraic specifications for interfaces of Java
-classes. Their specifications relate sequences of method invocations.
-The tool generates many terms as test cases from the class
-signature. The results of these tests are generalized to algebraic
-specifications.  They use a second tool to dynamically compare
-their specifications against implementations by executing both
-simultaneously and comparing their behavior \cite{henkel08debugging}.
-
-Much of the work on specification mining is targeted at inferring API
-protocols dynamically.  Whaley et al. \cite{whaley-automatic} create 
-a finite state machine into which a transition from method A to 
-method B is added if the post-condition of method A is not mutually
-exclusive with the pre-condition of method B. 
-%describe a system to extract component interfaces as finite 
-%state machines from execution traces. 
-Meghani and Ernst \cite{MeghaniE2003} build upon Whaley's work by 
-using Daikon to determine the likely pre/post-condition of each method.
-Other approaches use data mining techniques.  For
-instance Ammons et al. \cite{ammons02mining} use a learner to infer
-nondeterministic state machines from traces; similarly, Yang and Evans
-\cite{996832} built Terracotta, a tool to generate regular patterns
-of method invocations from observed runs of the program. Li and Zhou
-\cite{1081755} apply data mining in the source code to infer
-programming rules, i.e., usage of related methods and variables, and
-then detect potential bugs by locating the violation of these rules.
-Gabel and Su \cite{Gabel:2010:OIE:1806799.1806806} dynamically 
-infer and verify method call ordering constraints, and
-report the constraints only if they are violated. 
-Beschastnikh et al. \cite{Beschastnikh:2011:LEI:2025113.2025151} 
-use mined temporal invariants from logs to derive a refined
-finite state machine. 
-Although not explicitly our goal, some of our second-order constraints
-can be thought of
-as a way to express temporal API protocols.
-For example, we can find the general has$\ast$, next$\ast$ type
-specification \cite{Gabel:2010:OIE:1806799.1806806} by checking if \emph{CanFollow(has$\ast$(return==true),next$\ast$)},
-or that the postcondition of has$\ast$ when has$\ast$ 
-returns true implies the precondition of next$\ast$.  
-It is interesting future work to see how to integrate 
-existing techniques on specification mining with our approach 
-to derive automata that describe correct behavior.
-\section{Conclusions}
-\label{conclusions}
-
-
-Second-order constraints can steer dynamic invariant inference to
-avoid erroneous invariants and to derive more relevant invariants
-while reducing noise.  We have defined a vocabulary of second-order
-constraints and described how each of them encodes information that is
-typically known by programmers and useful to a dynamic invariant
-detector.  
-%The simplest approach to applying second-order constraints
-%is static in the sense that it combines invariants after dynamic
-%detection is complete, but static combination tends to produce
-%uselessly over-general invariants.  
-We have taken an approach in which the second-order constraints control
-the propagation of the observations on which invariant detection is
-based. We have also extended the Daikon system so as to infer second-order
-constraints.
-
-%We have implemented dynamic invariant detection with second-order
-%constraints as an extension of Daikon, allowing a user to provide a
-%separate configuration file containing second-order constraints. We
-%report three case studies, one of a small example application with a
-%relatively thorough test suite, and two of large, unfamiliar
-%applications, with real-world test suites.  The programmer effort
-%required to specify implicit relationships among methods as
-%second-order constraints in all cases was modest, and resulted in
-%elimination of many spurious invariants and addition of others, many
-%of which were insightful.
-
-Overall, we consider second-order constraints to be a particularly
-promising idea not just as a meaningful documentation concept but also
-for improving the consistency and quality of dynamically inferred
-invariants---a major challenge in this area. 
-% We believe this work to
-%be an important first step in this direction.
-
-\chapter{Sedge}
+\chapter{SEDGE: Symbolic Example Data Generation for Dataflow Programs}
 \label{chp:sedgepaper}
 % \documentclass[10pt,conference,compsocconf]{IEEEtran}
 % \documentclass[conference]{IEEEtran}
@@ -6475,8 +6398,6 @@ operations, the Pex completeness is only 0.09.
 %
 %Pex fails to generate a tuple that can pass the FILTER in step B due to the presence of the UDF \textit{POW(double, double)}. This is a witness of concretization failure inside Pex.  \textsc{Sedge} can still achieve perfect completeness in this case by employing non-linear constraint solver Coral that can solve constraints with common numeric functions such as the power function and the square root function. 
 
-\input{related}
-
 %\section{Conclusions and Future Work}
 %Generating example input data for dataflow programs has emerged as an
 %important challenge. We presented \textsc{Sedge}: an approach and tool
@@ -6524,7 +6445,7 @@ operations, the Pex completeness is only 0.09.
 %Research and Technology under an Excellence (Aristeia) award.
 %
 %Our tool is available at: \url{https://github.com/kaituo/sedge}.
-\chapter{RFBI}
+\chapter{Residual Investigation: Predictive and Precise Bug Detection}
 \label{chp:rfbipaper}
 %\documentclass{acm_proc_article-sp}
 %\documentclass[10pt,journal,letterpaper,compsoc]{IEEEtran}
@@ -9565,33 +9486,30 @@ conclusively determine that the refactoring is safe or unsafe, it can emit the
 above checks as additional safeguards of behavior preservation.
 
 
-\input{related.tex}
 
-
-
-\section{Conclusions}
-
-We presented residual investigation: the idea of accompanying a static
-error analysis with an appropriately designed dynamic analysis that
-will report with high confidence whether the static error report is
-valid. We believe that residual investigation is, first and
-foremostly, an interesting \emph{concept}. Identifying this concept
-helped us design dynamic analyses for a variety of static bug patterns
-and implement them in a tool, RFBI. We applied RFBI to a variety of
-test subjects to showcase the potential of the approach.
-
-There are several avenues for future work along the lines of residual
-investigation. Our current work has been a proof
-of concept. That is, we have been interested in examining whether
-\emph{some} application of residual investigation can be fruitful and
-not in determining how universally applicable the concept is to the
-realm of static analyses (i.e., how likely is it that a specific
-static analysis for bug detection can be accompanied by a profitable
-residual investigation).
-
-Overall, we feel that for bug finding tools to get to the next level
-of practicality they need to incorporate some flavor of the dynamic
-validation that residual investigation offers.
+%\section{Conclusions}
+%
+%We presented residual investigation: the idea of accompanying a static
+%error analysis with an appropriately designed dynamic analysis that
+%will report with high confidence whether the static error report is
+%valid. We believe that residual investigation is, first and
+%foremostly, an interesting \emph{concept}. Identifying this concept
+%helped us design dynamic analyses for a variety of static bug patterns
+%and implement them in a tool, RFBI. We applied RFBI to a variety of
+%test subjects to showcase the potential of the approach.
+%
+%There are several avenues for future work along the lines of residual
+%investigation. Our current work has been a proof
+%of concept. That is, we have been interested in examining whether
+%\emph{some} application of residual investigation can be fruitful and
+%not in determining how universally applicable the concept is to the
+%realm of static analyses (i.e., how likely is it that a specific
+%static analysis for bug detection can be accompanied by a profitable
+%residual investigation).
+%
+%Overall, we feel that for bug finding tools to get to the next level
+%of practicality they need to incorporate some flavor of the dynamic
+%validation that residual investigation offers.
 
 %%% (YS) Unfortunately I find the paragraph below to not flow well in
 %%% the conclusions section.
@@ -9636,7 +9554,7 @@ validation that residual investigation offers.
 %%\paragraph*{Acknowledgments}
 %% \section{ACKNOWLEDGMENTS}
 
-\appendix
+%\appendix
 
 %\begin{acks}
 %We thank 
@@ -9675,6 +9593,114 @@ validation that residual investigation offers.
 % Electronic Appendix
 %\elecappendix
 
+\chapter{Type Constraints}
+
+Type constraints reasoning is necessary as object oriented programming becomes prevalent.  For example, the official JVM spec defines the Java typing constraints in Prolog to do type checking within Java compiler: "The type checker enforces type rules that are specified by means of Prolog clauses. English language text is used to describe the type rules in an informal way, while the Prolog clauses provide a formal specification." Another important application of type constraints is dynamic symbolic execution, which often needs to create objects with correct types.  But due to polymorphisms such as subtyping and dynamic dispatch, the dynamic type of a reference variable is often not equal to its declared static type. Various errors could arise if static types are to substitute dynamic types to create objects. In this chapter, we focus on the application of type constraints to dynamic symbolic execution.
+
+The challenge of type constraints reasoning is the analysis must be precise enough to derive correct dynamic types not only in complete type hierarchy but also in incomplete type hierarchy while keeping the process at reasonable performance cost. Complete type hierarchy means all the required types are present during the search space of the analysis. Incomplete type hierarchy means some types to derive the correct dynamic types are missing in the search space. A streak of related work attempts to attack this challenge. 
+
+\chapter{Related Work}
+\label{chp:related}
+
+
+\section{Second-Order Constraints in Dynamic Invariant Inference}
+
+There is a wealth of other work on invariant inference. We next
+selectively focus on some recent approaches that were not covered in
+the body of the paper (typically because they focus on static
+invariant inference techniques).
+
+For reverse engineering, Gannod and Cheng \cite{gannod95strongest}
+proposed to infer detailed specifications statically by computing the
+strongest postconditions. Nevertheless, pre/postconditions obtained
+from analyzing the implementation are usually too detailed to
+understand and too specific to support program evolution. Gannod and
+Cheng \cite{gannod99specification} addressed this deficiency by
+generalizing the inferred specification, for instance by deleting
+conjuncts, or adding disjuncts or implications. Their approach
+requires loop bounds and invariants, both of which must be added
+manually.
+
+There has been some recent progress in inferring invariants using
+abstract interpretation. Logozzo \cite{logozzo04automatic,logozzo-phd}
+infers loop invariants while inferring class invariants.  The
+limitation of his approach are the available abstract domains;
+numerical domains are best studied. Resulting specifications are
+expressed in terms of fields of classes. 
+
+Flanagan and Leino \cite{flanagan01houdini} propose a lightweight
+verification-based tool, named Houdini, to statically infer ESC/Java
+\cite{flanagan02extended} annotations from unannotated Java
+programs. Based on pre-set property patterns, Houdini conjectures a
+large number of possible annotations and then uses ESC/Java to verify
+or refute each of them. The ability of this approach is limited by the
+patterns used. In fact, only simple patterns are feasible, otherwise
+too many candidate annotations will be generated, and, consequently,
+it will take a long time for ESC/Java to verify complicated
+properties.
+
+Taghdiri \cite{10.1109/ASE.2004.10075} uses a counterexample-guided
+refinement process to infer over-approximate specifications for
+procedures called in the function being verified. In contrast to our
+approach, Taghdiri aims to approximate the behaviors for the
+procedures within the caller's context instead of inferring
+specifications of the procedure.
+
+Henkel and Diwan \cite{henkel07discovering} have built a tool to
+dynamically discover algebraic specifications for interfaces of Java
+classes. Their specifications relate sequences of method invocations.
+The tool generates many terms as test cases from the class
+signature. The results of these tests are generalized to algebraic
+specifications.  They use a second tool to dynamically compare
+their specifications against implementations by executing both
+simultaneously and comparing their behavior \cite{henkel08debugging}.
+
+Much of the work on specification mining is targeted at inferring API
+protocols dynamically.  Whaley et al. \cite{whaley-automatic} create 
+a finite state machine into which a transition from method A to 
+method B is added if the post-condition of method A is not mutually
+exclusive with the pre-condition of method B. 
+%describe a system to extract component interfaces as finite 
+%state machines from execution traces. 
+Meghani and Ernst \cite{MeghaniE2003} build upon Whaley's work by 
+using Daikon to determine the likely pre/post-condition of each method.
+Other approaches use data mining techniques.  For
+instance Ammons et al. \cite{ammons02mining} use a learner to infer
+nondeterministic state machines from traces; similarly, Yang and Evans
+\cite{996832} built Terracotta, a tool to generate regular patterns
+of method invocations from observed runs of the program. Li and Zhou
+\cite{1081755} apply data mining in the source code to infer
+programming rules, i.e., usage of related methods and variables, and
+then detect potential bugs by locating the violation of these rules.
+Gabel and Su \cite{Gabel:2010:OIE:1806799.1806806} dynamically 
+infer and verify method call ordering constraints, and
+report the constraints only if they are violated. 
+Beschastnikh et al. \cite{Beschastnikh:2011:LEI:2025113.2025151} 
+use mined temporal invariants from logs to derive a refined
+finite state machine. 
+Although not explicitly our goal, some of our second-order constraints
+can be thought of
+as a way to express temporal API protocols.
+For example, we can find the general has$\ast$, next$\ast$ type
+specification \cite{Gabel:2010:OIE:1806799.1806806} by checking if \emph{CanFollow(has$\ast$(return==true),next$\ast$)},
+or that the postcondition of has$\ast$ when has$\ast$ 
+returns true implies the precondition of next$\ast$.  
+It is interesting future work to see how to integrate 
+existing techniques on specification mining with our approach 
+to derive automata that describe correct behavior.
+
+\input{related_sedge}
+
+\input{related_rfbi}
+
+
+\section{Providing dynamic symbolic execution with concrete system states}
+
+Similar to us, hybrid concolic testing\cite{Majumdar:2007:HCT:1248820.1248874} interleaves random testing and concolic testing to increase coverage.  The switch from random testing to concolic testing happens when random testing does not find new coverage points after a predetermined steps; the switch from concolic testing to random testing happens when concolic testing finds an input to an uncovered branch goal (though concolic testing may need to explore several feasible execution paths to generate the new input).  But hybrid concolic testing is not designed to trigger one specific bug condition.  I are targeting at generating tests to trigger one specific bug condition, using call graph search and dynamic symbolic execution. 
+
+\cite{Elbaum:2006:CDU:1181775.1181806} saves system test states and restores those states as regression tests.  I also save system test states.  But our purpose is helping setting up environment (i.e. assignments to heap variables) for starting dynamic symbolic execution of the “switching” method.
+
+The closest work to us is \cite{Pasareanu:2008:CUS:1390630.1390635}, which uses system tests to set up the environment.  Different from\cite{Pasareanu:2008:CUS:1390630.1390635} that uses symbolic execution to generate unit tests, I use dynamic symbolic execution to generate unit tests.  This enables us to handle native method calls and some complicated constraints by replacing them with concrete values. 
 
 \bibliographystyle{umthesis}
 \bibliography{testing,testing-cc,refactoring,sigproc,dbgen}

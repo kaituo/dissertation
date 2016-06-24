@@ -1,0 +1,120 @@
+\section{Residual Investigation: Predictive and Precise Bug Detection}
+
+% The proposed analysis is a light-weight static-dynamic combo that produces warnings that are more actionable than FindBugs warnings but not quite as actionable as a test case that exhibits the actual bug:
+% 1) Run FindBugs hashCode--equals detector
+% 2) Detector flags some classes as inconsistent
+% 3) Detector installs dynamic check in these classes
+% 4) If program (during testing, deployment) adds instance of such class into a data structure: Warning
+
+Static and dynamic analyses are routinely chained together for
+checking program correctness conditions in programming languages,
+i.e., in compilers and runtime systems. Compilers check certain
+properties statically and insert runtime checks for remaining
+properties. A classic example is checking that an array read does not
+access a memory location outside the bounds of the array. To enforce
+this property, Java compilers traditionally insert a dynamic check
+into the code before each array read. To reduce the runtime overhead,
+static analyses such as ABCD~\cite{bodik00abcd} have been developed
+that can guarantee some reads as being within bounds, so that only the
+remaining ones have to be checked dynamically. Beyond array
+bounds checking, a similar static dynamic analysis pipeline has been
+applied to more complex properties. The Spec\# extended compiler
+framework~\cite{barnett04spec} is a prime example: it can prove some
+pre- and post-conditions statically and generates runtime checks for
+the remaining ones. 
+\cite{Gopinathan:2008:EOP:1449764.1449784} uses a combination of static
+and dynamic analysis for enforcing object protocols. Their approach
+separates the static checking of protocol correctness from a
+dynamic check of program conformance to the protocol.
+
+In residual dynamic typestate analysis, explored by
+\cite{dwyer07residual}, \cite{bodden10efficient} and
+\cite{bodden07staged}, a dynamic typestate analysis that monitors all
+program transitions for bugs is reduced to a residual analysis that
+just monitors those program transitions that are left undecided by a
+previous static analysis. This approach exploits the fact that a
+static typestate analysis is typically complete, i.e., it
+over-approximates the states a program can be in. If for a small
+sub-region of the program the over-approximated state sets do not
+contain an error state, all transitions within such a region can
+be safely summarized and ignored by the subsequent residual
+dynamic analysis. At a high level, our approach adopts this idea, by
+only monitoring those aspects of the program that the static analysis
+has flagged as suspicious. However, our approach is more general in
+two dimensions, (1) typestate analysis is restricted to verifying
+finite state machine properties (``do not pop before push''), while
+our approach can be applied to more complex properties (``do not pop
+more than pushed'') and (2) our dynamic analysis is predictive: it
+leverages dynamic results to identify bugs in code both executed and
+not executed during the analysis.
+% In typestate analysis the program correctness criterion is a finite state automaton, some program actions trigger transitions in the automaton and some transitions lead to an error state. The results of the static analysis are used to minimize the automaton checked by the dynamic analysis. Short follow-up SPIN paper on residual checking of safety properties~\cite{dwyer08residual}.
+
+Beyond typestates, the idea of speeding up a dynamic program analysis
+by pre-computing some parts statically has been applied to other
+analyses, such as information flow analysis. For example, recent work
+by \cite{chugh09staged} provides a fast dynamic
+information flow analysis of JavaScript programs. JavaScript programs
+are highly dynamic and can load additional code elements during
+execution. These dynamically loaded program elements can only be
+checked dynamically. Their staged analysis statically propagates its
+results throughout the statically known code areas, up to the borders
+at which code can change at runtime. These intermediate results are
+then packaged into residual checkers that can be evaluated efficiently
+at runtime, minimizing the runtime checking overhead.
+
+Our analysis can be seen in a similar light as residual dynamic typestate analysis and residual information flow analysis. If we take as a hypothetical baseline somebody running only our residual checkers, then adding the static bug finding analysis as a pre-step would indeed make the residual dynamic analysis more efficient, as the static analysis focuses the residual analysis on code that may have bugs. However, our goals are very different. Our 
+real baseline is an established static analysis technique whose main problem is over-approximation, which leads to users ignoring true warnings. 
+
+Our earlier work on Check'n'Crash~\cite{csallner05check} and DSD-Crasher~\cite{csallner06dsd-crasher,smaragdakis07combining} can be seen as strict versions of residual analysis. These earlier techniques share our goal of convincing users of the validity of static bug warnings. However, Check'n'Crash and DSD-Crasher guarantee that a given warning is true, by generating and executing concrete test cases that satisfy the static warning, until a static warning can be replicated in a concrete execution or a user-defined limit is reached. While such proof is very convincing, it also narrows the technique's scope. I.e., our earlier tools could only confirm very few warnings. In our current residual investigation, we relax this strict interpretation and also consider predictive clues that are likely to confirm a static warning.
+
+Dynamic symbolic execution is a recent combination of static and
+dynamic program
+analysis~\cite{godefroid05dart,cadar05execution,tillmann08pex,Islam14Generating}. Dynamic
+symbolic execution is also a strict approach that warns a user only
+after it has generated and executed a test case that proves the
+existence of a bug. Compared to our analysis, dynamic symbolic
+execution is heavier-weight, by building and maintaining
+during program execution a fully symbolic representation of the
+program state. While such detailed symbolic information can be useful
+for many kinds of program analyses, our current residual
+investigations do not need such symbolic information, making our
+approach more scalable.
+
+Monitoring-oriented programming (MOP)~\cite{chen07mop} shows how
+runtime monitoring of correctness conditions can be implemented more
+efficiently, even without a prefixed static analysis. JavaMOP, for
+example, compiles correctness conditions to Java aspects that add
+little runtime overhead. This technique is orthogonal to ours. I.e.,
+as some of our dynamic analyses are currently implemented manually
+using AspectJ, expressing them in terms of JavaMOP would be a
+straightforward way to reduce our runtime overhead.
+
+Our analysis can be viewed as a ranking system on static analysis
+error reports.  There has been significant work in this direction using data mining.
+\cite{kremenek2004} sorts error reports by their probabilities.  A
+model is used for computing probabilities for each error report by
+leveraging code locality, code versioning, and user feedback.  The
+effectiveness of the model depends on (1) a fair number of reports and
+(2) strong clustering of false positives.  \cite{kim2007} prioritize
+warning categories by mining change log history messages.
+Intuitively, they expect a warning category to be important if warning
+instances from the category are removed many times in the revision
+history of a system. Their method requires change logs of good
+quality. For static tools such as FindBugs, which analyze Java
+bytecode to generate warnings, they also require compilation of each
+revision.  \cite{Bodden2008FPE} use a machine-learning approach to filter out false positives of their static analyses for validating a finite state property.  They identify cases where imprecise static analysis information can appear due to factors such as dynamic class loading and interprocedural data flow.  They then use each case as a feature for decision tree learning.  The key differene between our approach and data-mining-based ones is that our approach considers the possible objections to certain static error reports.  As a result, we can validate more complicated error situations that require understanding what a programmer has in mind in practice when writing their code. 
+
+Besides Eraser~\cite{266641}, some other related work on race detection comes under the label of predictive race analysis.  
+%reports a race whenever two threads access the same memory location without holding a common lock and one of the access is a write. 
+\cite{Chen:2007:PSC:1770351.1770387} predicts races by logging only relevant information in a program trace and then model-checking all feasible trace permutations.  jPredictor \cite{Chen:2008:JPR:1368088.1368119} presents a polynomial algorithm that can search a thread scheduling for a potential race that did not occur in the observed execution. jPredictor is not sound.  \cite{Smaragdakis:2012:SPR:2103656.2103702} define the causally-precedes relation (CP) that weakens the traditional Happens-Before relation.  The CP approach can generalize beyond an observed execution and guarantee soundness and polynomial complexity. These sophisticated predictive approaches can offer greater precision than residual investigation in terms of race detection, whereas our residual investigation based race detector can have fewer false negatives, due to the better coverage of static analysis tools and the conservativeness of our dynamic analysis.
+
+The precision of bug detection software can be greatly enhanced with
+human supervision at residual steps.  After an automated static
+program verification step, \cite{Dillig:2012:AED:2254064.2254087}
+relies on humans to help reduce false positives by asking humans simple
+and relevant questions.  \cite{Xie2012SCAM} proposes to use humans to
+provide guidance to otherwise intractable problems faced by test case
+generators.  It would be interesting to combine such techniques in our
+approach.  For instance, residual investigation's precision is
+influenced by the native test suite coverage.  With the help of human
+users, additional test cases can be constructed if required.

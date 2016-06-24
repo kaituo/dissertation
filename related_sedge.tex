@@ -1,0 +1,104 @@
+\section{SEDGE: Symbolic Example Data Generation for Dataflow Programs}
+%PL&SE
+
+Dataflow languages such as Pig can been seen as a compromise between
+declarative languages, such as SQL, and imperative languages, such as C
+and Java. That is, Pig combines the declarative feature of
+straightforward parallel computation with the imperative feature of
+explicit intermediate results. 
+%However, besides the work by Olston et
+%al.~\cite{Olston:2009:GED:1559845.1559873}, with which we have
+%compared in detail in Section
+%%s~\ref{sec:background_olston} and~
+%\ref{sec:eval}, we are not aware of any related work that
+%addresses test data generation for dataflow languages. 
+There is little work (discussed in earlier sections) that addresses
+test data generation for dataflow languages. Instead, the
+related work from various research communities has focused on the
+extreme ends of this spectrum, i.e., either on SQL or on Java-like
+programming languages.
+
+Specifically, related work in the software engineering community has
+focused on traditional procedural and object-oriented database-centric
+programs, tested via combinations of static and dynamic reasoning
+\cite{DBLP:conf/tap/SmaragdakisC07}. The main approaches use static
+symbolic execution~\cite{marcozzi12test} or dynamic symbolic
+execution~\cite{emmi07dynamic,li10dynamic,pan11generating}.  While our
+work is inspired by such earlier dynamic symbolic execution
+approaches, we adapted this work to dataflow programs and their
+execution semantics. At the other end, there is work that
+automatically generates database data that satisfy external
+constraints \cite{orm-ase07} but there is no coverage or conciseness
+goal and no application to dataflow languages. Other work
+\cite{tuya10full} has introduced the idea of code coverage to SQL
+queries. For our purposes, we reused the concept of coverage for Pig
+Latin as defined by Olston et al.
+\cite{Olston:2009:GED:1559845.1559873}.
+
+%\cite{Khalek:2011:STD:1989760.1990071}
+%% CC says: tuya10full applies the SE idea of code coverage to SQL queries.
+
+In the formal methods community, Qex is generating test inputs for SQL 
+queries~\cite{veanes10qex}. Similar to our work, Qex maps a SQL
+query to SMT and uses the Z3 constraint solver to infer data tables.
+However Qex differs from our work in that Qex does not have a dynamic 
+program analysis component and therefore cannot observe how a query
+processes existing example data. Earlier work in the software engineering
+community on dynamic symbolic execution has shown that dynamic analysis
+can make such program analysis more efficient and enable it to reason
+about user-defined functions, which we leverage in our work.
+
+%% CC says: It is probably not worth to distinguish here between
+%% generating program inputs that merely select data from an existing db
+%% \cite{li10dynamic,pan11generating} 
+%% and synthesizing fresh db data (that may not correspond to any ``real'' 
+%% db data) \cite{emmi07dynamic,marcozzi12test}.
+%% CC says: 
+%% - li10dynamic generates a SQL query as a program input, given a db state
+%% - pan11generating generates general program inputs, given a db state
+%% - marcozzi12test maps individual CFG-paths to Alloy constraints.
+% \todo{YL: What is the technical difference from our work?}
+%\todo{YL: Is this survey complete?}
+%\cc{Nothing else comes to mind, but I will make another pass.}
+
+%% CC says: karam01testing,karam08unit define coverage criteria for
+%% (visual) dataflow languages: all-nodes, all-edges, and def-use.
+
+
+%DATABASES
+%(1) DB testing
+In the database community, a common methodology for testing a database
+management system or a database application is to generate a set of
+test databases given target query workloads.  Overall our problem
+differs in that, instead of a whole database, we aim to generate a
+small (or minimum if desired) set of tuples that have perfect path
+coverage of a given dataflow program.  The recent work on reverse
+query processing~\cite{binnig07reverse} takes an application query and
+a result set as input, and generates a corresponding input database by
+exploiting \textit{reverse relational algebra}. In comparison, our
+work focuses on dataflow programs for big data applications, where
+many operators are non-relational, e.g., map(), reduce(), and
+arbitrary user-defined functions, and hence a ``reverse algebra'' may
+not exist.  The QAGen system~\cite{BinnigKLO07} further takes into
+account a set of constraints, usually cardinality and data
+distribution in input and operator output tables, and aims to generate
+a database that satisfies these constraints. Analogously to earlier
+work in the formal methods community, this work performs a static
+symbolic analysis and does not obtain additional information from a
+dynamic analysis.
+%% CC says: Do we really need to discuss QAGen? These authors' other
+%% work on reverse query processing (binnig07reverse) is more closely
+%% related to our work.
+%
+%%YS: Removed both paras below for space.
+%More recent work, including~\cite{Lo:2010:GDQ} and \cite{Arasu:2011:DGU}, proposes to generate databases with approximate cardinalities  for im%proved performance, but those approximation techniques are not directly relevant to our work.
+%%% There is some similar work in the SE community, i.e.:
+%% Testing DBMS using Alloy~\cite{khalek11systematic}.
+
+%(2) applications of data examples 
+
+%More broadly, data examples have been employed to assist in schema
+%mapping~\cite{Alexe:2010:CSM,Alexe:2011:DRS}. But this line of work
+%addresses a different question: given a finite set of data examples,
+%it decides whether or not there exists a schema mapping specified by
+%global and local view constraints t%hat ``fits'' these data examples.
