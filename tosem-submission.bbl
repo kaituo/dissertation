@@ -468,6 +468,12 @@ Liang, Sheng.
 \newblock {\em Java Native Interface: Programmer's Guide and Specification}.
 \newblock Prentice Hall, June 1999.
 
+\bibitem{Lindholm:2014:JVM:2636992}
+Lindholm, Tim, Yellin, Frank, Bracha, Gilad, and Buckley, Alex.
+\newblock {\em The Java Virtual Machine Specification, Java SE 8 Edition},
+  1st~ed.
+\newblock Addison-Wesley Professional, 2014.
+
 \bibitem{logozzo04automatic}
 Logozzo, Francesco.
 \newblock Automatic inference of class invariants, 2004.
@@ -615,6 +621,12 @@ Sen, Koushik, and Agha, Gul.
   model-checking tools.
 \newblock In {\em Proc. 18th International Conference on Computer Aided
   Verification (CAV)\/} (Aug. 2006), Springer, pp.~419--423.
+
+\bibitem{Sherman:2015:DTP:2776776.2755971}
+Sherman, Elena, Garvin, Brady~J., and Dwyer, Matthew~B.
+\newblock Deciding type-based partial-order constraints for path-sensitive
+  analysis.
+\newblock {\em ACM Trans. Softw. Eng. Methodol. 24}, 3 (May 2015), 15:1--15:33.
 
 \bibitem{smaragdakis07combining}
 Smaragdakis, Yannis, and Csallner, Christoph.
