@@ -9596,11 +9596,24 @@ above checks as additional safeguards of behavior preservation.
 
 \chapter{Type Constraints}
 
-Type constraint reasoning is necessary as object oriented programming becomes prevalent. Type constraints are logical formulas related to types. For example, the Java method header \java{void foo(List a)} implies the type constraint that the dynamic type of \java{a} is a subtype of \java{List}.  A recent survey on open source applications with a total size of more than 2 MLOC by \cite{Islam14Generating} found three hundred cases of type constraints. Sherman et al. \cite{Sherman:2015:DTP:2776776.2755971} conducted experiments by collecting path constraints from dynamic symbolic execution. These path constraints include first-order logic formulas such as the numerical formula \java{a < 3} and the type constraint \java{a} is a subtype of \java{b}. It estimates that the average percentage of type constraints on five open source Java programs is 51\%.  
+ Type constraints are logical formulas related to types. For example, the Java method header \java{void foo(List a)} implies the type constraint that the dynamic type of \java{a} is a subtype of \java{List}.  Without loss of generality, Sherman et al. \cite{Sherman:2015:DTP:2776776.2755971} finds 5 kinds of type constraints in Java programs:
+ 
+\begin{enumerate}
+  \item x $\leq$ t: Variable type x is a subtype of constant type x. 
+  \item x $\leq$ y: Variable type x is a subtype of variable type y.
+  \item t $\leq$ x: Constant type t is a subtype of variable type x.
+  \item x $=$ y: Variable type x equals to variable type y.
+  \item x $=$ t: Variable type x equals to constant type t.
+\end{enumerate}
 
-Type constraints have important application areas such as verification and testing. The official JVM spec \cite{Lindholm:2014:JVM:2636992} defines the Java type constraints in Prolog to do type checking within Java compiler: "The type checker enforces type rules that are specified by means of Prolog clauses. English language text is used to describe the type rules in an informal way, while the Prolog clauses provide a formal specification." Another important application area of type constraints is dynamic symbolic execution, which often needs to create objects with correct types. We can use type constraints to find the correct dynamic type of an object. Due to polymorphisms such as subtyping and dynamic dispatch, the dynamic type of a reference variable is often not equal to its declared static type. Various errors could arise if static types are to substitute dynamic types to create objects. 
 
-The challenge of type constraints reasoning is the analysis must be precise enough to derive correct dynamic types not only in complete type hierarchy but also in incomplete type hierarchy while keeping the process at reasonable performance cost. Complete type hierarchy means all the required types are present during the search space of the analysis. Incomplete type hierarchy means some types to derive the correct dynamic types are missing in the search space. A streak of related work attempts to attack this challenge. 
+
+Type constraint reasoning is necessary as object oriented programming becomes prevalent. A recent survey on open source applications with a total size of more than 2 MLOC by \cite{Islam14Generating} found three hundred cases of type constraints. Sherman et al. \cite{Sherman:2015:DTP:2776776.2755971} conducted experiments by collecting path constraints from dynamic symbolic execution. These path constraints include first-order logic formulas such as the numerical formula \java{a < 3} and the type constraint \java{a} is a subtype of \java{b}. It estimates that the average percentage of type constraints on five open source Java programs is 51\%.  
+
+Type constraints have important application areas such as verification and testing. The official JVM spec \cite{Lindholm:2014:JVM:2636992} defines the Java type constraints in Prolog to do type checking within Java compiler: "The type checker enforces type rules that are specified by means of Prolog clauses. English language text is used to describe the type rules in an informal way, while the Prolog clauses provide a formal specification." Another important application area of type constraints is dynamic symbolic execution, which often needs to create objects with correct types. Due to polymorphisms such as subtyping and dynamic dispatch, the dynamic type of a reference variable is often not equal to its declared static type. Various errors could arise if static types are to substitute dynamic types to create objects. With type constraints and constraint solver, we can easily find the correct dynamic type of an object. 
+
+The challenge of type constraints reasoning is the analysis must be precise enough to derive correct dynamic types not only in complete type hierarchy but also in incomplete type hierarchy while keeping the process at reasonable performance cost. Complete type hierarchy means all the required types are available in the search space. Incomplete type hierarchy means some types are missing in the search space. A streak of related work attempts to attack this challenge. \cite{Islam14Generating} uses SMT solver Z3's array theory to encode type constraints.  
+
 
 \chapter{Related Work}
 \label{chp:related}
