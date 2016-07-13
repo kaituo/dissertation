@@ -9609,7 +9609,31 @@ operations, the Pex completeness is only 0.09.
   \item x $=$ t or x$\neq$ t: Variable type x equals to constant type t. For example, Apache Hive \footnote{\url{https://github.com/apache/hive/blob/master/metastore/src/gen/thrift/gen-javabean/org/apache/hadoop/hive/metastore/api/ThriftHiveMetastore.java}} checks if a field's dynamic type equals to a constant type using a statement like \java{schemeField.type == org.apache.thrift.protocol.TType.STOP}.
 \end{enumerate}
 
-Type constraint reasoning is necessary as object oriented programming becomes prevalent. We have performed 4 case studies, searching for empirical evidence about the distribution of the 5 kinds of type constraints via the source code mining tool Boa \cite{Dyer-Nguyen-Rajan-Nguyen-13}. After analyzing 23,229,406 revisions, 7,830,023 projects of the September 2015 Github dataset available in Boa, we are able to find out the 5 kinds of type constraints are not evenly distributed, with the number of x $\preceq$ t constraints dominating the number of all other type constraints, but with other type constraints appearing in a similarly number of projects.  A caveat is some of the results may not be consistent with the programs, seemingly due to the semantic unsoundness in source code mining tools. For example, when there is a function call to \java{isAssignableFrom()}, Boa does not encode the receiver's static type. Therefore we cannot accurately determine type constraints in the function call to \java{java.lang.Class.isAssignableFrom()}.  
+
+Type constraint reasoning is necessary as object oriented programming becomes prevalent.  A recent survey on open source applications with a total size of more than 2 MLOC by \cite{Islam14Generating} found three hundred cases of type constraints. Sherman et al. \cite{Sherman:2015:DTP:2776776.2755971} conducted experiments by collecting path constraints from dynamic symbolic execution. These path constraints include first-order logic formulas such as the numerical formula \java{a < 3} and the type constraint \java{a} is a subtype of \java{b}. It estimates that the average percentage of type constraints on five open source Java programs is 51\%.  
+
+Type constraints have important application areas such as verification and testing. The official JVM spec \cite{Lindholm:2014:JVM:2636992} defines type constraints in Prolog to do type checking within Java compiler:``The type checker enforces type rules that are specified by means of Prolog clauses. English language text is used to describe the type rules in an informal way, while the Prolog clauses provide a formal specification.'' Another important application area of type constraints is dynamic symbolic execution, which often needs to create objects with correct types. Due to polymorphisms such as subtyping and dynamic dispatch, the dynamic type of a reference variable is often not equal to its declared static type. Various errors could arise if static types are to substitute dynamic types to create objects. With type constraints and a suitable constraint solver, we can easily find the correct dynamic type of an object. 
+
+The challenge of type constraints reasoning is the analysis must be acceptably accurate not only in complete type hierarchy but also in incomplete type hierarchy while keeping the process at reasonable performance cost. Complete type hierarchy means all the required types are available in the search space. Incomplete type hierarchy means some types are missing in the search space either because the required classes have not been written (e.g. in the the test-driven development practice) or because the required classes have not been loaded yet (e.g. in languages like Java classes are loaded on demand).  
+
+A streak of related work attempts to attack this challenge. SMT solver Z3's \cite{moura08Z3} official tutorial \footnote{\url{http://rise4fun.com/z3/tutorialcontent/guide}} provides a way of encoding type constraints using uninterpreted function.  With Z3 we have to assert the subtype relationship of every pair of x, y of types from known type systems. Sherman et al. \cite{Sherman:2015:DTP:2776776.2755971} finds that Z3 suffers severe performance degradation because of its huge number of asserted type constraints.  \cite{Islam14Generating} encodes ``subtype'' as a 2-dimensional array because they can tell Z3 to create an array whose fields are all ``false'' by default. Then they only have to assert actual subtypes. In other words, they do not have to assert ``X is not a subtype of A'', ``X is not a subtype of B'' etc. They only have to assert ``X is a subtype of C'', ``X is a subtype of D'' etc.  Still their algorithm has quadratic complexity.  For type constraints of the form x $\preceq$ t and x $=$ t, Sherman et al.'s solver \cite{Sherman:2015:DTP:2776776.2755971} is significantly faster than the two approaches mentioned above. But Sherman et al.'s solver is not able to solve the other 3 kinds of type constraints, including x $\preceq$ y, t $\preceq$ x and x $=$ y. We cannot ignore those 3 kinds of type constraints as they are common in projects.  Please see details of our case studies on the distribution of the 5 kinds of type constraints in Section~\ref{chp:case}. 
+
+In this chapter, we describe an approach to reason about type constraints using Datalog. Datalog is a database query language that operates on relations (similar to tables in a database). Following predefined rules, new relations are computed based on projecting and joining existing relations as in relational database queries. Rules are usually in the form of implications. Our approach is guaranteed to have a polynomial complexity as the complexity class of Datalog is $P$ \cite{immerman2012descriptive}. In practice, our approach's time complexity is $O(n^2)$, where $n$ is the size of input relations.  This is because we compute unrelated input relations separately and we have rarely seen links among more than 2 relations.  Also, encoding type constraints using uninterpreted functions or arrays is slow due to its large number of asserted constraints. In contrast, Datalog makes a closed-world assumption and can define recursive rules, and the resulting type constraints are relatively smaller. A closed-world assumption treats anything that are not facts and cannot be inferred from existing facts as false. This assumption is convenient for type constraints encoding as we do not have to assert false or unknown relationships between two types: ``X is not a subtype of A'', ``X is not a subtype of B'' etc. Recursive rules are defined in a way that both body and head can contain the same relation.  This allows Datalog to instantiate new facts on demand. 
+
+ declarative Datalog semantics
+
+general 5 kinds of constraints
+
+\section{Case Studies}
+\label{chp:case}
+
+\subsection{5 kinds of type constraints}
+
+
+
+\subsection{Case studies}
+
+ We have performed 4 case studies, searching for empirical evidence about the distribution of the 5 kinds of type constraints via the source code mining tool Boa \cite{Dyer-Nguyen-Rajan-Nguyen-13}. After analyzing 23,229,406 revisions, 7,830,023 projects of the September 2015 Github dataset available in Boa, we are able to find out the 5 kinds of type constraints are not evenly distributed, with the number of x $\preceq$ t constraints dominating the number of all other type constraints, but with other type constraints appearing in a similarly number of projects.  A caveat is some of the results may not be consistent with the programs, seemingly due to the semantic unsoundness in source code mining tools. For example, when there is a function call to \java{isAssignableFrom()}, Boa does not encode the receiver's static type. Therefore we cannot accurately determine type constraints in the function call to \java{java.lang.Class.isAssignableFrom()}.  
 
 Our 4 case studies try to address the following research questions:
 
@@ -9742,26 +9766,6 @@ Again, if a project has no less than 100 commits, we regard it as a high quality
 \caption{Number of high quality projects where each kind of type constraints can be found at least once.  For missing cells (``n/a''), the expression has no such type constraint. }
 \label{fig:projectnumber_quality}
 \end{figure*}
-
-%A recent survey on open source applications with a total size of more than 2 MLOC by \cite{Islam14Generating} found three hundred cases of type constraints. Sherman et al. \cite{Sherman:2015:DTP:2776776.2755971} conducted experiments by collecting path constraints from dynamic symbolic execution. These path constraints include first-order logic formulas such as the numerical formula \java{a < 3} and the type constraint \java{a} is a subtype of \java{b}. It estimates that the average percentage of type constraints on five open source Java programs is 51\%.  
-
-Type constraints have important application areas such as verification and testing. The official JVM spec \cite{Lindholm:2014:JVM:2636992} defines type constraints in Prolog to do type checking within Java compiler:``The type checker enforces type rules that are specified by means of Prolog clauses. English language text is used to describe the type rules in an informal way, while the Prolog clauses provide a formal specification.'' Another important application area of type constraints is dynamic symbolic execution, which often needs to create objects with correct types. Due to polymorphisms such as subtyping and dynamic dispatch, the dynamic type of a reference variable is often not equal to its declared static type. Various errors could arise if static types are to substitute dynamic types to create objects. With type constraints and a suitable constraint solver, we can easily find the correct dynamic type of an object. 
-
-The challenge of type constraints reasoning is the analysis must be acceptably accurate not only in complete type hierarchy but also in incomplete type hierarchy while keeping the process at reasonable performance cost. Complete type hierarchy means all the required types are available in the search space. Incomplete type hierarchy means some types are missing in the search space either because the required classes have not been written (e.g. in the the test-driven development practice). or because the required classes have not been loaded yet (e.g. in languages like Java classes are loaded on demand).  
-
-A streak of related work attempts to attack this challenge. SMT solver Z3's \cite{moura08Z3} official tutorial \footnote{\url{http://rise4fun.com/z3/tutorialcontent/guide}} provides a way of encoding type constraints using uninterpreted function.  With Z3 we have to assert the subtype relationship of every pair of x, y of types from known type systems. Sherman et al. \cite{Sherman:2015:DTP:2776776.2755971} finds that Z3 suffers severe performance degradation because of its huge number of asserted type constraints.  \cite{Islam14Generating} encodes ``subtype'' as a 2-dimensional array because they can tell Z3 to create an array whose fields are all ``false'' by default. Then they only have to assert actual subtypes. In other words, they do not have to assert ``X is not a subtype of A'', ``X is not a subtype of B'' etc. They only have to assert ``X is a subtype of C'', ``X is a subtype of D'' etc.  Still their algorithm has quadratic complexity.  For certain kinds of type constraints, Sherman et al.'s solver \cite{Sherman:2015:DTP:2776776.2755971} is significantly faster than the two approaches mentioned above. But Sherman et al.'s solver is not able to solve certain kinds of type constraints, including x $\preceq$ y, t $\preceq$ x and x $=$ y mentioned in Section~\ref{chp:case}. We cannot ignore those 3 kinds of type constraints as they are common in projects based on our case studies. 
-
-
-\section{Case Studies}
-\label{chp:case}
-
-\subsection{5 kinds of type constraints}
-
-
-
-\subsection{Case studies}
-
-
 
 \section{Motivating example}
 
