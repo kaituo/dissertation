@@ -9628,12 +9628,6 @@ general 5 kinds of constraints
 \section{Case Studies}
 \label{chp:case}
 
-\subsection{5 kinds of type constraints}
-
-
-
-\subsection{Case studies}
-
  We have performed 4 case studies, searching for empirical evidence about the distribution of the 5 kinds of type constraints via the source code mining tool Boa \cite{Dyer-Nguyen-Rajan-Nguyen-13}. After analyzing 23,229,406 revisions, 7,830,023 projects of the September 2015 Github dataset available in Boa, we are able to find out the 5 kinds of type constraints are not evenly distributed, with the number of x $\preceq$ t constraints dominating the number of all other type constraints, but with other type constraints appearing in a similarly number of projects.  A caveat is some of the results may not be consistent with the programs, seemingly due to the semantic unsoundness in source code mining tools. For example, when there is a function call to \java{isAssignableFrom()}, Boa does not encode the receiver's static type. Therefore we cannot accurately determine type constraints in the function call to \java{java.lang.Class.isAssignableFrom()}.  
 
 Our 4 case studies try to address the following research questions:
@@ -9644,9 +9638,11 @@ While we found 69,338,416 expressions are matched with type constraints, 93.3\% 
 
 \textbf{(RQ2) In high quality projects, how many expressions are matched with each kind of type constraints?}
 
-Ideally we want to use metrics like the number of downloads to measure the project quality.  But this information is not encoded by Boa.  Instead, we use the number of commits for a project as the quality metric: if a project has no less than 100 commits, we regard it as a high quality project.
+Ideally we want to use metrics like the number of downloads to measure the project quality.  But this information is not encoded by Boa.  Instead, we use the number of commits for a project as the quality metric: if a project has no less than 100 commits, we regard it as a high quality project. 
 
 \textbf{(RQ3) How many projects are there where each kind of type constraints can be found at least once?}
+
+There have been 164,998 projects with type constraints out of 7,830,023 projects in our dataset, according to Figure~\ref{fig:projectnumber}. We identified 63.2\% of those 164,998 projects have x $\preceq$ t expressions.  
 
 \textbf{(RQ4) How many high quality projects are there where each kind of type constraints can be found at least once?}
 
