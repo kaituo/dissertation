@@ -627,9 +627,9 @@ Dynamic symbolic execution\cite{Schwartz:2010:YEW:1849417.1849981} is such an ex
 
 I propose new combinations of static and dynamic analysis for bug detection and program understanding.  More specifically, I make the following contributions:
 \begin{enumerate}
+\item To reduce false or low-value warnings for static tools, I introduce the concept of “residual investigation” for program analysis. Residual investigation provides a \textbf{general recipe} for \textbf{designing predictive and precise dynamic analysis for the first time}. A residual investigation is a dynamic check installed as a result of running a static analysis that reports a possible program error. The purpose is to observe conditions that indicate whether the statically predicted program fault is likely to be realizable and relevant. The key feature of a residual investigation is that it has to be much more precise (i.e., with fewer false warnings) than the static analysis alone, yet significantly more general (i.e., reporting more errors) than the dynamic tests in the program’s test suite pertinent to the statically reported error.
 \item I present a technique to enhance the dynamic invariant detection approach. My work identifies and describes the idea of second-order constraints that can help improve the consistency and relevance of dynamically inferred invariants.  I call these constraints “second-order” because they are constraints over constraints: they relate classes of invariants (first-order constraints). For instance, even though the invariants describing the behavior of two functions f1 and f2 may be unknown, I may know that any valid input for f1 is also valid for f2, i.e., the precondition of f1 implies that of f2.
 \item My SEDGE system addresses the dataflow program test case generation completeness problem: for every dataflow operator, I produce data aiming to cover all cases that arise in the dataflow program (e.g., both passing and failing a filter). SEDGE relies on transforming the program into symbolic constraints, and solving the constraints using a symbolic reasoning engine (a powerful SMT solver), while using input data as concrete aids in the solution process. The approach resembles dynamic-symbolic (a.k.a. “concolic”) execution in a conventional programming language, adapted to the unique features of the dataflow domain. SEDGE is the \textit{\textbf{first} dynamic symbolic execution engine for dataflow programs}.
-\item To reduce false or low-value warnings for static tools, I introduce the concept of “residual investigation” for program analysis. Residual investigation provides a \textbf{general recipe} for \textbf{designing predictive and precise dynamic analysis for the first time}. A residual investigation is a dynamic check installed as a result of running a static analysis that reports a possible program error. The purpose is to observe conditions that indicate whether the statically predicted program fault is likely to be realizable and relevant. The key feature of a residual investigation is that it has to be much more precise (i.e., with fewer false warnings) than the static analysis alone, yet significantly more general (i.e., reporting more errors) than the dynamic tests in the program’s test suite pertinent to the statically reported error. 
 \end{enumerate}
 
 %The remainder of this proposal is organized as follows.  Chapter~\ref{chp:worksofar} summarizes work done so far.  Work I propose to do is presented in Chapter~\ref{chp:proposed}.  Related work is discussed in Chapter~\ref{chp:related}.  Chapter~\ref{chp:timeline} concludes with a schedule for completing the work proposed.   
@@ -909,7 +909,7 @@ I propose new combinations of static and dynamic analysis for bug detection and 
 
 %\maketitle
 
-This chapter investigates the combination of static analysis and predictive and precise dynamic analysis.  We provide a general recipe for designing predictive and precise dynamic analysis for the first time. The key feature of our predictive and precise dynamic analysis is that it is much more precise (i.e., with fewer false warnings) than the static analysis alone, yet significantly more general (i.e., reporting more errors) than the dynamic tests in the programs test suite pertinent to the statically reported error.
+This chapter investigates the combination of static analysis and predictive and precise dynamic analysis.  We provide a general recipe for designing predictive and precise dynamic analysis for the first time. The key feature of our predictive and precise dynamic analysis is that it is much more precise (i.e., with fewer false warnings) than the static analysis alone, yet significantly more general (i.e., reporting more errors) than the dynamic tests in the programs test suite pertinent to the statically reported error. The idea of predictive and precise dynamic analysis has been implemented within FindBugs, a static bug detection tool.  We are able to improve both precision and recall of FindBugs of detected bugs.
 
 \section{Introduction and Motivation}
 \label{introduction}
@@ -3957,7 +3957,7 @@ above checks as additional safeguards of behavior preservation.
 \chapter{Second-Order Constraints in Dynamic Invariant Inference}
 \label{chp:metainvariantpaper}
 
-This chapter centers around the enhancement of dynamic invariant inference with second-order constraints. I call these constraints second-order because they are constraints over constraints: they relate classes of invariants (first-order constraints).  Such second-order constraints are provided directly by programmers or vetted by programmers among candidates suggested automatically by a tool we developed.  
+This chapter centres around the enhancement of dynamic invariant inference with static second-order constraints. I call these constraints second-order because they are constraints over constraints: they relate classes of invariants (first-order constraints).  Such second-order constraints are provided directly by programmers or vetted by programmers among candidates suggested automatically by a tool we developed.  By incorporating second-order static information about invariants, we will improve the quality of derived invariants in ways that greatly improve the utility of dynamically discovered invariants in program analysis, testing, and program understanding. 
 
 % \begin{abstract}
 
@@ -6774,6 +6774,14 @@ complement for manual derivation of second-order constraints.
 
 \chapter{SEDGE: Symbolic Example Data Generation for Dataflow Programs}
 \label{chp:sedgepaper}
+
+This chapter describes the first dynamic symbolic execution engine for
+dataflow programs: SEDGE.  Dynamic symbolic execution is a systematic test case
+generation method.  It statically collect path constraints while dynamically
+executes test cases generated by solving those path constraints using a 
+constraint solver.  We demonstrate SEDGE beats previous approaches in terms of 
+test case coverage. 
+
 % \documentclass[10pt,conference,compsocconf]{IEEEtran}
 % \documentclass[conference]{IEEEtran}
 %% We have some bulleted lists with multi-paragraph items. These are a
