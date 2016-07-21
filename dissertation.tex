@@ -624,7 +624,17 @@ Software practitioners have traditionally faced many problems with testing, docu
 Dynamic analysis excels in precision and efficiency: it operates by executing programs with test cases, and subsequently is able to compute 100\% accurate results with relatively little cost; static analysis is good at generality: the results are able to generalize to future executions no matter what is the user input or what environment the system is in \cite{ernst03static}.
 One cannot make a statement that static analysis is always better than dynamic analysis or vice versa. This has led researchers to devise combinations of static and dynamic analyses (e.g., \cite{csallner05check,csallner06dsd-crasher,godefroid05dart,cadar05execution,tomb07variably,tillmann08pex,Islam14Generating}) to achieve the best of both worlds.  
 
-Dynamic symbolic execution\cite{Schwartz:2010:YEW:1849417.1849981} is such an example. Symbolic execution is a static analysis technique.  For a vector of input values, a method performs an execution following a particular path, then returns output results.  Instead of using concrete values, symbolic execution represents input and output values of a method by symbolic names. In an object-oriented programming language, symbolic execution can create symbolic representations of class variables. Symbolic execution can compute the path condition of each path in an analyzed program.  A path condition is a conjunct of branch conditions along the path.  A branch condition is a symbolic expression over input symbols. Symbolic execution cannot reason about native method calls because the source code of native method calls are not available.  Dynamic symbolic execution resolves this by symbolically executing a program in parallel with the actual program execution.  Calls to native methods are replaced with concrete return values of the method calls from the execution. Dynamic symbolic execution is effective at exposing bugs.  It can systematically generates test cases from paths of control flow graph of the system under test. If bugs are found, users are able to reproduce all of the bugs with the generated test cases.  Due to its effectiveness, a lot of dynamic symbolic execution engine has been developed in industry and academia.  For example, Microsoft's dynamic symbolic execution engine SAGE has been used to find one-third of Windows 7 bugs \cite{Godefroid:2012:SWF:2090147.2094081}.
+Dynamic symbolic execution\cite{Schwartz:2010:YEW:1849417.1849981} is such an example. Symbolic execution is a static analysis technique.  In a function or method of modern programming languages, a concrete execution comprises input data received as arguments, an execution following a particular path, and output data if this method or function returns one or more values.  
+%For a vector of input values, a method performs an execution following a particular path, then returns output results.  
+Instead of using concrete values, symbolic execution represents input and output values by symbolic names. 
+%In an object-oriented programming language, symbolic execution can create symbolic representations of class variables. 
+It then computes the path condition for each path using these symbolic names and sends them to a constraint solver.  Path conditions are logical formulas that the input values need to satisfy in order to steer the execution into a certain path.  Constraint solvers are able to pick values for those symbolic names such that the logical formulas can be made true.  With symbolic execution, generating test cases for a path amounts to mapping branch conditions of a path to low-level formulas. 
+%A path condition is a conjunct of branch conditions along the path.  A branch condition is a symbolic expression over input symbols. 
+
+
+However, symbolic execution cannot reason about native method calls because the source code or the object code of native methods are not available.  Also, the ability of symbolic execution generating test cases heavily depends on the power of constraint solver.  Constraint solving is practically always limited in the face of complex constraints such as certain non-linear constraints and certain constraints that use quantifiers.  Dynamic symbolic execution resolves these problems by symbolically executing a program in parallel with the actual program execution.  Calls to native methods or symbolic names in complex constraints are replaced with concrete values from the actual program execution.  
+
+Dynamic symbolic execution is effective at exposing bugs.  It can systematically generates test cases from paths of control flow graph of the system under test. If bugs are found, users are able to reproduce all of the bugs with the generated test cases, provided that they are working on a sequential program or a multi-threaded program whose thread interleaving are deterministic.  Due to its effectiveness, dynamic symbolic execution has received much attention of late.  There has been a lot of dynamic symbolic execution engines in industry and academia, notably DART \cite{godefroid05dart}, CUTE \cite{sen05cute}, jCUTE \cite{Sen:2006:CJC:2135909.2135962}, KLEE \cite{Cadar:2008:KUA:1855741.1855756}, Java PathFinder \cite{visser04test}, SAGE \cite{Godefroid:2012:SWF:2090147.2094081}, PEX \cite{tillmann08pex}, BitBlaze \cite{song2008bitblaze}.  The popularity of dynamic symbolic execution is sharply illustrated by the adoption of SAGE into Microsoft Windows 7 development: SAGE found one-third of Windows 7 bugs \cite{Godefroid:2012:SWF:2090147.2094081}.
 
 \section{Overview and contribution}
 
@@ -912,7 +922,9 @@ I propose new combinations of static and dynamic analysis for bug detection and 
 
 %\maketitle
 
-This chapter investigates the combination of static analysis and predictive and precise dynamic analysis.  We provide a general recipe for designing predictive and precise dynamic analysis for the first time. The key feature of our predictive and precise dynamic analysis is that it is much more precise (i.e., with fewer false warnings) than the static analysis alone, yet significantly more general (i.e., reporting more errors) than the dynamic tests in the programs test suite pertinent to the statically reported error. The idea of predictive and precise dynamic analysis has been implemented within FindBugs, a static bug detection tool.  We are able to improve both precision and recall of FindBugs-detected bugs.
+A tension exists between static analysis and testing.  Static analysis has the problem of issuing false positives: namely, it often warns about bugs that are not real bugs.  They are just there because of over-generalizing observations.  However, testing suffers from no false positives.  When it reports an error, it's a true error.  In converse, testing suffers from false negatives: it misses many errors.  It only watches errors that are dynamically exercised by the test suite, whereas static analysis generalizes the test suite, or generalizes what the application would normally do.  Static analysis does not even need a test suite.  Therefore static analysis has fewer false negatives.  That's a traditional tension between static analysis and testing.  Ideally, what we would like is to have something in the middle.  And what can come in the middle is what we usually call dynamic analysis. But it is not well defined by what we mean by dynamic analysis.  We believe that ideally dynamic analysis are things that sit in the middle and get the best of both worlds, both static analysis and testing.  
+
+This chapter investigates predictive and precise dynamic analysis.  The thrust of this  dynamic analysis is to have very few false positives and fewer negatives than testing.  Predictive and precise dynamic analysis can be combined with static analysis to improve precision and recall of bug detection. We have confirmed the efficacy of this combination  by implementing it inside FindBugs, a static bug detection tool. 
 
 \section{Introduction and Motivation}
 \label{introduction}
@@ -9614,6 +9626,12 @@ operations, the Pex completeness is only 0.09.
 \chapter{Related Work}
 \label{chp:related}
 
+There is a lot of interesting work on the three different research
+directions covered by this dissertation. This chapter discusses 
+representative work for each area as belows.
+
+\input{related_rfbi}
+
 \section{Second-Order Constraints in Dynamic Invariant Inference}
 
 There is a wealth of other work on invariant inference. We next
@@ -9702,9 +9720,7 @@ to derive automata that describe correct behavior.
 
 \input{related_sedge}
 
-\input{related_rfbi}
-
-
+%%%This section needs to be moved to the section of rfbi's related work.
 \section{Providing dynamic symbolic execution with concrete system states}
 
 Similar to us, hybrid concolic testing\cite{Majumdar:2007:HCT:1248820.1248874} interleaves random testing and concolic testing to increase coverage.  The switch from random testing to concolic testing happens when random testing does not find new coverage points after a predetermined steps; the switch from concolic testing to random testing happens when concolic testing finds an input to an uncovered branch goal (though concolic testing may need to explore several feasible execution paths to generate the new input).  But hybrid concolic testing is not designed to trigger one specific bug condition.  I are targeting at generating tests to trigger one specific bug condition, using call graph search and dynamic symbolic execution. 
