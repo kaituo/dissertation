@@ -590,22 +590,22 @@ stringstyle=\color{orange}}
 
 \begin{abstract}
 This work proposes new combinations of static and dynamic analysis for bug
-detection and program understanding. There are 3 independent directions.
-a) In the area of dynamic invariant inference, I improve the consistency of
+detection and program understanding. There are 3 related but largely independent directions:
+a) In the area of dynamic invariant inference, we improve the consistency of
 dynamically discovered invariants by taking into account second-order
 constraints that encode knowledge about invariants; the second-order
 constraints are either supplied by the programmer or vetted by the
-programmer (among candidate constraints suggested automatically).
-b) In the area of testing dataflow (esp. map-reduce) programs, my
+programmer (among candidate constraints suggested automatically);
+b) In the area of testing dataflow (esp. map-reduce) programs, our
 tool, SEDGE, achieves higher testing coverage by leveraging existing
 input data and generalizing them using a symbolic reasoning engine (a
-powerful SMT solver).
-c) In the area of bug detection, I identify and present the concept of
-residual investigation: a dynamic analysis that serves the runtime agent of a
+powerful SMT solver);
+c) In the area of bug detection, we identify and present the concept of
+residual investigation: a dynamic analysis that serves as the runtime agent of a
 static analysis. Residual investigation identifies with higher certainty
-whether an error reported by the static analysis is likely true. In
-future work, I propose to improve the recall of residual investigation
-by augmenting existing system-level tests via dynamic symbolic execution.
+whether an error reported by the static analysis is likely true. 
+%In future work, we propose to improve the recall of residual investigation
+%by augmenting existing system-level tests via dynamic symbolic execution.
 \end{abstract}
 
 \mainmatter   %% <-- This line is mandatory
@@ -615,14 +615,15 @@ by augmenting existing system-level tests via dynamic symbolic execution.
 
 \section{My thesis}
 
-We can improve the precision and availability of existing program understanding and bug detection techniques by combining static and dynamic analysis. Specifically, we combine static and dynamic analysis in 3 different directions: predictive and precise dynamic analysis with static analysis in bug detection, second-order constraints (constraints over invariants) in dynamic invariant inference, and dynamic symbolic execution in dataflow program testing.
+We can improve the precision and availability of existing program understanding and bug detection techniques by combining static and dynamic analysis. Specifically, we combine static and dynamic analysis in 3 different directions: predictive and precise dynamic analysis with static analysis in bug detection, second-order constraints (static constraints over invariants) in dynamic invariant inference, and dynamic symbolic execution in dataflow program testing.
 
 \section{Static and dynamic analysis}
 
-Software practitioners have traditionally faced many problems with testing, documenting and maintaining software modules systems.  These problems are often the result of poor understanding of program properties, over-reliance on specific bug detecting tools, and so on. Various static and dynamic program analysis techniques can be used to remedy these problems. Each flavor of analysis has its own advantage. 
+Software practitioners have traditionally faced many problems with testing, documenting and maintaining software systems.  These problems are often the result of poor understanding of program properties, lack of reliable methods for validating software results, over-reliance on specific bug detecting tools, and so on. Various static and dynamic program analysis techniques can be used to remedy these problems. Each flavor of analysis has its own advantages. 
 %Dynamic analysis excels in control-flow accuracy; static analysis is good at data-flow richness/generality\cite{smaragdakis07combining}. 
-Dynamic analysis excels in precision and efficiency: it operates by executing programs with test cases, and subsequently is able to compute 100\% accurate results with relatively little cost; static analysis is good at generality: the results are able to generalize to future executions no matter what is the user input or what environment the system is in \cite{ernst03static}.
-One cannot make a statement that static analysis is always better than dynamic analysis or vice versa. This has led researchers to devise combinations of static and dynamic analyses (e.g., \cite{csallner05check,csallner06dsd-crasher,godefroid05dart,cadar05execution,tomb07variably,tillmann08pex,Islam14Generating}) to achieve the best of both worlds.  
+Dynamic analysis excels in precision and efficiency: it operates by executing programs with test cases, and subsequently is able to compute 100\% accurate results with relatively little cost; static analysis is good at generality: we are able to generalize the static analysis results to future executions no matter what the user input is or what environment the system is in \cite{ernst03static}.
+%One cannot make a statement that static analysis is always better than dynamic analysis or vice versa. 
+This has led researchers to devise combinations of static and dynamic analyses (e.g., \cite{csallner05check,csallner06dsd-crasher,godefroid05dart,cadar05execution,tomb07variably,tillmann08pex,Islam14Generating}) to achieve the best of both worlds.  
 
 Dynamic symbolic execution\cite{Schwartz:2010:YEW:1849417.1849981} is such an example. Symbolic execution is a static analysis technique.  In a function or method of modern programming languages, a concrete execution comprises input data received as arguments, an execution following a particular path, and output data if this method or function returns one or more values.  
 %For a vector of input values, a method performs an execution following a particular path, then returns output results.  
@@ -632,20 +633,20 @@ It then computes the path condition for each path using these symbolic names and
 %A path condition is a conjunct of branch conditions along the path.  A branch condition is a symbolic expression over input symbols. 
 
 
-However, symbolic execution cannot reason about native method calls because the source code or the object code of native methods are not available.  Also, the ability of symbolic execution generating test cases heavily depends on the power of constraint solver.  Constraint solving is practically always limited in the face of complex constraints such as certain non-linear constraints and certain constraints that use quantifiers.  Dynamic symbolic execution resolves these problems by symbolically executing a program in parallel with the actual program execution.  Calls to native methods or symbolic names in complex constraints are replaced with concrete values from the actual program execution.  
+However, symbolic execution cannot reason about native method calls because the source code or the object code of native methods are not available.  Also, the ability of symbolic execution to generate test cases heavily depends on the power of constraint solver.  Constraint solving is practically always limited in the face of complex constraints such as certain non-linear constraints and certain constraints that use quantifiers.  Dynamic symbolic execution resolves these problems by arranging for the symbolic execution and the actual execution of a program to proceed in tandem.  Calls to native methods or symbolic names in complex constraints are replaced with concrete values from the actual program execution.  
 
-Dynamic symbolic execution is effective at exposing bugs.  It can systematically generates test cases from paths of control flow graph of the system under test. If bugs are found, users are able to reproduce all of the bugs with the generated test cases, provided that they are working on a sequential program or a multi-threaded program whose thread interleaving are deterministic.  Due to its effectiveness, dynamic symbolic execution has received much attention of late.  There has been a lot of dynamic symbolic execution engines in industry and academia, notably DART \cite{godefroid05dart}, CUTE \cite{sen05cute}, jCUTE \cite{Sen:2006:CJC:2135909.2135962}, KLEE \cite{Cadar:2008:KUA:1855741.1855756}, Java PathFinder \cite{visser04test}, SAGE \cite{Godefroid:2012:SWF:2090147.2094081}, PEX \cite{tillmann08pex}, BitBlaze \cite{song2008bitblaze}.  The popularity of dynamic symbolic execution is sharply illustrated by the adoption of SAGE into Microsoft Windows 7 development: SAGE found one-third of Windows 7 bugs \cite{Godefroid:2012:SWF:2090147.2094081}.
+Dynamic symbolic execution is effective at exposing bugs.  It can systematically generates test cases from paths of control flow graph of the system under test. If bugs are found, users are able to reproduce all of the bugs with the generated test cases, provided that they are working on a sequential program or a multi-threaded program whose thread interleavings are deterministic.  Due to its effectiveness, dynamic symbolic execution has received much attention of late.  There has been a lot of dynamic symbolic execution engines in industry and academia, notably DART \cite{godefroid05dart}, CUTE \cite{sen05cute}, jCUTE \cite{Sen:2006:CJC:2135909.2135962}, KLEE \cite{Cadar:2008:KUA:1855741.1855756}, Java PathFinder \cite{visser04test}, SAGE \cite{Godefroid:2012:SWF:2090147.2094081}, PEX \cite{tillmann08pex}, BitBlaze \cite{song2008bitblaze}.  The popularity of dynamic symbolic execution is sharply illustrated by the adoption of SAGE into Microsoft Windows 7 development: SAGE found one-third of Windows 7 bugs \cite{Godefroid:2012:SWF:2090147.2094081}.
 
 \section{Overview and contribution}
 
-I propose new combinations of static and dynamic analysis for bug detection and program understanding.  More specifically, I make the following contributions:
+We propose new combinations of static and dynamic analysis for bug detection and program understanding.  More specifically, we make the following contributions:
 \begin{enumerate}
-\item To reduce false or low-value warnings for static tools, I introduce the concept of “residual investigation” for program analysis. Residual investigation provides a \textbf{general recipe} for \textbf{designing predictive and precise dynamic analysis for the first time}. A residual investigation is a dynamic check installed as a result of running a static analysis that reports a possible program error. The purpose is to observe conditions that indicate whether the statically predicted program fault is likely to be realizable and relevant. The key feature of a residual investigation is that it has to be much more precise (i.e., with fewer false warnings) than the static analysis alone, yet significantly more general (i.e., reporting more errors) than the dynamic tests in the program’s test suite pertinent to the statically reported error.
-\item I present a technique to enhance the dynamic invariant detection approach. My work identifies and describes the idea of second-order constraints that can help improve the consistency and relevance of dynamically inferred invariants.  I call these constraints “second-order” because they are constraints over constraints: they relate classes of invariants (first-order constraints). For instance, even though the invariants describing the behavior of two functions f1 and f2 may be unknown, I may know that any valid input for f1 is also valid for f2, i.e., the precondition of f1 implies that of f2.
-\item My SEDGE system addresses the dataflow program test case generation completeness problem: for every dataflow operator, I produce data aiming to cover all cases that arise in the dataflow program (e.g., both passing and failing a filter). SEDGE relies on transforming the program into symbolic constraints, and solving the constraints using a symbolic reasoning engine (a powerful SMT solver), while using input data as concrete aids in the solution process. The approach resembles dynamic-symbolic (a.k.a. “concolic”) execution in a conventional programming language, adapted to the unique features of the dataflow domain. SEDGE is the \textit{\textbf{first} dynamic symbolic execution engine for dataflow programs}.
+\item To reduce false or low-value warnings for static tools, we introduce the concept of “residual investigation” for program analysis. Residual investigation provides a \textbf{general recipe} for \textbf{designing predictive and precise dynamic analysis for the first time}. A residual investigation is a dynamic check installed as a result of running a static analysis that reports a possible program error. The purpose is to observe conditions that indicate whether the statically predicted program fault is likely to be realizable and relevant. The key feature of a residual investigation is that it has to be much more precise (i.e., with fewer false warnings) than the static analysis alone, yet significantly more general (i.e., reporting more errors) than the dynamic tests in the program’s test suite pertinent to the statically reported error.
+\item We present a technique to enhance the dynamic invariant detection approach. Our work identifies and describes the idea of second-order constraints that can help improve the consistency and relevance of dynamically inferred invariants.  We call these constraints “second-order” because they are constraints over constraints: they relate classes of invariants (first-order constraints). For instance, even though the invariants describing the behavior of two functions f1 and f2 may be unknown, we may know that any valid input for f1 is also valid for f2, i.e., the precondition of f1 implies that of f2.
+\item Our SEDGE system addresses the dataflow program test case generation completeness problem: for every dataflow operator, we produce data aiming to cover all cases that arise in the dataflow program (e.g., both passing and failing a filter). SEDGE relies on transforming the program into symbolic constraints, and solving the constraints using a symbolic reasoning engine (a powerful SMT solver), while using input data as concrete aids in the solution process. The approach resembles dynamic-symbolic (a.k.a. “concolic”) execution in a conventional programming language, adapted to the unique features of the dataflow domain. SEDGE is the \textit{\textbf{first} dynamic symbolic execution engine for dataflow programs}.
 \end{enumerate}
 
-%The remainder of this proposal is organized as follows.  Chapter~\ref{chp:worksofar} summarizes work done so far.  Work I propose to do is presented in Chapter~\ref{chp:proposed}.  Related work is discussed in Chapter~\ref{chp:related}.  Chapter~\ref{chp:timeline} concludes with a schedule for completing the work proposed.   
+%The remainder of this proposal is organized as follows.  Chapter~\ref{chp:worksofar} summarizes work done so far.  Work we propose to do is presented in Chapter~\ref{chp:proposed}.  Related work is discussed in Chapter~\ref{chp:related}.  Chapter~\ref{chp:timeline} concludes with a schedule for completing the work proposed.   
 
 
 %\chapter{Work done so far}
@@ -1031,13 +1032,13 @@ period of time,
 by merely examining the FindBugs list of bug patterns under the lens
 of residual investigation. 
 
-The present article revises, generalizes, and extends the original
-conference publication on residual investigation \cite{rfbi-issta12}.
-Thus, we integrate the original definition and presentation of
-residual investigation analyses in RFBI, but our presentation also
-reflects a broader perspective on how residual investigation can apply
-to different contexts, the enabling factors and limitations
-of the approach, and more.
+%The present article revises, generalizes, and extends the original
+%conference publication on residual investigation \cite{rfbi-issta12}.
+%Thus, we integrate the original definition and presentation of
+%residual investigation analyses in RFBI, but our presentation also
+%reflects a broader perspective on how residual investigation can apply
+%to different contexts, the enabling factors and limitations
+%of the approach, and more.
 
 In summary, the main contributions of this work are:
 \begin{itemize}
@@ -3972,7 +3973,7 @@ above checks as additional safeguards of behavior preservation.
 \chapter{Second-Order Constraints in Dynamic Invariant Inference}
 \label{chp:metainvariantpaper}
 
-This chapter centres around the enhancement of dynamic invariant inference with static second-order constraints. I call these constraints second-order because they are constraints over constraints: they relate classes of invariants (first-order constraints).  Such second-order constraints are provided directly by programmers or vetted by programmers among candidates suggested automatically by a tool we developed.  By incorporating second-order static information about invariants, we will improve the quality of derived invariants in ways that greatly improve the utility of dynamically discovered invariants in program analysis, testing, and program understanding. 
+This chapter centres around the enhancement of dynamic invariant inference with static second-order constraints. We call these constraints second-order because they are constraints over constraints: they relate classes of invariants (first-order constraints).  Such second-order constraints are provided directly by programmers or vetted by programmers among candidates suggested automatically by a tool we developed.  By incorporating second-order static information about invariants, we will improve the quality of derived invariants in ways that greatly improve the utility of dynamically discovered invariants in program analysis, testing, and program understanding. 
 
 % \begin{abstract}
 
@@ -9723,11 +9724,11 @@ to derive automata that describe correct behavior.
 %%%This section needs to be moved to the section of rfbi's related work.
 \section{Providing dynamic symbolic execution with concrete system states}
 
-Similar to us, hybrid concolic testing\cite{Majumdar:2007:HCT:1248820.1248874} interleaves random testing and concolic testing to increase coverage.  The switch from random testing to concolic testing happens when random testing does not find new coverage points after a predetermined steps; the switch from concolic testing to random testing happens when concolic testing finds an input to an uncovered branch goal (though concolic testing may need to explore several feasible execution paths to generate the new input).  But hybrid concolic testing is not designed to trigger one specific bug condition.  I are targeting at generating tests to trigger one specific bug condition, using call graph search and dynamic symbolic execution. 
+Similar to us, hybrid concolic testing\cite{Majumdar:2007:HCT:1248820.1248874} interleaves random testing and concolic testing to increase coverage.  The switch from random testing to concolic testing happens when random testing does not find new coverage points after a predetermined steps; the switch from concolic testing to random testing happens when concolic testing finds an input to an uncovered branch goal (though concolic testing may need to explore several feasible execution paths to generate the new input).  But hybrid concolic testing is not designed to trigger one specific bug condition.  We are targeting at generating tests to trigger one specific bug condition, using call graph search and dynamic symbolic execution. 
 
-\cite{Elbaum:2006:CDU:1181775.1181806} saves system test states and restores those states as regression tests.  I also save system test states.  But our purpose is helping setting up environment (i.e. assignments to heap variables) for starting dynamic symbolic execution of the “switching” method.
+\cite{Elbaum:2006:CDU:1181775.1181806} saves system test states and restores those states as regression tests.  We also save system test states.  But our purpose is helping setting up environment (i.e. assignments to heap variables) for starting dynamic symbolic execution of the “switching” method.
 
-The closest work to us is \cite{Pasareanu:2008:CUS:1390630.1390635}, which uses system tests to set up the environment.  Different from\cite{Pasareanu:2008:CUS:1390630.1390635} that uses symbolic execution to generate unit tests, I use dynamic symbolic execution to generate unit tests.  This enables us to handle native method calls and some complicated constraints by replacing them with concrete values. 
+The closest work to us is \cite{Pasareanu:2008:CUS:1390630.1390635}, which uses system tests to set up the environment.  Different from\cite{Pasareanu:2008:CUS:1390630.1390635} that uses symbolic execution to generate unit tests, we use dynamic symbolic execution to generate unit tests.  This enables us to handle native method calls and some complicated constraints by replacing them with concrete values. 
 
 \bibliographystyle{umthesis}
 \bibliography{testing,testing-cc,refactoring,sigproc,dbgen}
