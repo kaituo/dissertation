@@ -1,0 +1,188 @@
+\chapter{Type Constraints}
+
+\section{Introduction}
+ Type constraints are logical formulas related to types. For example, the Java method header \java{void foo(List a)} implies the type constraint that the dynamic type of \java{a} is a subtype of \java{List}.  Without loss of generality, Sherman et al. \cite{Sherman:2015:DTP:2776776.2755971} finds 5 kinds of type constraints in Java programs:
+ 
+\begin{enumerate}
+    \item x $\preceq$ t: Variable type x is a subtype of constant type t. Example: From an if condition which uses \java{instanceof} to check if a given object \java{o} is a \java{Map} object, we can infer the type constraint \java{o} $\preceq$ Map.  
+  \item x $\preceq$ y: Variable type x is a subtype of variable type y. Example: You might want to check if an object \java{o} is of type \java{clazz} via \java{java.lang.Class.isInstance()} like this: \java{clazz.isInstance(o)}. This expression contains the type constraint \java{o} $\preceq$ \java{clazz}.
+  \item t $\preceq$ x: Constant type t is a subtype of variable type x. Example: When a method parameter \java{c} is constrained to satisfy the \java{java.lang.Class.isAssignableFrom()} constraint \java{c.isAssignableFrom(Integer.class)}, the actual type constraint is \java{Integer.class} $\preceq$ \java{c}.
+  \item x $=$ y or x$\neq$ y: Variable type x equals to variable type y. The Java expressions such as \java{getClass().equals(other.getClass()} have been used to check whether one variable type equals to another variable type.
+  \item x $=$ t or x$\neq$ t: Variable type x equals to constant type t. For example, Apache Hive \footnote{\url{https://github.com/apache/hive/blob/master/metastore/src/gen/thrift/gen-javabean/org/apache/hadoop/hive/metastore/api/ThriftHiveMetastore.java}} checks if a field's dynamic type equals to a constant type using a statement like \java{schemeField.type == org.apache.thrift.protocol.TType.STOP}.
+\end{enumerate}
+
+
+Type constraint reasoning is necessary as object oriented programming becomes prevalent.  A recent survey on open source applications with a total size of more than 2 MLOC by \cite{Islam14Generating} found three hundred cases of type constraints. Sherman et al. \cite{Sherman:2015:DTP:2776776.2755971} conducted experiments by collecting path constraints from dynamic symbolic execution. These path constraints include first-order logic formulas such as the numerical formula \java{a < 3} and the type constraint \java{a} is a subtype of \java{b}. It estimates that the average percentage of type constraints on five open source Java programs is 51\%.  
+
+Type constraints have important application areas such as verification and testing. The official JVM spec \cite{Lindholm:2014:JVM:2636992} defines type constraints in Prolog to do type checking within Java compiler:``The type checker enforces type rules that are specified by means of Prolog clauses. English language text is used to describe the type rules in an informal way, while the Prolog clauses provide a formal specification.'' Another important application area of type constraints is dynamic symbolic execution, which often needs to create objects with correct types. Due to polymorphisms such as subtyping and dynamic dispatch, the dynamic type of a reference variable is often not equal to its declared static type. Various errors could arise if static types are to substitute dynamic types to create objects. With type constraints and a suitable constraint solver, we can easily find the correct dynamic type of an object. 
+
+The challenge of type constraints reasoning is the analysis must be acceptably accurate not only in complete type hierarchy but also in incomplete type hierarchy while keeping the process at reasonable performance cost. Complete type hierarchy means all the required types are available in the search space. Incomplete type hierarchy means some types are missing in the search space either because the required classes have not been written (e.g. in the the test-driven development practice) or because the required classes have not been loaded yet (e.g. in languages like Java classes are loaded on demand).  
+
+A streak of related work attempts to attack this challenge. SMT solver Z3's \cite{moura08Z3} official tutorial \footnote{\url{http://rise4fun.com/z3/tutorialcontent/guide}} provides a way of encoding type constraints using uninterpreted function.  With Z3 we have to assert the subtype relationship of every pair of x, y of types from known type systems. Sherman et al. \cite{Sherman:2015:DTP:2776776.2755971} finds that Z3 suffers severe performance degradation because of its huge number of asserted type constraints.  \cite{Islam14Generating} encodes ``subtype'' as a 2-dimensional array because they can tell Z3 to create an array whose fields are all ``false'' by default. Then they only have to assert actual subtypes. In other words, they do not have to assert ``X is not a subtype of A'', ``X is not a subtype of B'' etc. They only have to assert ``X is a subtype of C'', ``X is a subtype of D'' etc.  Still their algorithm has quadratic complexity.  For type constraints of the form x $\preceq$ t and x $=$ t, Sherman et al.'s solver \cite{Sherman:2015:DTP:2776776.2755971} is significantly faster than the two approaches mentioned above. But Sherman et al.'s solver is not able to solve the other 3 kinds of type constraints, including x $\preceq$ y, t $\preceq$ x and x $=$ y. We cannot ignore those 3 kinds of type constraints as they are common in projects.  Please see details of our case studies on the distribution of the 5 kinds of type constraints in Section~\ref{chp:case}. 
+
+In this chapter, we describe an approach to reason about type constraints using Datalog. Datalog is a database query language that operates on relations (similar to tables in a database). Following predefined rules, new relations are computed based on projecting and joining existing relations as in relational database queries. Rules are usually in the form of implications. Our approach is guaranteed to have a polynomial complexity as the complexity class of Datalog is $P$ \cite{immerman2012descriptive}. In practice, our approach's time complexity is $O(n^2)$, where $n$ is the size of input relations.  This is because we compute unrelated input relations separately and we have rarely seen links among more than 2 relations.  Also, encoding type constraints using uninterpreted functions or arrays is slow due to its large number of asserted constraints. In contrast, Datalog makes a closed-world assumption and can define recursive rules, and the resulting type constraints are relatively smaller. A closed-world assumption treats anything that are not facts and cannot be inferred from existing facts as false. This assumption is convenient for type constraints encoding as we do not have to assert false or unknown relationships between two types: ``X is not a subtype of A'', ``X is not a subtype of B'' etc. Recursive rules are defined in a way that both body and head can contain the same relation.  This allows Datalog to instantiate new facts on demand. 
+
+ declarative Datalog semantics
+
+general 5 kinds of constraints
+
+\section{Case Studies}
+\label{chp:case}
+
+ We have performed 4 case studies, searching for empirical evidence about the distribution of the 5 kinds of type constraints via the source code mining tool Boa \cite{Dyer-Nguyen-Rajan-Nguyen-13}. After analyzing 23,229,406 revisions, 7,830,023 projects of the September 2015 Github dataset available in Boa, we are able to find out the 5 kinds of type constraints are not evenly distributed, with the number of x $\preceq$ t constraints dominating the number of all other type constraints, but with other type constraints appearing in a similarly number of projects.  A caveat is some of the results may not be consistent with the programs, seemingly due to the semantic unsoundness in source code mining tools. For example, when there is a function call to \java{isAssignableFrom()}, Boa does not encode the receiver's static type. Therefore we cannot accurately determine type constraints in the function call to \java{java.lang.Class.isAssignableFrom()}.  
+
+Our 4 case studies try to address the following research questions:
+
+\textbf{(RQ1) How many expressions are matched with each kind of type constraints?}
+
+While we found 69,338,416 expressions are matched with type constraints, 93.3\% of expressions contain x $\preceq$ t, as shown in Figure~\ref{fig:exprnumber}.
+
+\textbf{(RQ2) In high quality projects, how many expressions are matched with each kind of type constraints?}
+
+Ideally we want to use metrics like the number of downloads to measure the project quality.  But this information is not encoded by Boa.  Instead, we use the number of commits for a project as the quality metric: if a project has no less than 100 commits, we regard it as a high quality project. 
+
+\textbf{(RQ3) How many projects are there where each kind of type constraints can be found at least once?}
+
+There have been 164,998 projects with type constraints out of 7,830,023 projects in our dataset, according to Figure~\ref{fig:projectnumber}. We identified 63.2\% of those 164,998 projects have x $\preceq$ t expressions.  
+
+\textbf{(RQ4) How many high quality projects are there where each kind of type constraints can be found at least once?}
+
+Again, if a project has no less than 100 commits, we regard it as a high quality project. 
+
+
+
+
+%\begin{figure*}[tb]
+%\begin{center}
+%\begin{scriptsize}
+%\begin{tabular}{|l|r|r|r|r|r|r|r|r|r|}
+%\hline
+%&\multicolumn{3}{c|}{\textbf{isAssignableFrom}} & \multicolumn{3}{c|}{\textbf{isInstance}} & \textbf{instanceof} & \multicolumn{2}{c|}{\textbf{Equal}}  
+%\\
+%&x $<:$ t & t $<:$  x & x1 $<:$  x2 & x $<:$ t & t $<:$ x & x1 $<:$ x2 &x $<:$ t & x1 $=$ x2 & x $=$ t \\
+%\hline
+%\hline
+%large & 1,001,478 & 178,340 & 527,760 & 194,303 & 25,054 & 513,570 &63,493,487& 1,711,876&1,692,548 \\
+%%mc & 23 & 2/0 & 0/0 & 0/0 \\
+%large & 12,247 & 4,075 & 9,365 & 2,949 &906 &8,193 &89,057&27,840&10,366 \\ 
+%large& 4,566 & 1,735 & 3,655 & 1,193 &417&3,294&17,643&7,976&3,870 \\
+%large & 882,098 & &&&&&57,704,965 & 1,495,999 & 1,617,767 \\
+%\hline
+%\end{tabular}
+%\end{scriptsize}
+%\end{center}
+%\caption{Average running time in seconds for residual investigation on race 
+%detection.}
+%\label{fig:racetime}
+%\end{figure*}
+
+\begin{figure*}[tb]
+\begin{center}
+\begin{small}
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+& \multirow{2}{*}{x $\preceq$ t} &\multirow{2}{*}{t $\preceq$ x}& \multirow{2}{*}{x $\preceq$  y }& x $=$ y & x $=$ t
+\\&&&&x$\neq$y&x$\neq$t\\
+\hline
+\hline
+\textbf{isAssignableFrom} & 1,001,478 & 178,340 & 527,760 & n/a &n/a\\
+\textbf{isInstance}&194,303 & 25,054 & 513,570&n/a&n/a\\
+\textbf{instanceof} &63,493,487&n/a&n/a&n/a&n/a\\
+\textbf{Equality}&n/a&n/a&n/a& 1,711,876&1,692,548 \\
+%mc & 23 & 2/0 & 0/0 & 0/0 \\
+\hline
+\end{tabular}
+\end{small}
+\end{center}
+\caption{Number of expressions that are matched with each kind of type constraints. For missing cells (``n/a''), the expression has no such type constraint. }
+\label{fig:exprnumber}
+\end{figure*}
+
+\begin{figure*}[tb]
+\begin{center}
+\begin{small}
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+& \multirow{2}{*}{x $\preceq$ t} &\multirow{2}{*}{t $\preceq$ x}& \multirow{2}{*}{x $\preceq$  y }& x $=$ y & x $=$ t
+\\&&&&x$\neq$y&x$\neq$t\\
+\hline
+\hline
+\textbf{isAssignableFrom} & 882,098& 156,745 & 474,316 & n/a &n/a\\
+\textbf{isInstance}& 169,096 & 20,018 & 474,588 &n/a&n/a\\
+\textbf{instanceof} &57,704,965&n/a&n/a&n/a&n/a\\
+\textbf{Equality}&n/a&n/a&n/a &1,495,999&1,617,767 \\
+%mc & 23 & 2/0 & 0/0 & 0/0 \\
+\hline
+\end{tabular}
+\end{small}
+\end{center}
+\caption{Number of expressions that are matched with each kind of type constraints in high quality projects. For missing cells (``n/a''), the expression has no such type constraint. }
+\label{fig:exprnumber_quality}
+\end{figure*}
+
+\begin{figure*}[tb]
+\begin{center}
+\begin{small}
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+& \multirow{2}{*}{x $\preceq$ t} &\multirow{2}{*}{t $\preceq$ x}& \multirow{2}{*}{x $\preceq$  y }& x $=$ y & x $=$ t
+\\&&&&x$\neq$y&x$\neq$t\\
+\hline
+\hline
+\textbf{isAssignableFrom} & 12,247 & 4,075 & 9,365 & n/a &n/a\\
+\textbf{isInstance}&2,949 &906 &8,193&n/a&n/a\\
+\textbf{instanceof} &89,057&n/a&n/a&n/a&n/a\\
+\textbf{Equality}&n/a&n/a&n/a&27,840&10,366 \\
+%mc & 23 & 2/0 & 0/0 & 0/0 \\
+\hline
+\end{tabular}
+\end{small}
+\end{center}
+\caption{Number of projects where each kind of type constraints can be found at least once.  For missing cells (``n/a''), the expression has no such type constraint. }
+\label{fig:projectnumber}
+\end{figure*}
+
+
+\begin{figure*}[tb]
+\begin{center}
+\begin{small}
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+& \multirow{2}{*}{x $\preceq$ t} &\multirow{2}{*}{t $\preceq$ x}& \multirow{2}{*}{x $\preceq$  y }& x $=$ y & x $=$ t
+\\&&&&x$\neq$y&x$\neq$t\\
+\hline
+\hline
+\textbf{isAssignableFrom} & 4,566 & 1,735 & 3,655 & n/a &n/a\\
+\textbf{isInstance}&1,193 &417&3,294&n/a&n/a\\
+\textbf{instanceof} &17,643&n/a&n/a&n/a&n/a\\
+\textbf{Equality}&n/a&n/a&n/a &7,976&3,870 \\
+%mc & 23 & 2/0 & 0/0 & 0/0 \\
+\hline
+\end{tabular}
+\end{small}
+\end{center}
+\caption{Number of high quality projects where each kind of type constraints can be found at least once.  For missing cells (``n/a''), the expression has no such type constraint. }
+\label{fig:projectnumber_quality}
+\end{figure*}
+
+\section{Motivating example}
+
+\begin{lstlisting}[style=JavaStyle, caption=An example Java program, label=lst:motivation]
+static public void invokeInterface(I i) {
+    new C1();
+    new C2();
+    int res = i.foo(0); 
+    
+    Goals.reached(0);
+    
+    if (res == 1)
+      Goals.reached(1);
+
+    else if (res == 2)
+      Goals.reached(2);
+    
+    else
+      Goals.reached(3);   
+  }
+
+\end{lstlisting}

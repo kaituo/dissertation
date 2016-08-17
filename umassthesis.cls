@@ -80,7 +80,7 @@
 %% Identification part
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{umthesis}[2003/10/16 20:20:51 1.25
+\ProvidesClass{umassthesis}[2014/04/16 v1.26
                          U.Mass. dissertation class]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -103,13 +103,13 @@
 \DeclareOption{doublespace}{\double@spacetrue}
 \DeclareOption{condensed}{\condensed@frontmattertrue\double@spacefalse}
 \DeclareOption{uncondensed}{\condensed@frontmatterfalse}
-\DeclareOption{proposal}{\def\umthesis@typename{A Dissertation Outline}\@proposaltrue}
-\DeclareOption{dissertation}{\def\umthesis@typename{A Dissertation}}
-\DeclareOption{thesis}{\def\umthesis@typename{A Thesis}%
+\DeclareOption{proposal}{\def\umassthesis@typename{A Dissertation Outline}\@proposaltrue}
+\DeclareOption{dissertation}{\def\umassthesis@typename{A Dissertation}}
+\DeclareOption{thesis}{\def\umassthesis@typename{A Thesis}%
   \renewcommand{\@degree}{Master of Science}%
   \renewcommand{\@degreeabbrv}{M.S.}}
-\DeclareOption{nolisthyphenation}{\def\umthesis@listhyphenpenalty{10000}}
-\DeclareOption{allowlisthyphenation}{\def\umthesis@listhyphenpenalty{50}}
+\DeclareOption{nolisthyphenation}{\def\umassthesis@listhyphenpenalty{10000}}
+\DeclareOption{allowlisthyphenation}{\def\umassthesis@listhyphenpenalty{50}}
 \DeclareOption{nicerdraft}{\nicer@drafttrue}
 \DeclareOption{nonicerdraft}{\nicer@draftfalse}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}}
@@ -401,7 +401,7 @@
         \@mkboth{%
            \MakeTextUppercase\contentsname}{\MakeTextUppercase\contentsname}}%
     {\hfill \textbf{Page}\par}%
-    {\hyphenpenalty=\umthesis@listhyphenpenalty\@starttoc{toc}}%
+    {\hyphenpenalty=\umassthesis@listhyphenpenalty\@starttoc{toc}}%
     \if@restonecol\twocolumn\fi
     }
 
@@ -417,8 +417,8 @@
 
 \renewcommand{\@dotsep}{2}
 
-\newlength{\umthesis@contentshangindent}
-\setlength{\umthesis@contentshangindent}{1.55em}
+\newlength{\umassthesis@contentshangindent}
+\setlength{\umassthesis@contentshangindent}{1.55em}
 
 \renewcommand{\@dottedtocline}[5]{%
   \ifnum #1>\c@tocdepth \else
@@ -434,7 +434,7 @@
      \leavevmode
      \@tempdima #3\relax
      \advance\leftskip \@tempdima \null\nobreak\hskip -\leftskip
-     \hangindent\umthesis@contentshangindent
+     \hangindent\umassthesis@contentshangindent
      {#4}\nobreak%
      \leaders\hbox{$\m@th\mkern \@dotsep mu \hbox{.}\mkern \@dotsep mu$}%
              \hskip3em plus1fill\relax%
@@ -513,7 +513,7 @@
       \@mkboth{\MakeTextUppercase\listfigurename}%
               {\MakeTextUppercase\listfigurename}}%
     {\normalsize\parindent\z@\textbf{Figure \hfill Page}\par}%
-    {\hyphenpenalty=\umthesis@listhyphenpenalty\@starttoc{lof}}%
+    {\hyphenpenalty=\umassthesis@listhyphenpenalty\@starttoc{lof}}%
     \if@restonecol\twocolumn\fi
     }
 \fi
@@ -537,14 +537,14 @@
       \@mkboth{%
           \MakeTextUppercase\listtablename}{\MakeTextUppercase\listtablename}}%
     {\normalsize\parindent\z@\textbf{Table \hfill Page}\par}%
-    {\hyphenpenalty=\umthesis@listhyphenpenalty\@starttoc{lot}}%
+    {\hyphenpenalty=\umassthesis@listhyphenpenalty\@starttoc{lot}}%
     \if@restonecol\twocolumn\fi
     }
 \fi
 \let\l@table\l@figure
 
-\let\umthesis@base@starttoc\@starttoc
-\renewcommand{\@starttoc}{\tolerance10000\umthesis@base@starttoc}
+\let\umassthesis@base@starttoc\@starttoc
+\renewcommand{\@starttoc}{\tolerance10000\umassthesis@base@starttoc}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -619,7 +619,7 @@
 % To change Department Chair to Chair, call like this:
 % \departmentchair[Chair]{Jane Doe}.
 \newcommand{\departmentchair}[2][Department Chair]{
-  \gdef\umthesis@chairtitle{#1}
+  \gdef\umassthesis@chairtitle{#1}
   \gdef\@departmentchair{#2}
   }
 \def\departmentname#1{\gdef\@departmentname{#1}}
@@ -757,22 +757,20 @@
 %% Fix footnotes -- double spacing between footnotes, single spacing within
 %%     footnotes is what is required.
 
-\newlength{\umthesis@basefootnotesep}
-\newlength{\umthesis@baseskipfootins}
+\newlength{\umassthesis@basefootnotesep}
+\newlength{\umassthesis@baseskipfootins}
 
-\setlength{\umthesis@basefootnotesep}{\footnotesep}
-\setlength{\umthesis@baseskipfootins}{\skip\footins}
+\setlength{\umassthesis@basefootnotesep}{\footnotesep}
+\setlength{\umassthesis@baseskipfootins}{\skip\footins}
 
 \ifdouble@space
-  \setlength{\footnotesep}{2\umthesis@basefootnotesep}
-  \setlength{\skip\footins}{2\umthesis@baseskipfootins}
+  \setlength{\footnotesep}{2\umassthesis@basefootnotesep}
+  \setlength{\skip\footins}{2\umassthesis@baseskipfootins}
 \fi
 
-\let\base@footnotetext\@footnotetext
-\long\def\@footnotetext{%
-  \renewcommand{\baselinestretch}{1}%
-  \base@footnotetext%
-}
+\pretocmd{\@footnotetext}{\linespread{1}\selectfont}%
+  {\typeout{Patching footnotetext succeeded}}%
+  {\typeout{Patching footnotetext failed}}
 
 %%
 %% Fix the bibliography
@@ -781,12 +779,26 @@
   \let\base@thebibliography\thebibliography%
   \let\endbase@thebibliography\endthebibliography%
   %
-  \renewenvironment{thebibliography}[1]{%
-    \begin{base@thebibliography}{#1}%
+  \@ifpackageloaded{biblatex}{%
+    % Double-space the bibliography entries, according to an interpretation
+    % of the discussion at
+    % http://tex.stackexchange.com/questions/13742/what-does-double-spacing-mean
+    \setlength{\bibitemsep}{\baselineskip}%
+    % Add entry to TOC
+    \AtBeginBibliography{%
       \addcontentsline{toc}{\toc@section}{\MakeTextUppercase{\bibname}}%
-    }{\end{base@thebibliography}}}
+    }%
+  }{%
+    % Add entry to TOC
+    \renewenvironment{thebibliography}[1]{%
+      \begin{base@thebibliography}{#1}%
+        \addcontentsline{toc}{\toc@section}{\MakeTextUppercase{\bibname}}%
+      }{\end{base@thebibliography}}%
+  }%
+}
 
 \newcommand{\doublespace}{\doublespacenormalsize}
 
 % silence hyperref warning about bookmark level
 \providecommand*{\toclevel@FrontMatter}{0}
+\providecommand*{\toclevel@Chapter}{0}

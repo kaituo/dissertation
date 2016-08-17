@@ -9,7 +9,7 @@
     \pagenumbering{roman}
     \null
     \textbf{\uppercase\expandafter{\@title}} \par % Title must be all caps.
-    \umthesis@typename\ Presented \par
+    \umassthesis@typename\ Presented \par
     by \par
     \uppercase\expandafter{\@author} \par
     Submitted to the Graduate School of the \par
@@ -61,7 +61,7 @@
     \fi
     \par
     Department Chair will be listed as: \par
-    \@departmentchair, \umthesis@chairtitle \par
+    \@departmentchair, \umassthesis@chairtitle \par
   \end{center}
   }
 
@@ -70,9 +70,13 @@
 %%
 
 \newenvironment{dedication}
-    {\vspace{6ex}\begin{quotation}}
-    {\par\end{quotation}}
-  
+    {\vspace{6ex}\textbf{DEDICATION}\par}
+    {\par}
+
+\newenvironment{frontispiece}
+  {\vspace{6ex}}
+  {\par}
+
 \renewenvironment{abstract}{
   \vspace{6ex}
   \begin{center}
