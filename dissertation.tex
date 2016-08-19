@@ -35,6 +35,7 @@
 \usepackage{letltxmacro}
 \usepackage[shortlabels]{enumitem}
 %\usepackage[dvipsnames]{xcolor}
+%\usepackage{chicago}
 
 \DeclareMathSymbol{\mlq}{\mathord}{operators}{``}
 \DeclareMathSymbol{\mrq}{\mathord}{operators}{`'}
@@ -107,24 +108,6 @@ stringstyle=\color{orange}}
 
 \addtolength{\abovedisplayskip}{-1mm}
 \addtolength{\belowdisplayskip}{-1mm}
-
-%\DeclareRobustCommand\citeN{%				% January 2008
-%    \@citeRB
-%    \def\citeauthoryear##1##2##3{##1\ [##3%
-%        \def\reserved@a{##1}%
-%        \def\citeauthoryear####1####2####3{%
-%            \def\reserved@b{####1}%
-%            \ifx\reserved@a\reserved@b
-%                ####3%
-%            \else
-%                \errmessage{Package acmart Error: author mismatch
-%                         in \string\citeN^^J^^J%
-%                    See the acmart package documentation for explanation}%
-%            \fi
-%        }%
-%    }%
-%    \@ifstar\@citeyear\@citeyear
-%}
 
 \newcommand*{\SavedLstInline}{}
 \LetLtxMacro\SavedLstInline\lstinline
@@ -401,6 +384,7 @@ stringstyle=\color{orange}}
 \newcommand{\define}{\mathrel{\mathop:}-}
 %\title{Second-Order Constraints in Dynamic Invariant Inference}
 
+
 % \author{
 % \alignauthor Kaituo Li, Christoph Reichenbach\\
 % \affaddr{Computer Science Dept.}\\
@@ -649,7 +633,7 @@ It then computes the path condition for each path using these symbolic names and
 
 However, symbolic execution cannot reason about native method calls because the source code or the object code of native methods are not available.  Also, the ability of symbolic execution to generate test cases heavily depends on the power of constraint solver.  Constraint solving is practically always limited in the face of complex constraints such as certain non-linear constraints and certain constraints that use quantifiers.  Dynamic symbolic execution resolves these problems by arranging for the symbolic execution and the actual execution of a program to proceed in tandem.  Calls to native methods or symbolic names in complex constraints are replaced with concrete values from the actual program execution.  
 
-Dynamic symbolic execution is effective at exposing bugs.  It can systematically generates test cases from paths of control flow graph of the system under test. If bugs are found, users are able to reproduce all of the bugs with the generated test cases, provided that they are working on a sequential program or a multi-threaded program whose thread interleaving are deterministic.  Due to its effectiveness, dynamic symbolic execution has received much attention of late.  There has been a lot of dynamic symbolic execution engines in industry and academia, notably DART \cite{godefroid05dart}, CUTE \cite{sen05cute}, jCUTE \cite{Sen:2006:CJC:2135909.2135962}, KLEE \cite{Cadar:2008:KUA:1855741.1855756}, Java PathFinder \cite{visser04test}, SAGE \cite{Godefroid:2012:SWF:2090147.2094081}, PEX \cite{tillmann08pex}, BitBlaze \cite{song2008bitblaze}.  The popularity of dynamic symbolic execution is sharply illustrated by the adoption of SAGE into Microsoft's Windows 7 development: SAGE found one-third of all bugs during the development of Windows 7 \cite{Godefroid:2012:SWF:2090147.2094081}.
+Dynamic symbolic execution is effective at exposing bugs.  It can systematically generates test cases from paths of control flow graph of the system under test. If bugs are found, users are able to reproduce all of the bugs with the generated test cases, provided that they are working on a sequential program or a multi-threaded program whose thread interleavings are deterministic.  Due to its effectiveness, dynamic symbolic execution has received much attention of late.  There has been a lot of dynamic symbolic execution engines in industry and academia, notably DART \cite{godefroid05dart}, CUTE \cite{sen05cute}, jCUTE \cite{Sen:2006:CJC:2135909.2135962}, KLEE \cite{Cadar:2008:KUA:1855741.1855756}, Java PathFinder \cite{visser04test}, SAGE \cite{Godefroid:2012:SWF:2090147.2094081}, PEX \cite{tillmann08pex}, BitBlaze \cite{song2008bitblaze}.  The popularity of dynamic symbolic execution is sharply illustrated by the adoption of SAGE into Microsoft's Windows 7 development: SAGE found one-third of all bugs during the development of Windows 7 \cite{Godefroid:2012:SWF:2090147.2094081}.
 
 \section{Overview and contribution}
 
@@ -937,14 +921,16 @@ We propose new combinations of static and dynamic analysis for bug detection and
 
 %\maketitle
 
-A tension exists between static analysis and testing.  Static analysis has the problem of issuing false positives: namely, it often warns about bugs that are not real bugs.  They are just there because of over-generalizing observations.  However, testing does not suffer from false positives.  When it reports an error, it is a true error.  Conversely, testing suffers from false negatives: it misses many errors.  It only catches errors that are dynamically exercised by the test suite, whereas static analysis generalizes the test suite, or generalizes what the application would normally do.  Static analysis does not even need a test suite.  Therefore static analysis has fewer false negatives.  That is a traditional tension between static analysis and testing.  Ideally, what we would like is to have something in the middle.  
-%And what can come in the middle is what we usually call dynamic analysis. But it is not well defined by what we mean by dynamic analysis.  We believe that ideally dynamic analysis are things that sit in the middle and get the best of both worlds, both static analysis and testing.  
-Dynamic analysis is a concept between testing and static analysis. Although the term is not always well defined, it can stand for techniques that generalize executions relative to mere testing, yet do not perform a fully over-approximate (and, hence, imprecise) static analysis.
+A tension exists between static analysis and testing.  Static analysis has the problem of issuing false positives: namely, it often warns about bugs that are not real bugs.  They are just there because of over-generalizing observations.  However, testing does not suffer from false positives.  When it reports an error, it is a true error.  
+%Conversely, testing suffers from false negatives: it misses many errors.  It only catches errors that are dynamically exercised by the test suite, whereas static analysis generalizes the test suite, or generalizes what the application would normally do.  Static analysis does not even need a test suite.  Therefore static analysis has fewer false negatives.  That is a traditional tension between static analysis and testing.  Ideally, what we would like is to have something in the middle.  
+%Dynamic analysis is a concept between testing and static analysis. Although the term is not always well defined, it can stand for techniques that generalize executions relative to mere testing, yet do not perform a fully over-approximate (and, hence, imprecise) static analysis.
+Conversely, testing suffers from false negatives: it misses many errors. Testing can only catch errors that are dynamically exercised by the test suite, whereas static analysis generalizes the test suite, or, rather, generalizes the application's behavior without consulting the test suite. In this way, static analysis has fewer false negatives. This well-known tradeoff between static analysis and testing creates the need to have something in the middle: an approach that is more general than reporting the errors encountered by a test suite while avoiding high rates of false positives.
+And what can come in the middle is what we usually call dynamic analysis. But it is not well defined by what we mean by dynamic analysis.  We believe that ideally dynamic analysis sits in the middle and get the best of both worlds, both static analysis and testing.  
 
-This chapter investigates predictive and precise dynamic analysis.  The thrust of this  dynamic analysis is to have very few false positives and fewer negatives than testing.  Predictive and precise dynamic analysis can be combined with static analysis to improve the precision and recall of bug detection. We have confirmed the efficacy of this combination  by implementing it inside FindBugs, a static bug detection tool. 
+This chapter investigates predictive and precise dynamic analysis.  The thrust of this  dynamic analysis is to have very few false positives and fewer negatives than testing.  Predictive and precise dynamic analysis can be combined with static analysis to improve the precision and recall of bug detection. This combination consists of taking bug reports inferred by a static bug detector, examining false positives of those bug reports (i.e. what are the common objections to the static bug reports?), designing dynamic tests to disapprove those objections, and determining whether a static report is likely true by executing the dynamic tests.  Since we employ the dynamic analysis as a subsequent step of static analysis, we call the dynamic analysis the ``residual'' of the static analysis. We call the the dynamic analysis \emph{residual investigation} for the static analysis.  We have confirmed the efficacy of residual investigation by implementing it inside FindBugs, a static bug detection tool. 
 
 \section{Introduction and Motivation}
-\label{introduction}
+\label{rfbi:introduction}
 
 False error reports are the bane of automatic bug detection---this
 experience is perhaps the most often-reported in the program analysis
@@ -1056,7 +1042,7 @@ of residual investigation.
 %to different contexts, the enabling factors and limitations
 %of the approach, and more.
 
-In summary, the main contributions of this work are:
+In summary, the main contributions of this chapter are:
 \begin{itemize}
 \item We introduce residual investigation as a general concept and
 illustrate its principles.
@@ -1116,7 +1102,7 @@ the example analyses we have defined.
 
 We consider a dynamic check that is tied to a
 static analysis to be a residual investigation if it satisfies the informal
-conditions outlined in Section~\ref{introduction}:
+conditions outlined in Section~\ref{rfbi:introduction}:
 \begin{itemize}
 \item The check has to identify with very high confidence that the
 statically predicted behavior (typically a fault\footnote{The
@@ -1246,7 +1232,7 @@ false):
 % (We are only interested in non-trivial and therefore undecidable 
 % program properties. As our static analysis is complete, it has to be
 % unsound.
-(As discussed in the introduction, this assumption is true for most
+(As discussed in Section~\ref{rfbi:introduction}, this assumption is true for most
 static analysis systems, as they produce false warnings.%
 %% Note that since $T$ is sound, this implies $\exists p,b: S_p(b) \wedge
 %% \neg T_p(b)$ i.e., the dynamic analysis also does not flag this program
@@ -1745,7 +1731,7 @@ to the original.
 
 \subsubsection{Equal Objects Must Have Equal Hashcodes {\normalsize {\it (HE)}}} 
 
-As mentioned in the Introduction, FindBugs reports an error when a
+As mentioned in Section~\ref{rfbi:introduction}, FindBugs reports an error when a
 class overrides the \sv{equals(Object)} method but not the
 \sv{hashCode()} method, or vice versa. All Java objects support these
 two methods, since they are defined at the root of the Java class
@@ -2031,7 +2017,7 @@ the user the two different kinds of negative outcomes (i.e.,
 unexercised code vs. exercised code yet failure to confirm the static
 warning). Our experimental evaluation describes this distinction via a metric of
 the number of dynamic opportunities to confirm an error report that the residual investigation had,
-as we discuss in the next section.
+as we discuss in Section~\ref{rfbi:evaluation}.
 %, so that it is clear when there was
 %lack of confirmation because of complete lack of observations.
 
@@ -2126,6 +2112,7 @@ investigation.
 %\end{table}
 
 \section{Evaluation}
+\label{rfbi:evaluation}
 
 We evaluate RFBI in two complementary ways. First, we do a targeted
 evaluation using two medium-size systems with which we were already
@@ -2310,8 +2297,8 @@ the uninstrumented code of Jackrabbit takes 7m:32s, whereas running
 the pre-instrumented code of Jackrabbit takes 8m:30s.  Thus, the
 runtime slowdown of running pre-instrumented code for these residual
 investigations is small. The overhead will, however, vary based on the
-kinds of dynamic analyses installed, as we will also see in the next
-section.
+kinds of dynamic analyses installed, as we will also see in 
+Section~\ref{rfbi:evalLarge:runtime}.
    
 \subsection{Evaluation on Large Systems}
 
@@ -2403,7 +2390,7 @@ viewed as an indication of ``arbitrariness'': the dynamic analysis can
 only cover a small part of the static warnings, because of the
 shortcomings of the test suite.  A different view, however, is to
 interpret this number as an indication of why static analysis suffers
-from the ``slew of false positives'' perception mentioned in Section~\ref{introduction}. Programmers are likely to consider static warnings to be
+from the ``slew of false positives'' perception mentioned in Section~\ref{rfbi:introduction}. Programmers are likely to consider static warnings to be
 irrelevant if the warnings do not concern code that is even touched by
 the program's test suite.
 
@@ -2803,6 +2790,8 @@ factors.
 
 %\paragraph{Runtime overhead}
 \subsubsection{Runtime overhead}
+\label{rfbi:evalLarge:runtime}
+
 Figure~\ref{times} shows the runtime overhead of our residual
 investigation. We measured the analysis time of one run on a 4-core 2.4 GHz Intel i5 with 6 GB of RAM.
 As can be seen, compared to the baseline (of
@@ -2947,7 +2936,7 @@ We suspect that the 18 patterns that they described are at least somewhat
 %% article is somewhat
 representative of all FindBugs patterns. We selectively mention a few
 more FindBugs patterns in our discussion of the greater applicability
-of residual investigation in the next section.
+of residual investigation in Section~\ref{rfbi:applicability}.
 
 
 % First, our evaluation shows that the dynamic RFBI analyses weed out
@@ -2979,7 +2968,8 @@ of residual investigation in the next section.
 our static analysis system, truly randomly. We picked FindBugs because
 it is arguably the most widely known and used such tool for Java. We
 suspect that our findings will generalize to other static analysis
-tools and approaches. The next section discusses some such directions,
+tools and approaches. Section ~\ref{rfbi:race} and Section ~\ref{rfbi:applicability}
+ discuss some such directions,
 but only anecdotally.
 %, but this remains to be tested as part of future work.
 
@@ -3033,6 +3023,8 @@ but only anecdotally.
 %because we deemed it not well-known.
 
 \section{Residual Investigation for Race Detection}
+\label{rfbi:race}
+
 Residual investigation is a concept of much greater applicability than
 just our RFBI tool. The essence is to combine static analyses with
 predictive dynamic analyses that ascertain the validity or importance
@@ -3622,6 +3614,7 @@ detection.}
 \end{figure*}
 
 \section{Greater Applicability of Residual Investigation in Other Domains}
+\label{rfbi:applicability}
 
 In the following, we discuss several kinds
 of analyses to which residual investigation is applicable. We also
@@ -4043,7 +4036,7 @@ class B {
 }
 \end{lstlisting}
 
-Our test case generation design are based on the concept of the call graph: a graph with nodes denoting methods/functions, and edges between them denoting a method/function can call the other.  The associated call graph of the example program is shown in Figure~\ref{fig:call-graph-example}.  For instance, the edge from \sv{A.foo} to \sv{A.bar} in the call graph indicates method \sv{A.foo} can call method \sv{A.bar}. 
+Our test case generation design is based on the concept of the call graph: a graph with nodes denoting methods/functions, and edges between them denoting a method/function can call the other.  The associated call graph of the example program is shown in Figure~\ref{fig:call-graph-example}.  For instance, the edge from \sv{A.foo} to \sv{A.bar} in the call graph indicates method \sv{A.foo} can call method \sv{A.bar}. 
 
 \begin{figure}[h]
 \centering
@@ -4141,156 +4134,60 @@ PERM definitions for other bug patterns not described earlier:
 \hline
 1 & \emph{org.apache.bcel.classfile.AnnotationElementValue.dump}	&1&1 & 1 \\ %% 2
 \hline
-%% #1
-%% CanFollow(ArrayStack.push(Object), ArrayStack.peek())
-%\multirow{2}{*}{1} & \textsf{AjTypeSystem,}	&\multirow{2}{*}{\emph{Subrange(getAjType, getDeclaringType)}} & \multirow{2}{*}{0} & \multirow{2}{*}{9}	& \multirow{2}{*}{} & \multirow{2}{*}{++2} \\
-% & \textsf{AdviceImpl} & & & & & \\
-% 1 & \textsf{AjTypeSystem, AdviceImpl}	&	\emph{Subrange(getAjType, getDeclaringType)}	& 0 & 9	& & +2	\\
-%\hline
-%% #2
-%% Subrange(ArrayStack.peek(), ArrayStack.get())
-%% THIS IS A FALSE meta-invariant!
-%2 & \textsf{Factory}	&	\emph{Subrange(makeMethodSig(int,...), makeMethodSig(String))}	& 0 & 73& &+2-4	\\
-%\hline
-%% #3
-%% Subdomain(ListUtils.removeAll(Collection, Collection), ListUtils.retainAll(Collection, Collection) )
-
-%% THIS IS A FALSE meta-invariant!
-%3 & \textsf{Factory}	&	\emph{Subrange(makeMethodSig(String), makeMethodSig(int,...))}	& 0 & 73 & &+1-7 \\
-%\hline
-%% #4
-%% Subdomain(ListUtils.sum(List, List) , ListUtils.subtract(List, List))
-%% THIS IS A FALSE meta-invariant!
-%4 & \textsf{Factory}	&	\emph{Subrange(makeMethodSig(int,...), makeMethodSig(String,...))}	& 0	&124 & &-4 \\
-%\hline
-%% #5
-%% Subdomain(CollectionUtils.subtract(Collection, Collection) , CollectionUtils.disjunction (Collection, Collection))
-%% THIS IS A FALSE meta-invariant!
-%5 & \textsf{Factory}	&	\emph{Subrange(makeMethodSig(String,...), makeMethodSig(int,...) )}	& 0 & 124 & & +13-11\\
-%\hline
-%% #6
-%% Subdomain(CollectionUtils.subtract (Collection, Collection) , CollectionUtils.intersection (Collection, Collection))
-%% THIS IS A FALSE meta-invariant!
-%6 & \textsf{Factory}	&	\emph{Subrange(makeMethodSig(String), makeMethodSig(String,...))}	& 0 & 89 & &-2 \\
-%\hline
-%% #7
-%% Subdomain(TreeBidiMap.containsKey(Object), TreeBidiMap.get(Object))
-%% THIS IS A FALSE meta-invariant!
-%7 & \textsf{Factory}	&	\emph{Subrange(makeMethodSig(String,...) , makeMethodSig(String))}	& 0&89	& &+9-2 \\
-%\hline
-%% #8
-%% Subdomain(TreeBidiMap.nextKey(Object) , TreeBidiMap.previousKey(Object))
-%% THIS IS A FALSE meta-invariant!
-%8 & \textsf{Ajde}	&	\emph{Follows(getDefault, init)}	& 149 & 100 & &-3\\ %% 8
-%\hline
-
-%% #9
-%% Subrange( UnmodifiableSortedBidiMap.tailMap(Object), UnmodifiableSortedBidiMap.subMap(Object, Object))
 2 & \emph{org.apache.bcel.classfile.AnnotationEntry.dump}	&	2 & 1 & 2 \\ %% 2
 \hline
-%% #10
-%% CanFollow(org.apache.commons.collections.iterators.ArrayIterator.ArrayIterator(), org.apache.commons.collections.iterators.ArrayIterator.setArray(java.lang.Object))
 3 & \emph{org.apache.bcel.classfile.Code.accept}	&1 & 0 & 1 \\ %% 3
 \hline
-%% #11
-%% CanFollow(org.apache.commons.collections.iterators.ArrayIterator.ArrayIterator(), org.apache.commons.collections.iterators.ArrayIterator.setArray(java.lang.Object))
 4 &\emph{org.apache.bcel.generic.BranchHandle.setInstruction}	& 2 & 1 &2\\ %% 4
 \hline
-%% #12
-%% CanFollow(org.apache.commons.collections.iterators.ArrayIterator.ArrayIterator(), org.apache.commons.collections.iterators.ArrayIterator.setArray(java.lang.Object))
 5 &\emph{org.apache.bcel.classfile.ConstantPool.getConstant(index)}	& 2 & 1 &2\\ %% 5
 \hline
-%% #13
-%% CanFollow(org.apache.commons.collections.iterators.ArrayIterator.ArrayIterator(), org.apache.commons.collections.iterators.ArrayIterator.setArray(java.lang.Object))
 6 &\emph{org.apache.bcel.classfile.ConstantPool.getConstant(int, byte)}& 4 & 1 &4\\ %% 6
 \hline
-%% #14
-%% CanFollow(org.apache.commons.collections.iterators.ArrayIterator.ArrayIterator(), org.apache.commons.collections.iterators.ArrayIterator.setArray(java.lang.Object))
 7 &\emph{org.apache.bcel.generic.ClassGen.addEmptyConstructor}& 1 & 0 &1\\ %% 7
 \hline
-%% #15
-%% Subrange(DualTreeBidiMap.tailMap(Object), DualTreeBidiMap.subMap(Object, Object))
 8 & \emph{org.apache.bcel.generic.ClassGen.removeField}	&1 & 0 &1\\ %% 8
 \hline
-%% #16
-%% CanFollow(ArrayIterator.hasNext(), ArrayIterator.next())
 9 & \emph{org.apache.bcel.generic.ConstantPoolGen.addClass}	& 2 & error &2\\ %% 9
 \hline
-%% #17
-%% CanFollow(ArrayIterator.hasNext(), ArrayIterator.next())
 10 &	\emph{org.apache.bcel.generic.ConstantPoolGen.addFieldref}	& 2 & error &2\\ %% 10
 \hline
 11 &	\emph{org.apache.bcel.generic.ConstantPoolGen.addMethodref}	& 2 & 0 &2\\ %% 11
 \hline
-%% #19
-%% CanFollow(ArrayIterator.hasNext(), ArrayIterator.next())
 12 &	\emph{org.apache.bcel.generic.ConstantPoolGen.addNameAndType}	& 2 &error &2\\ %% 12
 \hline
-%% #20
-%% CanFollow(ArrayIterator.hasNext(), ArrayIterator.next())
 13 &	\emph{org.apache.bcel.generic.ConstantPoolGen.addString}	& 2 &error &2\\ %% 13
 \hline
-%% #21
-%% CanFollow(ArrayIterator.hasNext(), ArrayIterator.next())
 14 &	\emph{org.apache.bcel.generic.ConstantPoolGen.addUtf8}	& 2 &error &2\\ %% 14
 \hline
-%% #22
-%% CanFollow(ArrayIterator.hasNext(), ArrayIterator.next())
 15 &	\emph{org.apache.bcel.generic.ConstantPoolGen.lookupClass}	& 2&1 &1\\ %% 15
 \hline
-%% #23
-%% CanFollow(ArrayIterator.hasNext(), ArrayIterator.next())
 16 &	\emph{org.apache.bcel.generic.FieldGenOrMethodGen.removeAttribute}	& 1 & 0 &1\\ %% 16
 \hline
-%% #24
-%% CanFollow(ArrayIterator.hasNext(), ArrayIterator.next())
 17&	\emph{org.apache.bcel.generic.FieldGenOrMethodGen.setType}	& 2 & 2&2\\ %% 17
 \hline
-%% #25
-%% CanFollow(ArrayIterator.hasNext(), ArrayIterator.next())
 18&	\emph{org.apache.bcel.generic.InstructionHandle.addTargeter}	& 1 & 0 &1\\ %% 18
 \hline
-%% #26
-%% CanFollow(ArrayIterator.hasNext(), ArrayIterator.next())
 19&	\emph{org.apache.bcel.generic.InstructionHandle.setInstruction}	& 2 & 0 &2\\ %% 18
 \hline
 20&	\emph{org.apache.bcel.generic.InstructionList.append}	& 1 &1 &1\\ %% 18
 \hline
 21 &	\emph{org.apache.bcel.generic.InstructionList.setPositions}	& 2& N/A & 2\\ %% 16
 \hline
-%% #29
-%% CanFollow(ArrayIterator.hasNext(), ArrayIterator.next())
 22 &	\emph{org.apache.bcel.generic.MethodGen.addLocalVariable}	& 3 & 0 &3\\ %% 16
 \hline
-%% #30
-%% CanFollow(ArrayIterator.hasNext(), ArrayIterator.next())
 23 &	\emph{org.apache.bcel.generic.MethodGen.removeCodeAttribute}	& 1& 0 & 1\\ %% 16
 \hline
-%% #31
-%% CanFollow(ArrayIterator.hasNext(), ArrayIterator.next())
-%24 & \textsf{BcelWeaver}	&	\emph{CanFollow(prepareForWeave, weave(File))}	& 27 & 80 &-15&\\ %% 16
-%\hline
-%% #32
-%% CanFollow(ArrayIterator.hasNext(), ArrayIterator.next())
 24&	\emph{org.apache.bcel.util.ClassPath.getInputStream(String)}	& 2& 0 & 2\\ %% 16
 \hline
-%% #33
-%% CanFollow(ArrayIterator.hasNext(), ArrayIterator.next())
 25 &	\emph{org.apache.bcel.util.InstructionFinder.search}	& 2 & error & 1\\ %% 16
 \hline
-%% #34
-%% CanFollow(ArrayIterator.hasNext(), ArrayIterator.next())
 26& \emph{org.apache.bcel.util.SyntheticRepository.findClass}	& 2& 1 & 2\\ %% 16
 \hline
 27 &\emph{org.apache.bcel.util.SyntheticRepository.loadClass}	& error& 1 &1 and then error\\ %% 16
 \hline
 28 &\emph{org.apache.bcel.util.SyntheticRepository.storeClass}	& 1& 0 & 1\\ %% 16
 \hline
-%% #18
-%% CanFollow(ArrayIterator.hasNext(), ArrayIterator.next())
-
-%% \hline
-%% 30 & \textsf{CompositeCollection}	&	\emph{Concord(addComposited1, addComposited2)}	& 0 & 28 & & -8+1 \\
 \end{tabular}
 \caption{Summary of our experiments on the AspectJ Compiler.}
 \label{fig:ajc-results}
@@ -7120,7 +7017,7 @@ complement for manual derivation of second-order constraints.
 \chapter{SEDGE: Symbolic Example Data Generation for Dataflow Programs}
 \label{chp:sedgepaper}
 
-This chapter describes SEDGE: a dynamic symbolic execution engine for dataflow programs--indeed, the first such engine, to our knowledge.  Dynamic symbolic execution is a systematic test case generation method.  It statically collect path constraints while dynamically executing test cases generated by solving those path constraints using a 
+This chapter describes SEDGE: a dynamic symbolic execution engine for dataflow programs--indeed, the first such engine, to our knowledge.  Dynamic symbolic execution is a systematic test case generation method.  It statically collects path constraints while dynamically executing test cases generated by solving those path constraints using a 
 constraint solver.  We demonstrate that SEDGE beats the previous state-of-the-art in terms of test case coverage. 
 
 % \documentclass[10pt,conference,compsocconf]{IEEEtran}
@@ -9962,7 +9859,7 @@ representative work for each area.
 
 There is a wealth of other work on invariant inference. We next
 selectively focus on some recent approaches that were not covered in
-the body of the Chapter~\ref{chp:metainvariantpaper} (typically because they focus on static
+the body of Chapter~\ref{chp:metainvariantpaper} (typically because they focus on static
 invariant inference techniques).
 
 For reverse engineering, Gannod and Cheng \cite{gannod95strongest}
@@ -10058,39 +9955,53 @@ to derive automata that describe correct behavior.
 \chapter{Future Work and Conclusions}
 \label{chp:future}
 
+This dissertation analyzed techniques for combining static and dynamic analysis in three independent directions. In this chapter, we discuss a few areas of future research, and summarize the main contributions. 
+
 \section{Future Work}
-Our future research projects are along two lines.  The first part of our future projects is at the core of program analysis. 
-%There is a lot of unrealized potential for software engineering tools to actually help developers to develop and test their software, to make it easier to understand, easier to construct, and more efficient. 
-For instance, now there is not a strong open-source dynamic-symbolic execution engine for Java programs. We are working on a cutting-edge and open-sourced dynamic-symbolic execution engine that is actually usable for most Java programs.  A strong open-source Java dynamic-symbolic engine is of direct value for test case generation as described in Section~\ref{sec:staticdynamic}.  The second part of our future projects lies at the intersection of systems, program understanding, and bug detection. 
-% A wide variety of program analysis results on combining static and dynamic analysis are published in the programming language and software engineering community.  However, we are still far from using these results on complex systems such as distributed systems, operating systems, and data management systems. 
-A wide variety of static and dynamic analysis tools are available for program understanding and bug detection.  Unfortunately, existing tools are often not practical for use in huge and complex systems with distributed memory and parallel processing capabilities due to high overhead. There is significant value in providing scalable and computationally efficient ways to run those analyses.
-%There is significant value in statically analyzing mixed code and data and dynamically analyzing the behavior of running programs for these complex systems. 
-For example, any extensions of existing techniques for local concurrency bugs to the distributed context can greatly help developers debug their systems.  The following are several immediate research opportunities.
+There are some consistent themes and approaches in my past work that I expect to also pursue vigorously in the future.  I switch to the first person singular in this section, to represent that these future work plans are my own speculative ideas and not collaborative work.  
+\begin{itemize}
+\item The core of \textbf{\textit{program analysis}}. For instance, there is currently no strong open-source dynamic-symbolic execution engine for Java programs. I am working on a cutting-edge and open-sourced dynamic-symbolic execution engine that is actually usable for most Java programs.  A strong open-source Java dynamic-symbolic engine is of direct value for test case generation as described in Section~\ref{sec:staticdynamic}.
+\item \textbf{\textit{Machine learning}}, data mining, and natural language processing. Computers are good at identifying linear and non-linear patterns in huge data sets.  I am interested in designing a suite of algorithms and techniques that draw insights from machine learning, data mining, and natural language algorithms to guide the exploration of other challenges.  For example, during a Data Scientist internship, I have created a data mining system that can forecast the time required to complete a job in a SaaS (Software as a Service) platform, which can vary for a number of reasons: variance in input data set size, hardware resources, software modifications, network availability, network traffic, etc.  This work includes statistical modeling, and building infrastructure to efficiently store, analyze and extract data.
+\item \textbf{\textit{Constraint solving}}. Many computer science problems, including software and hardware verification, type inference, static program analysis, test-case generation, scheduling, planning, and graph problems, can be transformed into tasks of finding properties for all possible sequences of program behaviors or for some particular sequences.  These properties can be expressed in arithmetic constraints, boolean constraints, and equality constraints.  Later, we can encode the constraints in a solver that are amenable to automated reasoning. I have used constraint solvers extensively in my research and I have worked with a state-of-the art Satisfiability Modulo Theories (SMT) solver Z3 a lot these days. 
+\item \textbf{\textit{Big data}} systems. The complexity of big data systems presents not only challenges unique to this domain (e.g. whether protocols of big data systems work
+properly on some network topology), but also opportunities to revisit traditional questions of single-server systems (e.g. how a package scales to large problems). On the one hand, big data systems could benefit from the techniques used in software engineering and programming language. There are a number of well-understood language features and program analyses that could be adapted to big data systems. For example, I have adapted traditional dynamic symbolic execution to map-reduce programs (See Chapter~\ref{chp:sedgepaper}).  Such adaptions have many applications: performance monitoring, anomaly detection, and reengineering, to name a few.  On the other hand, big data systems are rather different from the single-server system for which most of existing languages and tools were developed.  This is a great opportunity to upgrade existing languages and tools by addressing new challenges.  For example, I have designed a domain-specific language for big data systems that provides significant ease of use for test condition formation, test construction and test running \cite{li2014reprolite}.
+\end{itemize}
+
+%My future research projects are along two lines.  The first part of my future projects is at the core of program analysis. 
+%%There is a lot of unrealized potential for software engineering tools to actually help developers to develop and test their software, to make it easier to understand, easier to construct, and more efficient. 
+%For instance, there is currently no strong open-source dynamic-symbolic execution engine for Java programs. We are working on a cutting-edge and open-sourced dynamic-symbolic execution engine that is actually usable for most Java programs.  A strong open-source Java dynamic-symbolic engine is of direct value for test case generation as described in Section~\ref{sec:staticdynamic}.  The second part of our future projects lies at the intersection of systems, and program analysis. 
+%% A wide variety of program analysis results on combining static and dynamic analysis are published in the programming language and software engineering community.  However, we are still far from using these results on complex systems such as distributed systems, operating systems, and data management systems. 
+%A wide variety of static and dynamic analysis tools are available for program understanding and bug detection.  Unfortunately, existing tools often do not scale for large complex systems with distributed memory and parallel processing capabilities, due to high overhead. There is significant value in providing scalable and computationally efficient ways to run those analyses.
+%%There is significant value in statically analyzing mixed code and data and dynamically analyzing the behavior of running programs for these complex systems. 
+%For example, any extensions of existing techniques for local concurrency bugs to the distributed context can greatly help developers debug their systems.  
+
+The following are several immediate research opportunities that I am currently working on or planning to investigate.
 
 %\textbf{Residual Investigation for Sparse Test Suite} In my evaluation of residual investigation, I can only confirm or down-play 43 bugs out of 436 FindBugs reports. This is largely because many program paths have not been exercised by the native test suite. I am working on improving the recall of residual investigation by making existing test suites better. To achieve this, I generate tests automatically using dynamic symbolic execution.  In particular, I focus on generating system tests. Generated unit tests may not be realistic; generated system tests attract less debate about the realism of the test cases, because users can see how the tests are used on the client side.  The challenge of using dynamic symbolic execution to generate system tests is that not all system tests can be generated, because existing dynamic symbolic execution engines are not powerful enough to deal with complicated real-world code (e.g., existing tools cannot generate sequences of method calls to construct desired object states).  To address this challenge, I tap into existing system tests to approximate new system tests. The approximate new system tests consist of states (i.e. assignments to variables) induced by existing system tests and assignments to some variables that are key to triggering a dynamic condition of residual investigation.  The approximate new system tests are not system tests.  They are unit tests with some system state attached.  They are justified by existing system tests so that the unit tests can connect with some execution path tracing back all the way up to program entry (i.e., the main function).  I cannot guarantee the correctness of such an approximation. It is likely that the argument assignments in the unit tests contradict with the states with which I pair the unit tests.  
 
 %\textbf{Combination of static and dynamic analysis} There is still considerable subtlety in devising combinations of static and dynamic analysis.  For example, my work on residual investigation showed that the loss of recall in bug detector combining static and dynamic analysis is high due to sparse test suite.  I am working on improving the recall of residual investigation by making existing test suites better. To achieve this, I plan to generate tests automatically using dynamic symbolic execution. 
-\textbf{Type constraints} Type constraints are logical formulas related to types. Type constraints have important application areas such as verification and testing. One important application area of type constraints is dynamic symbolic execution of object-oriented programs, which often needs to create objects with correct types. Due to polymorphisms such as subtyping and dynamic dispatch, the dynamic type of a reference variable is often not equal to its declared static type. The challenge of type constraints reasoning is the analysis must be acceptably accurate not only in complete type hierarchy but also in incomplete type hierarchy while keeping the process at reasonable performance cost. We are working on specifying algorithms of type constraints analyses using Datalog, a database query language that is guaranteed to have a polynomial complexity.
+\textbf{Type constraints.} Type constraints are logical formulas related to types. Type constraints have important application areas such as verification and testing. One important application area of type constraints is dynamic symbolic execution of object-oriented programs, which often needs to create objects with correct types. Due to polymorphic language features, such as subtyping, the dynamic type of a reference variable is often not equal to its declared static type. The challenge of type constraint reasoning is that the analysis must be acceptably accurate not only in the case of a complete type hierarchy but also for an incomplete type hierarchy while keeping a reasonable performance cost. Complete type hierarchy means all the required types are available in the search space. Incomplete type hierarchy means some types are missing in the search space either because the required classes have not been implemented (e.g. in the the test-driven development practice) or because the required classes have not been loaded yet (e.g. in languages like Java classes are loaded on demand) if we only consider loaded classes when solving type constraints.  
+I am implementing type constraints analyses using Datalog, a database query language that is guaranteed to have polynomial complexity, and applying optimization to lower complexity by caching computed results, computing unrelated relations separately, as well as ordering joins.
 
-\textbf{Invariant inference} Currently there are four popular approaches for invariant inference: generate-and-test using pre-defined invariant templates, generating propositions from symbolic execution along actual program execution paths, abstract interpretation, and machine-learning.  Each method has its own advantages and disadvantages in different contexts. We plan to explore the relationship among different approaches in an effort to create tools that follow a hybrid approach.  
+\textbf{Invariant inference.} Currently there are four popular approaches for invariant inference: generate-and-test using pre-defined invariant templates \cite{ErnstPGMPTX2006}, generating propositions from symbolic execution along actual program execution paths \cite{dysy-icse08}, abstract interpretation \cite{barnett05boogie}, and machine-learning \cite{xiao2013tzuyu}.  Each method has its own advantages and disadvantages in different contexts. I plan to explore the relationship among different approaches in an effort to create tools that follow a hybrid approach.  
 
 %\textbf{Hybrid dynamic invariant inference} I will pursue ways to create a dynamic invariant inference tool that follows a hybrid approach.  The tool will use a parallel dynamic and symbolic execution of test cases for the discovery of invariants. When handling loops, however, the tool will “guess” invariants from pre-defined invariant templates. This approach can achieve the best of both worlds. First, it eliminates irrelevant invariants, as the invariants have to be supported through symbolic manipulation of program expressions. Second, it brings back serendipity: Invariants can be produced even when they are not directly expressible from the program text. 
 
 %\textbf{Example Data Generation to Expose Changes in Evolving Dataflow Programs} Dataflow programs undergo constant changes. I would like to explore how to generate example data that reveal different output in two program versions.  T I plan to investigate four categories of changes: adding/deleting statement, changing operators (e.g. relational operators), changing identifiers (e.g. data table names and column references), and user-defined functions. One way for detecting changes will be applying symbolic execution and comparing path constraints corresponding to paths containing changed statement. I can then generate example data for those changed path constraints.  This also requires defining how changes in one statement are propagated to relevant statements.  
 
-\textbf{Program analysis on map-reduce programs} We believe that the area of dataflow programs (esp. map-reduce pipelines) can benefit from the application of program analysis techniques, to a much greater extent than current practice. As an example, we would like to explore how to generate program data that reveal changes among program versions.  The generated example data can help understand code change, augment existing test suite, and verify intended change (e.g., whether the change brings any anomaly).
+\textbf{Program analysis on map-reduce programs.} I believe that the area of dataflow programs (esp. map-reduce pipelines) can benefit from the application of program analysis techniques, to a much greater extent than current practice. As an example, I would like to explore how to generate program data that reveal changes among program versions.  The generated example data can help understand code change, augment an existing test suite, and verify intended change (e.g., whether the change introduces undesired effects in the program).
 
-\textbf{Debugging for Distributed Systems} 
-Debugging distributed system often incurs high-cost or significant human effort due to exponentially large state spaces. There is a great need for tools that can sift through a large number of state spaces and help programmers come up with hypothesis of bug causes.  By combining the proper kinds of data mining, log analysis, and search facilities with program analysis, one could design an inference algorithm to learn what events should be responsible for a bug. 
+\textbf{Debugging for Distributed Systems.} 
+Debugging distributed system often incurs high-cost or significant human effort due to exponentially large state spaces. There is a great need for tools that can sift through large state spaces and help programmers come up with hypotheses of bug causes.  By combining the proper kinds of data mining, log analysis, and search facilities with program analysis, one could design an inference algorithm to learn what events should be responsible for a bug. 
 % by connect Source Code and Log Messagesleverage logs of distributed systems.
 %Analyzing logs of distributed systems is a great way to understand why things are going wrong in a buggy system.  Usually the challenge is trying to extract which parts are relevant and which are not due to the huge amount of possible event sequences.   I plan to investigate how to automatically sift through a large number of log messages to infer the relevant ones.  A promising way is to develop efficient program analysis techniques for distributed context.  Program analyses can provide answers to questions such as which functions can call another function in that context or whether this statement can affect the value of a variable at some point of interest.  These kinds of information can facilitate filtering log messages.
 
 \section{Conclusions}
 
-The thrust of this dissertation is to provide analysis algorithms for program understanding and bug detection by statically analyzing mixed code and data and dynamically analyzing the behavior of running programs. Our analysis algorithms 
-emphasize precision and prediction in bug detection, correctness and relevancy 
+The thrust of this dissertation has been to provide analysis algorithms for program understanding and bug detection by statically analyzing code and dynamically analyzing the behavior of running programs. Our analysis algorithms 
+emphasize precision and prediction in bug detection, correctness and relevance 
 in invariant inference, and completeness, realness, and efficiency in test 
-case generation. More specifically, our main contribution are as follows:
+case generation. More specifically, our main contributions are as follows:
 
 \begin{enumerate}
 \item We presented residual investigation: the idea of accompanying a static
@@ -10129,7 +10040,7 @@ dataflow program.
 
 
 \interlinepenalty=10000  % prevent split bibliography entries
-\bibliographystyle{acm}
+\bibliographystyle{umassthesis}
 \bibliography{testing,testing-cc,refactoring,sigproc,dbgen}
 % History dates
 %\received{February 2007}{March 2009}{June 2009}
