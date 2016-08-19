@@ -22,13 +22,13 @@ applied to more complex properties. The Spec\# extended compiler
 framework~\cite{barnett04spec} is a prime example: it can prove some
 pre- and post-conditions statically and generates runtime checks for
 the remaining ones. 
-\cite{Gopinathan:2008:EOP:1449764.1449784} uses a combination of static
+Gopinathan and Rajamani \cite{Gopinathan:2008:EOP:1449764.1449784} use a combination of static
 and dynamic analysis for enforcing object protocols. Their approach
 separates the static checking of protocol correctness from a
 dynamic check of program conformance to the protocol.
 
-In residual dynamic typestate analysis, explored by
-\cite{dwyer07residual}, \cite{bodden10efficient} and
+In residual dynamic typestate analysis, explored by Dwyer and Purandare
+\cite{dwyer07residual}, Bodden \cite{bodden10efficient} and Bodden et al.
 \cite{bodden07staged}, a dynamic typestate analysis that monitors all
 program transitions for bugs is reduced to a residual analysis that
 just monitors those program transitions that are left undecided by a
@@ -52,7 +52,7 @@ not executed during the analysis.
 Beyond typestates, the idea of speeding up a dynamic program analysis
 by pre-computing some parts statically has been applied to other
 analyses, such as information flow analysis. For example, recent work
-by \cite{chugh09staged} provides a fast dynamic
+by Chugh et al. \cite{chugh09staged} provides a fast dynamic
 information flow analysis of JavaScript programs. JavaScript programs
 are highly dynamic and can load additional code elements during
 execution. These dynamically loaded program elements can only be
@@ -87,28 +87,28 @@ straightforward way to reduce our runtime overhead.
 
 Our analysis can be viewed as a ranking system on static analysis
 error reports.  There has been significant work in this direction using data mining.
-\cite{kremenek2004} sorts error reports by their probabilities.  A
+Kremenek et al. \cite{kremenek2004} sort error reports by their probabilities.  A
 model is used for computing probabilities for each error report by
 leveraging code locality, code versioning, and user feedback.  The
 effectiveness of the model depends on (1) a fair number of reports and
-(2) strong clustering of false positives.  \cite{kim2007} prioritize
+(2) strong clustering of false positives.  Kim and Ernst \cite{kim2007} prioritize
 warning categories by mining change log history messages.
 Intuitively, they expect a warning category to be important if warning
 instances from the category are removed many times in the revision
 history of a system. Their method requires change logs of good
 quality. For static tools such as FindBugs, which analyze Java
 bytecode to generate warnings, they also require compilation of each
-revision.  \cite{Bodden2008FPE} use a machine-learning approach to filter out false positives of their static analyses for validating a finite state property.  They identify cases where imprecise static analysis information can appear due to factors such as dynamic class loading and interprocedural data flow.  They then use each case as a feature for decision tree learning.  The key differene between our approach and data-mining-based ones is that our approach considers the possible objections to certain static error reports.  As a result, we can validate more complicated error situations that require understanding what a programmer has in mind in practice when writing their code. 
+revision. Bodden et al. \cite{Bodden2008FPE} use a machine-learning approach to filter out false positives of their static analyses for validating a finite state property.  They identify cases where imprecise static analysis information can appear due to factors such as dynamic class loading and interprocedural data flow.  They then use each case as a feature for decision tree learning.  The key differene between our approach and data-mining-based ones is that our approach considers the possible objections to certain static error reports.  As a result, we can validate more complicated error situations that require understanding what a programmer has in mind in practice when writing their code. 
 
 Besides Eraser~\cite{266641}, some other related work on race detection comes under the label of predictive race analysis.  
 %reports a race whenever two threads access the same memory location without holding a common lock and one of the access is a write. 
-\cite{Chen:2007:PSC:1770351.1770387} predicts races by logging only relevant information in a program trace and then model-checking all feasible trace permutations.  jPredictor \cite{Chen:2008:JPR:1368088.1368119} presents a polynomial algorithm that can search a thread scheduling for a potential race that did not occur in the observed execution. jPredictor is not sound.  \cite{Smaragdakis:2012:SPR:2103656.2103702} define the causally-precedes relation (CP) that weakens the traditional Happens-Before relation.  The CP approach can generalize beyond an observed execution and guarantee soundness and polynomial complexity. These sophisticated predictive approaches can offer greater precision than residual investigation in terms of race detection, whereas our residual investigation based race detector can have fewer false negatives, due to the better coverage of static analysis tools and the conservativeness of our dynamic analysis.
+Chen and Rosu \cite{Chen:2007:PSC:1770351.1770387} predict races by logging only relevant information in a program trace and then model-checking all feasible trace permutations.   jPredictor \cite{Chen:2008:JPR:1368088.1368119} present a polynomial algorithm that can search a thread scheduling for a potential race that did not occur in the observed execution. jPredictor is not sound.  Smaragdakis et al. \cite{Smaragdakis:2012:SPR:2103656.2103702} define the causally-precedes relation (CP) that weakens the traditional Happens-Before relation.  The CP approach can generalize beyond an observed execution and guarantee soundness and polynomial complexity. These sophisticated predictive approaches can offer greater precision than residual investigation in terms of race detection, whereas our residual investigation based race detector can have fewer false negatives, due to the better coverage of static analysis tools and the conservativeness of our dynamic analysis.
 
 The precision of bug detection software can be greatly enhanced with
 human supervision at residual steps.  After an automated static
-program verification step, \cite{Dillig:2012:AED:2254064.2254087}
-relies on humans to help reduce false positives by asking humans simple
-and relevant questions.  \cite{Xie2012SCAM} proposes to use humans to
+program verification step, Dillig et al. \cite{Dillig:2012:AED:2254064.2254087}
+rely on humans to help reduce false positives by asking humans simple
+and relevant questions.  Xie \cite{Xie2012SCAM} proposes to use humans to
 provide guidance to otherwise intractable problems faced by test case
 generators.  It would be interesting to combine such techniques in our
 approach.  For instance, residual investigation's precision is
