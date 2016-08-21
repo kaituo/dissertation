@@ -2,23 +2,28 @@
 
 \subsection{Introduction and Motivation}
 
-In our evaluation of residual investigation, we can only confirm or down-play 43 bugs out of 436 FindBugs reports. This is largely because native test suites are sparse: many program paths have not been exercised by the native test suite. One might hope we can write additional test cases to augment native test suites. But writing test cases manually is cumbersome and time-consuming. We thus propose to integrate residual investigation with automated test-generation techniques like dynamic symbolic execution (also called concolic testing).
+In our evaluation of residual investigation, we can only confirm or down-play 43 bugs out of 436 FindBugs reports. This is largely because native test suites are sparse: many program paths have not been exercised by the native test suite. One might hope we can write additional test cases to augment native test suites. But writing test cases manually is cumbersome and time-consuming. We thus propose to integrate residual investigation with automated test-generation techniques like dynamic symbolic execution (also called ``concolic'' testing).
 % In particular, we focus on generating system tests. Generated unit tests may not be realistic; generated system tests attract less debate about the realism of the test cases, because users can see how the tests are used on the client side.  
 
+ %% YANNIS: Throughout the dissertation, you should enforce consistent
+ %% naming of the term ``dynamic symbolic execution''. Is it with a
+ %% dash (``dynamic-symbolic'') or not? Right now it's mixed. In the
+ %% main file it is more often with a dash, but many times without. In
+ %% this file, it seems to be without.
 Exploiting dynamic symbolic execution is challenging with today's dynamic symbolic execution tools, since tools often fail to generate sequences of method calls to construct desired object states \cite{Xiao:2011:PIP:1985793.1985876}.
 % (2) tools cannot reason about the code (e.g. source code or bytecode) of external libraries such as native system libraries and pre-compiled libraries .
 % The challenge of using dynamic symbolic execution to generate test cases is that existing dynamic symbolic execution engines are not powerful enough to deal with complicated real-world code (e.g., existing tools cannot generate sequences of method calls to construct desired object states)\cite{Xiao:2011:PIP:1985793.1985876}.  
- We argue that addressing this challenge will require tapping into native test suites to synthesize new test cases. The synthesized test cases consist of states (i.e. assignments to variables) induced by native test cases and assignments to some variables that are key to triggering a dynamic condition of residual investigation.  
+ We argue that addressing this challenge will require tapping into native test suites to \emph{synthesize new} test cases. The synthesized test cases consist of states (i.e., assignments to variables) induced by native test cases and assignments to some variables that are key to triggering a dynamic condition of residual investigation.  
 % The approximate new system tests are not system tests.  They are unit tests with some system state attached.  They are justified by existing system tests so that the unit tests can connect with some execution path tracing back all the way up to program entry (i.e., the main function).  
  We cannot guarantee the realness of such synthesized test cases. It is likely that the argument assignments in the unit tests violate the code's precondition or contradict the states with which we pair the unit tests.  
 
 To see the core ideas and concepts of our test case generation design, consider its application to the program fragment below
 
-\begin{lstlisting}[style=JavaStyle, caption=An example Pig Latin program, label=lst:example, frame=none]
+\begin{lstlisting}[style=JavaStyle, caption=Simple example program fragment, label=lst:example, frame=none]
 class Example {
 	main() {
-	   A a = 
-	   v = …
+	   A a = ...
+	   v = ...
 	   a.foo(v);
 	}
 }
@@ -54,6 +59,10 @@ class B {
 	}
 }
 \end{lstlisting}
+ %% YANNIS: What are v2, v3, x2, x3? The example should make some
+ %% sense (e.g., refer to defined variables), otherwise is it really
+ %% minimal? It should be the bare minimum needed to illustrate the
+ %% idea you want illustrated.
 
 Our test case generation design is based on the concept of the call graph: a graph with nodes denoting methods/functions, and edges between them denoting a method/function can call the other.  The associated call graph of the example program is shown in Figure~\ref{fig:call-graph-example}.  For instance, the edge from \sv{A.foo} to \sv{A.bar} in the call graph indicates method \sv{A.foo} can call method \sv{A.bar}. 
 
@@ -64,11 +73,15 @@ Our test case generation design is based on the concept of the call graph: a gra
 \label{fig:call-graph-example}
 \end{figure}
 
-We define a potential error revealing method (PERM) as the method that might trigger the dynamic condition of residual investigation for a FindBugs bug pattern.  For example, FindBugs reports an error when a class overrides the equals(Object) method but not the hashCode() method.  Residual investigation installs a dynamic check for the condition that Object.hashCode() is called on an object of the suspect class. The method that contains a call to hashCode() on the suspect class (i.e. the class that redefines equals and inherits hashCode) or its subclass is the PERM for this bug pattern.  
+We define a \emph{potential error revealing method (PERM)} as the method that might trigger the dynamic condition of residual investigation for a FindBugs bug pattern.  For example, FindBugs reports an error when a class overrides the \sv{equals(Object)} method but not the \sv{hashCode()} method.  Residual investigation installs a dynamic check for the condition that \sv{Object.hashCode()} is called on an object of the suspect class. The method that contains a call to \sv{hashCode()} on the suspect class (i.e., the class that redefines equals and inherits \sv{hashCode}) or its subclass is the PERM for this bug pattern.  
+
+ %% YANNIS: You abandoned the convention of using \sv{..} for method
+ %% names. There should be consistent typesetting throughout. I only
+ %% fixed some instances.
 
 %We analyze the PERMs using text search tools like grep, and static analysis techniques such as call graph analysis and Java reflection API.  As an example, for the dropped exception pattern, we analyze the types of the exceptions declared to be thrown by the methods in the suspect code block (suspect methods) using Java reflection and then search for methods whose names are the same as that of any suspect method and throw the same exceptions using grep.  Suppose the method foobar in the above code example is our PERM.  
 
-Once identifying a PERM, we interpose k levels back in the call graph from a PERM and call this a switching method.  Returning to our running example, suppose \sv{k = 1} and foobar is a PERM, the method bar is a switching method.  
+Once identifying a PERM, we trace $k$ levels back in the call graph from a PERM and call this a switching method.  Returning to our running example, suppose $k = 1$ and \sv{foobar} is a PERM, the method \sv{bar} is a switching method.  
 
 Next we instrument the program under test to record heap state during native test suite execution. The goal of heap state is to provide this object of a switch method call during dynamic symbolic execution (which, recall, often fails to generate sequences of method calls to construct desired object states). The heap state is packed into serialized object files in disk. The kinds of the heap state that we collect include 1) the receiver object on which a switch method is called, 2) the receiver objects on which methods defined in the same class of the switch method are called, and 3) objects that may be used as constructor parameters to initialize the receiver object of the switching method. We use the second kind of heap state to approximate this object of a switch method call when the first kind of heap state are not recorded during the execution of a native test suite from the code under test. In this case, this object of the switch method call is replaced with this objects of other method calls belonging to the same class.  Likewise, we use the third kind of heap state when both the first and second kinds heap states are not recorded. In this case, this object of the switch method call is created by a constructor call using recorded data members.  When some of the data members requires by the constructor call may not be recorded, we use default values (e.g. a reference is assigned null and an integer is assigned \sv{0}).  
 
