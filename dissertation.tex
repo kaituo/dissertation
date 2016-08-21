@@ -643,8 +643,7 @@ We propose new combinations of static and dynamic analysis for bug detection and
 \item We present a technique to enhance the dynamic invariant detection approach. Our work identifies and describes the idea of second-order constraints that can help improve the consistency and relevance of dynamically inferred invariants.  We call these constraints second-order because they are constraints over constraints: they relate classes of invariants (first-order constraints). For instance, even though the invariants describing the behavior of two functions f1 and f2 may be unknown, we may know that any valid input for f1 is also valid for f2, i.e., the precondition of f1 implies that of f2.
 \item 
 Our SEDGE system addresses the problem of completeness in automated test case generation for dataflow programs:
-%Our SEDGE system addresses the dataflow program test case generation completeness problem: 
-for every dataflow operator, we produce data aiming to cover all cases that arise in the dataflow program (e.g., both passing and failing a filter). SEDGE relies on transforming the program into symbolic constraints, and solving the constraints using a symbolic reasoning engine (a powerful SMT solver), while using input data as concrete aids in the solution process. The approach resembles dynamic symbolic (a.k.a. “concolic”) execution in a conventional programming language, adapted to the unique features of the dataflow domain. SEDGE is the first dynamic symbolic execution engine for dataflow programs.
+for every dataflow operator, we produce data aiming to cover all cases that arise in the dataflow program (e.g., both passing and failing a filter). SEDGE relies on transforming the program into symbolic constraints, and solving the constraints using a symbolic reasoning engine (a powerful SMT solver), while using input data as concrete aids in the solution process. The approach resembles dynamic symbolic (a.k.a. ``concolic'') execution in a conventional programming language, adapted to the unique features of the dataflow domain. SEDGE is the first dynamic symbolic execution engine for dataflow programs.
 \end{enumerate}
 
 %The remainder of this proposal is organized as follows.  Chapter~\ref{chp:worksofar} summarizes work done so far.  Work we propose to do is presented in Chapter~\ref{chp:proposed}.  Related work is discussed in Chapter~\ref{chp:related}.  Chapter~\ref{chp:timeline} concludes with a schedule for completing the work proposed.   
@@ -691,16 +690,6 @@ for every dataflow operator, we produce data aiming to cover all cases that aris
 %program will likely exhibit a fault for different inputs. In this way
 %the residual investigation is a predictive dynamic analysis: it is
 %both more general than mere testing and more precise than static analysis.
-%
-%I implemented residual investigations for several of the most common analyses in the FindBugs system, such as “cloneable not implemented correctly”, “dropped exception”, “read return should be checked”, and several more. This yields a concrete result of our work, in the form of the Residual FindBugs Investigator (RFBI) tool.  The real experimental validation of our work consists of the ability to invent residual investigations easily. However, I also validated our expectation that the resulting analyses are useful by applying them to 9 open-source applications (including large systems, such as JBoss, Tomcat, NetBeans, and more) using their native test suites. 
-%%I find that residual investigation produces numerous (31) warnings that do not correspond to test suite failures and are overwhelmingly bugs.
-%I find my approach to be highly effective at eliminating
-%false positives and highlighting actual bugs among static bug reports without needing to
-%observe real faults. For example, FindBugs with residual investigation lowers the false
-%positive rate from $\geq 90\%$ to $\leq 23\%$ in several large Open Source systems. I observe similarly dramatic improvements with race detection.
-%
-%\section{Enhanced Dynamic Invariant Inference Using Second-Order Constraints}
-%Dynamic invariant inference is fundamentally a search in the space of propositions over program variables for the tiny subset of propositions that are both true (on all executions) and relevant (to the programmer, or to some client analysis such as a theorem prover or test data generator). To enhance the dynamic invariant detection approach my work\cite{Li:2013:SCD:2491411.2491457} identifies and describes the idea of second-order constraints that can help improve the consistency and relevance of dynamically inferred invariants.  I call these constraints “second-order” because they are constraints over constraints: they relate classes of invariants (first-order constraints). For instance, even though the invariants describing the behavior of two functions f1 and f2 may be unknown, I may know that any valid input for f1 is also valid for f2, i.e., the precondition of f1 implies that of f2.  Such second-order constraints can be known even though the invariants are unknown.  I define a vocabulary of common and useful second-order constraints and provided an implementation of the constraints in our vocabulary in the context of the Daikon system.  I further introduce techniques for dynamically discovering potential second-order constraints that the programmer can subsequently approve or reject.
 %
 %Our implementation builds on the Daikon tool, with a vocabulary of constraints that the programmer can use to enhance and constrain Daikon’s inference. We show that dynamic inference of second-order constraints together with minimal human effort can significantly influence the produced (first-order) invariants even in systems of substantial size, such as the Apache Commons Collections and the AspectJ compiler. We also find that 99\% of the dynamically inferred second-order constraints we sampled are true.
 %
@@ -9067,7 +9056,7 @@ of the DFA.  Xeger is suboptimal for two reasons: first, it may keep
 visiting the same state until a ``stack overflow'' error happens;
 second, it does not support union, concatenated repetition,
 intersection, concatenation, or complement of regular expressions.  To
-avoid the "stack overflow" error, our approach keeps a map from state
+avoid the ``stack overflow" error, our approach keeps a map from state
 ID to the number of times a state has been entered and reduces the
 probability of re-entering that state proportionally.  To support
 operations such as union and intersection, 
