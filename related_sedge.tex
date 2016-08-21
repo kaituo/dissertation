@@ -1,7 +1,7 @@
 \section{SEDGE: Symbolic Example Data Generation for Dataflow Programs}
 %PL&SE
 
-Dataflow languages such as Pig can been seen as a compromise between
+Dataflow languages such as Pig can be seen as a compromise between
 declarative languages, such as SQL, and imperative languages, such as C
 and Java. That is, Pig combines the declarative feature of
 straightforward parallel computation with the imperative feature of
@@ -15,7 +15,7 @@ explicit intermediate results.
 There is little work (discussed in earlier sections) that addresses
 test data generation for dataflow languages. Instead, the
 related work from various research communities has focused on the
-extreme ends of this spectrum, i.e., either on SQL or on Java-like
+extreme ends of this spectrum, i.e., either on SQL or Java-like
 programming languages.
 
 Specifically, related work in the software engineering community has
@@ -29,7 +29,7 @@ approaches, we adapted this work to dataflow programs and their
 execution semantics. At the other end, there is work that
 automatically generates database data that satisfy external
 constraints \cite{orm-ase07} but there is no coverage or conciseness
-goal and no application to dataflow languages. Other work
+goal and no application to dataflow languages. Another work
 \cite{tuya10full} has introduced the idea of code coverage to SQL
 queries. For our purposes, we reused the concept of coverage for Pig
 Latin as defined by Olston et al.
@@ -41,7 +41,7 @@ Latin as defined by Olston et al.
 In the formal methods community, Qex is generating test inputs for SQL 
 queries~\cite{veanes10qex}. Similar to our work, Qex maps a SQL
 query to SMT and uses the Z3 constraint solver to infer data tables.
-However Qex differs from our work in that Qex does not have a dynamic 
+However, Qex differs from our work in that Qex does not have a dynamic 
 program analysis component and therefore cannot observe how a query
 processes existing example data. Earlier work in the software engineering
 community on dynamic symbolic execution has shown that dynamic analysis
