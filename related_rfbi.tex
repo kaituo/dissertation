@@ -34,7 +34,7 @@ program transitions for bugs is reduced to a residual analysis that
 just monitors those program transitions that are left undecided by a
 previous static analysis. This approach exploits the fact that a
 static typestate analysis is typically complete, i.e., it
-over-approximates the states a program can be in. If for a small
+over-approximates the states in which a program can be. If for a small
 sub-region of the program the over-approximated state sets do not
 contain an error state, all transitions within such a region can
 be safely summarized and ignored by the subsequent residual
@@ -65,7 +65,7 @@ at runtime, minimizing the runtime checking overhead.
 Our analysis can be seen in a similar light as residual dynamic typestate analysis and residual information flow analysis. If we take as a hypothetical baseline somebody running only our residual checkers, then adding the static bug finding analysis as a pre-step would indeed make the residual dynamic analysis more efficient, as the static analysis focuses the residual analysis on code that may have bugs. However, our goals are very different. Our 
 real baseline is an established static analysis technique whose main problem is over-approximation, which leads to users ignoring true warnings. 
 
-Check'n'Crash~\cite{csallner05check} and DSD-Crasher~\cite{csallner06dsd-crasher,smaragdakis07combining} can be seen as strict versions of residual analysis. These earlier techniques share our goal of convincing users of the validity of static bug warnings. However, Check'n'Crash and DSD-Crasher guarantee that a given warning is true, by generating and executing concrete test cases that satisfy the static warning, until a static warning can be replicated in a concrete execution or a user-defined limit is reached. While such proof is very convincing, it also narrows the technique's scope. I.e., these tools could only confirm very few warnings. In our current residual investigation, we relax this strict interpretation and also consider predictive clues that are likely to confirm a static warning.
+Check'n'Crash~\cite{csallner05check} and DSD-Crasher~\cite{csallner06dsd-crasher,smaragdakis07combining} can be seen as strict versions of residual analysis. These earlier techniques share our goal of convincing users of the validity of static bug warnings. However, Check'n'Crash and DSD-Crasher guarantee that a given warning is true, by generating and executing concrete test cases that satisfy the static warning, until a static warning can be replicated in a concrete execution or a user-defined limit is reached. While such proof is very convincing, it also narrows the technique's scope (i.e., these tools could only confirm very few warnings). In our current residual investigation, we relax this strict interpretation and also consider predictive clues that are likely to confirm a static warning.
 
 We have already mentioned dynamic symbolic execution in Section~\ref{sec:staticdynamic} and Chapter~\ref{chp:sedgepaper}: a combination of concrete and symbolic execution. Similar to Check'n'Crash~\cite{csallner05check} and DSD-Crasher~\cite{csallner06dsd-crasher,smaragdakis07combining}, dynamic symbolic execution is also a strict approach that warns a user only after it has generated and executed a test case that proves the
 existence of a bug. Compared to our analysis, dynamic symbolic
@@ -80,9 +80,9 @@ Monitoring-oriented programming (MOP)~\cite{chen07mop} shows how
 runtime monitoring of correctness conditions can be implemented more
 efficiently, even without a prefixed static analysis. JavaMOP, for
 example, compiles correctness conditions to Java aspects that add
-little runtime overhead. This technique is orthogonal to ours. I.e.,
-as some of our dynamic analyses are currently implemented manually
-using AspectJ, expressing them in terms of JavaMOP would be a
+little runtime overhead. This technique is orthogonal to ours,
+as some of our dynamic analyses are implemented manually
+using AspectJ. Expressing them in terms of JavaMOP would be a
 straightforward way to reduce our runtime overhead.
 
 Our analysis can be viewed as a ranking system on static analysis
@@ -98,7 +98,7 @@ instances from the category are removed many times in the revision
 history of a system. Their method requires change logs of good
 quality. For static tools such as FindBugs, which analyze Java
 bytecode to generate warnings, they also require compilation of each
-revision. Bodden et al. \cite{Bodden2008FPE} use a machine-learning approach to filter out false positives of their static analyses for validating a finite state property.  They identify cases where imprecise static analysis information can appear due to factors such as dynamic class loading and interprocedural data flow.  They then use each case as a feature for decision tree learning.  The key differene between our approach and data-mining-based ones is that our approach considers the possible objections to certain static error reports.  As a result, we can validate more complicated error situations that require understanding what a programmer has in mind in practice when writing their code. 
+revision. Bodden et al. \cite{Bodden2008FPE} use a machine-learning approach to filter out false positives of their static analyses for validating a finite state property.  They identify cases where imprecise static analysis information can appear due to factors such as dynamic class loading and interprocedural data flow.  They then use each case as a feature for decision tree learning.  The key difference between our approach and data-mining-based ones is that our approach considers the possible objections to static error reports.  As a result, we can validate more complicated error situations that require understanding what a programmer has in mind in practice when writing their code. 
 
 Besides Eraser~\cite{266641}, some other related work on race detection comes under the label of predictive race analysis.  
 %reports a race whenever two threads access the same memory location without holding a common lock and one of the access is a write. 
@@ -109,8 +109,7 @@ human supervision at residual steps.  After an automated static
 program verification step, Dillig et al. \cite{Dillig:2012:AED:2254064.2254087}
 rely on humans to help reduce false positives by asking humans simple
 and relevant questions.  Xie \cite{Xie2012SCAM} proposes to use humans to
-provide guidance to otherwise intractable problems faced by test case
-generators.  It would be interesting to combine such techniques in our
-approach.  For instance, residual investigation's precision is
+guide otherwise intractable problems faced by test case
+generators.  Combining such techniques in our approach would be interesting.  For instance, residual investigation's precision is
 influenced by the native test suite coverage.  With the help of human
 users, additional test cases can be constructed if required.
