@@ -528,7 +528,7 @@ stringstyle=\color{orange}}
 % \fourthreader{Mary Lamb}   % Optional
 %\fifthreader{}            % Optional
 %\sixthreader{}            % Optional
-\departmentchair{James Allan} % Uses "Department Chair" as the title. To
+\departmentchair[Chair]{James Allan} % Uses "Department Chair" as the title. To
 % use an alternate title, such as "Chair", use \departmentchair[Chair]{Pete Shearer}
 \departmentname{College of Information and Computer Sciences}
 
@@ -1096,7 +1096,7 @@ We consider a dynamic check that is tied to a
 static analysis to be a residual investigation if it satisfies the informal
 conditions outlined in Section~\ref{rfbi:introduction}:
 \begin{itemize}
-\item The check has to identify with very high confidence that the
+\item The check has to identify with high confidence that the
 statically predicted behavior (typically a fault\footnote{The
 computing literature is remarkably inconsistent in the use of the
 terms ``error'', ``fault'', ``failure'', etc. In plain English
@@ -3971,7 +3971,7 @@ above checks as additional safeguards of behavior preservation.
 % Electronic Appendix
 %\elecappendix
 
-\input{transplanting}
+%\input{transplanting}
 
 
 \chapter{Second-Order Constraints in Dynamic Invariant Inference}
@@ -4443,7 +4443,8 @@ Follows(add,remove)
 This does not signify that \sv{add} needs to execute before
 \sv{remove} (a different method may be reaching the same states as
 \sv{add}). But it means that if we are in a state where the last
-operation cannot have been an \sv{add} (e.g., an empty structure),
+operation cannot have been an \sv{add} (i.e. the post condition 
+of add is not satisfied, e.g., an empty structure),
 then we cannot \sv{remove}.
 %%YANNIS: again, I think the above is more accurate, despite the
 %%negative wording.
@@ -4816,8 +4817,9 @@ may get overwhelmed by the junk.  Daikon uses a \emph{confidence}
 metric to approximate the probability that an invariant cannot hold by
 chance alone.  If we sum up the confidence values for all invariant
 implications between $\emph{P}$ and each constituent invariant of
-$\emph{Q}$, then the weight of the junk invariants in the ratio will
-decrease. Thus, we extend the definition of confidence to second-order
+$\emph{Q}$ and use the sums in the success rate, then the weight of the 
+junk invariants in the ratio will decrease. Thus, we extend the 
+definition of confidence to second-order
 constraints in order to approximately measure the probability that a
 second-order constraint could not hold by chance alone.  
 %The second-order constraint confidence is not meant to provide some
@@ -5544,7 +5546,7 @@ public class StackAr {
 
 To explore our invariants, we examined this API and determined
 second-order constraints that we considered to be meaningful for this
-class.  The process took one of the authors negligible time (less than
+class.  The process took the author negligible time (less than
 a minute, although there was previous discussion of interesting
 invariants, hence the exact effort cost is unclear).  We split these
 constraints into separate experiments and explored the effect they had
@@ -6171,12 +6173,12 @@ for our experiments.
 %Figure~\ref{fig:acc-overview} summarizes the classes we
 %based our constraints on.
 
-For our experiments, one of the authors (unfamiliar with the library)
+For our experiments, the author (unfamiliar with the library)
 examined the above classes and constructed a specification (while
 consulting the API documentation) with a total of 27 second-order
 constraints, comprising 22 experiments.  This process took
 approximately 3.5h.  The author spent another 2h double-checking and
-fixing the invariants after specification.  This amount of effort is
+fixed the invariants after specification.  This amount of effort is
 in the noise level, compared to the development effort for a library
 of this size.
 
@@ -6511,7 +6513,7 @@ from unit tests and integration tests.
 %% Kaituo: We don't have broken unit tests any more.
 %As in previous work \cite{SchulerDZ2009} we used AspectJ 1.6.1 and 
 %skipped broken unit tests.
-Since AspectJ lacks detailed API documentation, one of the authors 
+Since AspectJ lacks detailed API documentation, the author
 (unfamiliar with the library) directly inspected the source code of 
 AspectJ and derived a total of 27 second-order constraints.  The
 combined process of understanding the foreign code base and writing
@@ -6629,8 +6631,8 @@ correctness of automatically inferred second-order constraints.
 \myparagraph{Correctness of Inferred Constraints}
 We inspected the results of our automatic mechanism for inferring
 second-order constraints (Section~\ref{implementation}) on four
-randomly selected classes from ACC and AspectJ (two each).  One of the
-authors manually verified all of the generated second-order
+randomly selected classes from ACC and AspectJ (two each).  The 
+author manually verified all of the generated second-order
 constraints.  For this experiment, we considered a second-order
 constraint to be correct whenever it did not disagree with the
 implementation of the given class.
