@@ -307,7 +307,7 @@ stringstyle=\color{orange}}
 {\end{list}}
 
 %%%
-%  spacing hacks end
+%  spacing hacks }end
 %%%
 
 %\addtolength{\intextsep}{-3mm}
@@ -571,6 +571,58 @@ stringstyle=\color{orange}}
 \maketitle
 \copyrightpage     %% not required for an M.S. thesis
 \signaturepage
+
+\begin{dedication}
+ \begin{center}
+   \emph{To Meili and my parents}
+ \end{center}
+\end{dedication}
+
+
+\chapter{Acknowledgements}
+
+Pursuing Ph.D. in the U.S. is a very challenging chapter of my life.  I 
+would not be able to make it without so many people's help.  
+
+I was lucky enough to have Professor Yannis Smaragdakis as my advisor. 
+I have learned a lot from him. I have had massive aha moments while
+talking with him.  He showed me how to brainstorm ideas while driving 
+out around.  He was thoughtful. He has never asked 
+me to go beyond what was normal, and yet I felt I have to keep up with him.
+His unconditional help and guidance over all these years is greatly appreciated.
+I always know he is one I could go to in difficult time. 
+Also, through him, I was honoured to collaborate with Professor Christoph Reichenbach,
+Professor Christoph Csallner, and Professor Michal Young.
+
+I would like to thank my committee member Professor George Avrunin.  He offered
+a lot of insights and feedback to my presentation and dissertation text. 
+I am grateful to my committee member Professor Yuriy Brun. He made
+extra effort to look out postdoc positions for me. 
+I am very thankful to have Professor Lori Clarke as my committee member. My 
+discussions with her helped me clarify my thoughts.
+
+Professor Christoph Reichenbach is an angel God has sent to me.  Without him, I would
+have failed my Ph.D..  He was always around to help and talk.  
+When I was in China, he skype with me every week at 7 a.m. in the winter;  
+after he had a finger surgery, he was still typing in the Skype chat with 
+his other fingers; when he was working full-time at Google, he rode his bike 
+to the company every Saturday morning to skype with me.   
+
+I have been fortunate to have Professor Christoph Csallner as a great 
+collaborator. I thank him for graciously allowing me to develop
+the dynamic symbolic execution engine Dsc with him.  
+ 
+Professor Eliot Moss was a pleasure to work with.  I miss meeting with 
+him regularly when I TAed for him.  I once asked Eliot how he managed
+students as our Graduate Program Director.  He said it was easy.
+Some students need more mercies while some others need more justices. 
+He would just give a student what they need. I asked him what he thinks 
+I need.  He pondered for a while and said mercies.  I have indeed received 
+a lot of mercies from him. 
+
+When I passed his office, I constantly wanted to 
+knock his door and ask how he was doing.
+
 
 \begin{abstract}
 This work proposes new combinations of static and dynamic analysis for bug
@@ -6176,7 +6228,9 @@ for our experiments.
 For our experiments, the author (unfamiliar with the library)
 examined the above classes and constructed a specification (while
 consulting the API documentation) with a total of 27 second-order
-constraints, comprising 22 experiments.  This process took
+constraints, comprising 22 experiments.  We put related second-order
+constraints into the same experiment as in our \sv{StackAr} case study. 
+This process took
 approximately 3.5h.  The author spent another 2h double-checking and
 fixed the invariants after specification.  This amount of effort is
 in the noise level, compared to the development effort for a library
